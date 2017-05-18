@@ -1,0 +1,10 @@
+@f_color: #555;
+@font: "Microsoft YaHei","Ubuntu", "Sans Regular";
+@f_size: 16px;
+.a(@f_color, @hover_color) {
+  color: @f_color;
+  text-decoration: none;
+  &:hover {
+    color: @hover_color;
+  }
+}
