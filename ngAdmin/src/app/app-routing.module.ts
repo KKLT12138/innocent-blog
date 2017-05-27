@@ -2,7 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminMainComponent } from './adminmain/adminmain.component';
-import { LoginComponent } from './login/login.component';
+import { PostListComponent } from './postlist/postlist.component';
+import { AddPostComponent } from './addpost/addpost.component';
+import { CategoriesListComponent } from './categorieslist/categorieslist.component';
+import { TagsListComponent } from './tagslist/tagslist.component';
+import { AdminUserComponent } from './adminuser/adminuser.component';
+import { RegularSettingComponent } from './regularsetting/regularsetting.component';
+import { OperationComponent } from './operation/operation.component';
+import { FriendComponent } from './friend/friend.component';
+import { CommentComponent } from './comment/comment.component';
 
 
 const routes: Routes = [
@@ -16,8 +24,40 @@ const routes: Routes = [
     component: AdminMainComponent
   },
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'admin/postlist',
+    component: PostListComponent
+  },
+  {
+    path: 'admin/addpost',
+    component: AddPostComponent
+  },
+  {
+    path: 'admin/categorieslist',
+    component: CategoriesListComponent
+  },
+  {
+    path: 'admin/tagslist',
+    component: TagsListComponent
+  },
+  {
+    path: 'admin/adminuser',
+    component: AdminUserComponent
+  },
+  {
+    path: 'admin/regular',
+    component: RegularSettingComponent
+  },
+  {
+    path: 'admin/operation',
+    component: OperationComponent
+  },
+  {
+    path: 'admin/friend',
+    component: FriendComponent
+  },
+  {
+    path: 'admin/comment',
+    component: CommentComponent
   }
 ];
 

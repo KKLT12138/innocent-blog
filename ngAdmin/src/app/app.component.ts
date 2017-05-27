@@ -5,8 +5,8 @@ import { Title } from '@angular/platform-browser';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [
-    '../public/css/admin/index.css',
-    '../public/css/admin/main.css'
+    '../public/css/index.css',
+    '../public/css/main.css'
   ]
 })
 export class AppComponent implements OnInit {
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     this.titleService.setTitle( newTitle );
   }
 
-  ngOnInit():void {
-    this.setTitle("博客后台管理系统");
+  ngOnInit(): void {
+    this.setTitle('博客后台管理系统');
   }
 }

@@ -6,24 +6,44 @@
 
     <ul class="sidemenu-nav">
       <li class="sidemenu-nav-item">
-        <a href="">博客管理<span>&gt;</span></a>
+        <a href="">文章管理<span>&gt;</span></a>
         <ul class="second-nav">
           <li class="second-nav-item">
-            <a href="">文章管理</a>
+            <a routerLink="/admin/postlist">文章列表</a>
           </li>
           <li class="second-nav-item">
-            <a href="">文章管理</a>
+            <a routerLink="/admin/addpost">写文章</a>
+          </li>
+          <li class="second-nav-item">
+            <a routerLink="/admin/comment">评论管理</a>
+          </li>
+          <li class="second-nav-item">
+            <a routerLink="/admin/categorieslist">分类管理</a>
+          </li>
+          <li class="second-nav-item">
+            <a routerLink="/admin/tagslist">标签管理</a>
           </li>
         </ul>
       </li>
       <li class="sidemenu-nav-item">
-        <a href="">博客管理<span>&gt;</span></a>
+        <a href="">用户管理<span>&gt;</span></a>
         <ul class="second-nav">
           <li class="second-nav-item">
-            <a href="">文章管理</a>
+            <a routerLink="/admin/adminuser">管理员</a>
+          </li>
+        </ul>
+      </li>
+      <li class="sidemenu-nav-item">
+        <a href="">站点管理<span>&gt;</span></a>
+        <ul class="second-nav">
+          <li class="second-nav-item">
+            <a routerLink="/admin/regular">常规设置</a>
           </li>
           <li class="second-nav-item">
-            <a href="">文章管理</a>
+            <a routerLink="/admin/operation">运营数据</a>
+          </li>
+          <li class="second-nav-item">
+            <a routerLink="/admin/friend">友链管理</a>
           </li>
         </ul>
       </li>

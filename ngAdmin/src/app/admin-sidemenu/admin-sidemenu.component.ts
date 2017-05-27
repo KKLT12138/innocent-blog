@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'admin-sidemenu',
   templateUrl: './admin-sidemenu.component.html',
   styleUrls: [
-    '../../public/css/admin/index.css',
-    '../../public/css/admin/main.css'
+    '../../public/css/index.css',
+    '../../public/css/main.css'
   ]
 })
 export class AdminSideMenuComponent implements OnInit {
