@@ -1,0 +1,95 @@
+.pre(@style, @value) {
+  -webkit-@{style}: @value;
+  -moz-@{style}: @value;
+  -ms-@{style}: @value;
+  -o-@{style}: @value;
+    @{style}: @value;
+}
+
+.box-sizing(@value) {
+  .pre(box-sizing, @value);
+}
+
+.transform(@value) {
+  .pre(transform, @value);
+}
+
+.transition(@value) {
+  .pre(transition, @value);
+}
+
+#post-box {
+  .post-box-left {
+    float: left;
+    #editor {
+      ul {
+        padding: 0;
+        @font_i: 20px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        li {
+          float: left;
+          margin-right: 10px;
+          list-style: none;
+          height: 30px;
+          width: 50px;
+          border: 1px solid #ccc;
+          text-align: center;
+          line-height: 30px;
+          cursor: pointer;
+          border-radius: 3px;
+          i {
+            font-size: @font_i;
+          }
+          &:hover {
+            color: #ff7043;
+            border-color: #ff7043;
+          }
+          .transition(all 0.3s);
+        }
+        #markdown {
+          i {
+            font-size: @font_i + 10;
+          }
+        }
+        #enlarge {
+          i {
+            font-size: @font_i - 2;
+          }
+        }
+      }
+
+    }
+  }
+  .post-box-right {
+    float: right;
+    margin-right: 45px;
+    padding: 30px;
+    width: 280px;
+    border: 2px solid #eee;
+    .box-sizing(border-box);
+
+    input[type=text] {
+      height: 30px;
+      width: 100%;
+      .box-sizing(border-box);
+    }
+
+    #category {
+      display: inline-block;
+      height: 30px;
+      width: 100%;
+      background: #fff;
+      text-align: center;
+    }
+
+    small {
+      margin-left: 6px;
+      color: #ff9b7b;
+    }
+    .post-submit>.btn{
+      margin-top: 28px;
+      width: 100%;
+    }
+  }
+}

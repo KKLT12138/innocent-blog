@@ -33,6 +33,11 @@
   .pre(transition, @value);
 }
 
+input[type=text] {
+  display: inline-block;
+  padding: 5px;
+}
+
 .main-inner {
   padding: 20px 20px 20px 40px;
   color: @f_color;
@@ -120,6 +125,9 @@
   &:hover {
     background-color: white;
     color: #ff7043;
+  }
+  &:focus {
+    outline-color: #ff7043;
   }
 }
 .btn-a {
