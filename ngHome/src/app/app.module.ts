@@ -15,6 +15,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ArchivesComponent } from './archives/archives.component';
 import { TagsComponent } from './tags/tags.component';
 import { AboutComponent } from './about/about.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AboutComponent } from './about/about.component';
     ArchivesComponent,
     TagsComponent,
     AboutComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ArchivesComponent } from './archives/archives.component';
 import { TagsComponent } from './tags/tags.component';
 import { AboutComponent } from './about/about.component';
+import { PostComponent } from './post/post.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'tags',
     component: TagsComponent
+  },
+  {
+    path: 'post',
+    component: PostComponent
   },
 ];
 
