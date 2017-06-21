@@ -8,6 +8,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+    }
+    #loading-page {
+      width: 100%;
+      height: 100%;
+      background-color: #222;
+      text-align: center;
+      position: relative;
+    }
+    .pac-container {
+      position: relative;
+      top: 25%;
+      width: 500px;
+      margin: 0 auto;
+      color: white;
+    }
+    .pacman {
+      width: 200px;
+      margin: 0 auto;
+      margin-top: 50px;
+    }
+
+
     @-webkit-keyframes rotate_pacman_half_up {
       0% {
         -webkit-transform: rotate(270deg);
@@ -69,81 +94,82 @@
         transform: translate(-100px, -6.25px); } }
 
     @keyframes pacman-balls {
-      75% {
-        opacity: 0.7; }
+      80% {
+        opacity: 0.8; }
 
       100% {
         -webkit-transform: translate(-100px, -6.25px);
         transform: translate(-100px, -6.25px); } }
 
-    .bootpage .pacman {
+    .pacman {
       position: relative;
     }
-    .bootpage .pacman > div:nth-child(2) {
+    .pacman > div:nth-child(2) {
       -webkit-animation: pacman-balls 1s 0s infinite linear;
       animation: pacman-balls 1s 0s infinite linear; }
-    .bootpage .pacman > div:nth-child(3) {
+    .pacman > div:nth-child(3) {
       -webkit-animation: pacman-balls 1s 0.33s infinite linear;
       animation: pacman-balls 1s 0.33s infinite linear; }
-    .bootpage .pacman > div:nth-child(4) {
+    .pacman > div:nth-child(4) {
       -webkit-animation: pacman-balls 1s 0.66s infinite linear;
       animation: pacman-balls 1s 0.66s infinite linear; }
-    .bootpage .pacman > div:nth-child(5) {
+    .pacman > div:nth-child(5) {
       -webkit-animation: pacman-balls 1s 0.99s infinite linear;
       animation: pacman-balls 1s 0.99s infinite linear; }
-    .bootpage .pacman > div:first-of-type {
+    .pacman > div:first-of-type {
       width: 0px;
       height: 0px;
-      border-right: 25px solid transparent;
-      border-top: 25px solid #fff;
-      border-left: 25px solid #fff;
-      border-bottom: 25px solid #fff;
-      border-radius: 25px;
+      border-right: 50px solid transparent;
+      border-top: 50px solid #fff;
+      border-left: 50px solid #fff;
+      border-bottom: 50px solid #fff;
+      border-radius: 50px;
       -webkit-animation: rotate_pacman_half_up 0.5s 0s infinite;
       animation: rotate_pacman_half_up 0.5s 0s infinite; }
-    .bootpage .pacman > div:nth-child(2) {
+    .pacman > div:nth-child(2) {
       width: 0px;
       height: 0px;
-      border-right: 25px solid transparent;
-      border-top: 25px solid #fff;
-      border-left: 25px solid #fff;
-      border-bottom: 25px solid #fff;
-      border-radius: 25px;
+      border-right: 50px solid transparent;
+      border-top: 50px solid #fff;
+      border-left: 50px solid #fff;
+      border-bottom: 50px solid #fff;
+      border-radius: 50px;
       -webkit-animation: rotate_pacman_half_down 0.5s 0s infinite;
       animation: rotate_pacman_half_down 0.5s 0s infinite;
-      margin-top: -50px; }
-    .bootpage .pacman > div:nth-child(3), .pacman > div:nth-child(4), .pacman > div:nth-child(5), .pacman > div:nth-child(6) {
+      margin-top: -100px; }
+    .pacman > div:nth-child(3), .pacman > div:nth-child(4), .pacman > div:nth-child(5), .pacman > div:nth-child(6) {
       background-color: #fff;
+      width: 25px;
+      height: 25px;
+      border-radius: 100%;
+      margin: 25px;
       width: 15px;
       height: 15px;
-      border-radius: 100%;
-      margin: 2px;
-      width: 10px;
-      height: 10px;
       position: absolute;
       -webkit-transform: translate(0, -6.25px);
       -ms-transform: translate(0, -6.25px);
       transform: translate(0, -6.25px);
       top: 25px;
-      left: 100px;
-    }
-    .bootpage {
-      background-color: black;
+      left: 150px;
     }
   </style>
 </head>
 <body>
   <app-root>
-    <div class="bootpage">
-      <div class="pacman">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <div id="loading-page">
+      <div class="pac-container">
+        <h1>&nbsp;&nbsp;pacman!!!</h1>
+        <h2 class="text-404">loading...</h2>
+
+        <div class="pacman">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
-
   </app-root>
 </body>
 </html>

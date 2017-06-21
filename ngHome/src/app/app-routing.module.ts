@@ -35,7 +35,7 @@ const routes: Routes = [
     component: TagsComponent
   },
   {
-    path: 'home/post',
+    path: 'home/post/:id',
     component: PostComponent
   },
 ];
