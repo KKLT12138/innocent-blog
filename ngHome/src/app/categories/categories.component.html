@@ -1,15 +1,11 @@
 <div id="categories" class="categories">
   <div class="categories-inner">
     <h2 class="categories-title">分类</h2>
-    <p class="categories-total">当前共计10个分类</p>
+    <p class="categories-total">当前共计{{categoriesCount}}个分类</p>
     <div class="categories-wrap">
       <div class="categories-nav">
         <ul class="categories-nav-list">
-          <li class="categories-nav-list-item"><a>Nodejs<span>(5)</span></a></li>
-          <li class="categories-nav-list-item"><a>Nodejs</a></li>
-          <li class="categories-nav-list-item"><a>Nodejs</a></li>
-          <li class="categories-nav-list-item"><a>Nodejs</a></li>
-          <li class="categories-nav-list-item"><a>Nodejs</a></li>
+          <li class="categories-nav-list-item" *ngFor="let category of categories"><a>{{category.name}}<span>(5)</span></a></li>
         </ul>
       </div>
       <div class="categories-content">

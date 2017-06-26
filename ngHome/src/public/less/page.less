@@ -1,0 +1,24 @@
+@f_color: #555;
+@f_size: 14px;
+.a(@f_color, @hover_color) {
+  color: @f_color;
+  text-decoration: none;
+  &:hover {
+    color: @hover_color;
+  }
+}
+.pages {
+  margin-top: 100px;
+  margin-bottom: 80px;
+  border-top: 1px solid #eee;
+  font-size: @f_size + 2;
+  a {
+    display: inline-block;
+    .a(@f_color, #222);
+    padding: 10px 10px 10px 10px;
+  }
+  a.active {
+    .a(#eee, #fff);
+    background-color: #222;
+  }
+}

@@ -33,9 +33,9 @@ app.get('/admin/login', function(req, res, next) {
 
 // catch 404 and forward to error handler
 app.use(function (req, res) {
-    // res.type('text/plain');
-    res.status(404);
-    res.render('404');
+  // res.type('text/plain');
+  res.status(404);
+  res.render('404');
 })
 
 // error handler

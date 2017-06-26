@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import { CategoryService } from './service/category.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,17 @@ import { Title } from '@angular/platform-browser';
   // encapsulation: ViewEncapsulation.None,
   styleUrls: [
     '../public/css/index.css',
+  ],
+  providers: [
+    CategoryService
   ]
 })
 export class AppComponent implements OnInit {
   title = 'app works!';
-  public constructor(private titleService: Title ) { }
+  public constructor(
+    private titleService: Title,
+    private categoryService: CategoryService
+  ) { }
 
   public setTitle( newTitle: string) {
     this.titleService.setTitle( newTitle );
