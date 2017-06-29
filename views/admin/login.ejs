@@ -17,27 +17,61 @@
     <h2 class="title-main">博客后台管理系统&nbsp;&nbsp;&nbsp;Enjoy it !</h2>
     <section class="login-dialog">
       <h4>Login with your account：</h4>
-      <form action="">
+      <form>
         <ul>
           <li>
-            <input type="text" placeholder="username" name="username" class="input" autocomplete="off">
+            <input type="text" placeholder="username" name="username" id="username" class="input" autocomplete="off">
           </li>
           <li>
-            <input type="password" placeholder="password" name="password" class="input" autocomplete="off">
+            <input type="password" placeholder="password" name="password" id="password" class="input" autocomplete="off">
           </li>
           <li>
-            <input type="text" placeholder="verify" class="input verify" autocomplete="off">
+            <input type="text" placeholder="verify" name="verify" id="verify" class="input verify" autocomplete="off">
             <img src="" alt="verify">
           </li>
           <li>
-            <input type="submit" value="登录" class="submit">
+            <input type="button" value="登录" class="submit" id="loginButton">
           </li>
         </ul>
       </form>
     </section>
   </div>
 </div>
+<script>
+  (function () {
+    function loginAjax () {
+      var xhr = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
+      var method ='POST';
+      var url = 'abc';
+      var aysn = true;
+      var data = "username=" + document.getElementById("username").value + "&password=" + document.getElementById("password").value + "&verify=" + document.getElementById("verify").value;
+      var error = function () {
 
+      };
+
+      url = url+'?'+new Date().getTime();
+      xhr.open(method, url , aysn);
+      xhr.setRequestHeader('content-type' , 'application/x-www-form-urlencoded');
+      xhr.send(data);
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            alert(xhr.responseText);
+          } else {
+            error && error();
+          }
+        }
+      }
+    }
+
+    var loginButton = document.getElementById("loginButton");
+    loginButton.onclick = function () {
+      loginAjax();
+      return false;
+    }
+  })()
+
+</script>
 </body>
 </html>
 
