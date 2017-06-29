@@ -42,7 +42,7 @@
     function loginAjax () {
       var xhr = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
       var method ='POST';
-      var url = 'abc';
+      var url = 'login';
       var aysn = true;
       var data = "username=" + document.getElementById("username").value + "&password=" + document.getElementById("password").value + "&verify=" + document.getElementById("verify").value;
       var error = function () {
@@ -53,10 +53,10 @@
       xhr.open(method, url , aysn);
       xhr.setRequestHeader('content-type' , 'application/x-www-form-urlencoded');
       xhr.send(data);
-      xhr.onreadystatechange = function(){
+      xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
           if (xhr.status >= 200 && xhr.status < 300) {
-            alert(xhr.responseText);
+            console.log(xhr.responseText);
           } else {
             error && error();
           }

@@ -27,12 +27,13 @@ app.use(express.static(path.join(__dirname, 'src')));
 app.use('/', index);
 app.use('/users', users);
 
-app.get('/admin/login', function(req, res, next) {
-  res.render('admin/login');
-});
+// app.get('/admin/login', function(req, res, next) {
+//   res.render('admin/login');
+// });
+app.use('/admin', require('./api/login'));
 
 // catch 404 and forward to error handler
-app.use(function (req, res) {
+app.use(function(req, res) {
   // res.type('text/plain');
   res.status(404);
   res.render('404');
