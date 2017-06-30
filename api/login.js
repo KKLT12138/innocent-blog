@@ -12,11 +12,10 @@ router.route('/login')
         var verify = req.body.verify;
 
         var auserQuery = AuserModel.Auser.find({});
-        auserQuery.select('name password');
-        auserQuery.exec(function (err, r) {
-            for (var i in r) {
-                console.log(r[i].name);
-            }
+        auserQuery.exec(function (err, ausers) {
+            ausers.forEach(function (auser, index) {
+                console.log(auser.name)
+            })
         })
         res.json(200, {"word": "hello"});
     })
