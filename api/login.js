@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var AuserModel = require('../models/auser');
 var lang = require('../lib/lang.json');
+var hash = require('../lib/hash');
 
 router.route('/login')
     /*
@@ -19,6 +20,8 @@ router.route('/login')
     .post(function (req, res, next) {
         var username = req.body.username;
         var password = req.body.password;
+        password = hash.communism();
+        console.log(password);
         var verify = req.body.verify;
 
         var auserQuery = AuserModel.Auser.find({});
