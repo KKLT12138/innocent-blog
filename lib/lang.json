@@ -1,0 +1,7 @@
+{
+  "usernameError": "用户名错误",
+  "passwordError": "密码错误",
+  "forbidden": "无访问权限",
+  "error": "操作失败",
+  "success": "操作成功"
+}
