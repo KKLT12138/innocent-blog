@@ -3,13 +3,37 @@ var mongoose = db.mongoose;
 
 var auserSchema = new mongoose.Schema(
   {
-    _id: String,
-    name: String,
-    password: String,
-    lastIp: String,
-    currentIp: String,
-    lastDate: String,
-    currentDate: String
+    _id: {
+      type: String,
+      unique: true
+    },
+    name: {
+      type: String,
+      unique: true,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    salt: {
+      type: String
+    },
+    lastIp: {
+      type: String
+    },
+    currentIp: {
+      type: String
+    },
+    lastDate: {
+      type: String
+    },
+    currentDate: {
+      type: String
+    },
+    createDate: {
+      type: String
+    }
   },
   {
     collection: 'auser'

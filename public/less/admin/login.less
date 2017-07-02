@@ -51,7 +51,7 @@ body {
   z-index: -1;
   width: 100%;
   height: 100%;
-  background: url("../../img/adminbg.jpg") no-repeat ;
+  background: url("/img/adminbg.jpg") no-repeat ;
   background-size: cover;
 }
 .login {
@@ -125,7 +125,11 @@ body {
             }
           }
         }
-
+        #error-message {
+          line-height: 40px;
+          font-size: @f_size + 2;
+          color: #db3333;
+        }
       }
     }
   }

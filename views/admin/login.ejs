@@ -17,7 +17,7 @@
     <h2 class="title-main">博客后台管理系统&nbsp;&nbsp;&nbsp;Enjoy it !</h2>
     <section class="login-dialog">
       <h4>Login with your account：</h4>
-      <form>
+      <form id="login-form">
         <ul>
           <li>
             <input type="text" placeholder="username" name="username" id="username" class="input" autocomplete="off">
@@ -29,6 +29,7 @@
             <input type="text" placeholder="verify" name="verify" id="verify" class="input verify" autocomplete="off">
             <img src="" alt="verify">
           </li>
+          <li id="error-message"></li>
           <li>
             <input type="button" value="登录" class="submit" id="loginButton">
           </li>
@@ -45,8 +46,9 @@
       var url = 'login';
       var aysn = true;
       var data = "username=" + document.getElementById("username").value + "&password=" + document.getElementById("password").value + "&verify=" + document.getElementById("verify").value;
-      var error = function () {
-
+      var error = function (xhr, err) {
+        console.log(xhr, err);
+        document.getElementById("loginButton").value = "登录失败，点击重试";
       };
 
       url = url+'?'+new Date().getTime();
@@ -54,9 +56,14 @@
       xhr.setRequestHeader('content-type' , 'application/x-www-form-urlencoded');
       xhr.send(data);
       xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
+        if (xhr.readyState === 4) {
           if (xhr.status >= 200 && xhr.status < 300) {
-            console.log(xhr.responseText);
+            var res = JSON.parse(xhr.responseText);
+            console.log(res);
+            if (res.status === 0) {
+              document.getElementById("error-message").innerText = res.message;
+            }
+            //todo route
           } else {
             error && error();
           }
@@ -66,8 +73,45 @@
 
     var loginButton = document.getElementById("loginButton");
     loginButton.onclick = function () {
+      var username = document.getElementById("username");
+      var password = document.getElementById("password");
+      var verify = document.getElementById("verify");
+      var errorMessage = document.getElementById("error-message");
+
+      if (!username.value.match(/^[\w\d]{2,14}$/)) {
+        username.focus();
+        username.style.outlineColor = "red";
+        errorMessage.innerText = "非法的用户名";
+        return false;
+      }
+      username.style.outlineColor = "";
+
+      if (!password.value.match(/^[\w\d\.\?\!\@\#\$\%\^\&\*]{2,16}$/)) {
+        password.focus();
+        password.style.outlineColor = "red";
+        errorMessage.innerText = "非法的密码";
+        return false;
+      }
+      password.style.outlineColor = "";
+
+      if (!verify.value.match(/^[a-z0-9]{4}$/i)) {
+        verify.focus();
+        verify.style.outlineColor = "red";
+        errorMessage.innerText = "非法的验证码";
+        return false;
+      }
+      verify.style.outlineColor = "";
       loginAjax();
       return false;
+    }
+
+    var loginForm = document.getElementById("login-form");
+    loginForm.onkeydown = function (e) {
+      var e = e || window.event;
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) {
+        loginButton.click();
+      }
     }
   })()
 
