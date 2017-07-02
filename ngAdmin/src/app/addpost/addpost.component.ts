@@ -13,6 +13,18 @@ export class AddPostComponent implements OnInit {
 
   constructor() { }
 
+  editorMode = {
+    isNormal: true,
+    isPreview: false,
+    isLarge: false
+  };
+  setEditorMode() {
+    return {
+      "editor-form-normal": this.editorMode.isNormal,
+    };
+  }
+
+
   ngOnInit() {
   }
 

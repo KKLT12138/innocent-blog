@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -41,7 +43,13 @@ import { CommentComponent } from './comment/comment.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [Title],
+  providers: [
+    Title,
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

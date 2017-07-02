@@ -35,6 +35,7 @@ app.use(session({
   saveUninitialized: true,
   verify: ''
 }));
+
 app.use('/admin', require('./api/login'));
 
 // catch 404 and forward to error handler

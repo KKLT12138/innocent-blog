@@ -9,7 +9,7 @@
             <li id="split" title="预览模式"><i class="iconfont">&#xe661;</i></li>
             <li id="enlarge" title="放大模式"><i class="iconfont">&#xe724;</i></li>
           </ul>
-          <form action="" id="editor-form">
+          <form action="" id="editor-form" [ngClass]="setEditorMode()">
             <textarea name="mark" id="mark" autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
           </form>
         </div>
@@ -43,7 +43,7 @@
             <input type="text" name="tag" id="tag" value="" placeholder="输入标签">
           </label>
           <label class="post post-order">
-            <p>排序：<small>输入88默认置顶</small></p>
+            <p>排序：<small>输入999默认置顶</small></p>
             <input type="text" name="order" id="order" value="" placeholder="输入序号">
           </label>
           <label class="post post-date">
