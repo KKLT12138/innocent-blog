@@ -27,7 +27,7 @@
           </li>
           <li>
             <input type="text" placeholder="verify" name="verify" id="verify" class="input verify" autocomplete="off">
-            <img src="" alt="verify">
+            <img src="" alt="加载中..." id="verify-img"title="点击刷新">
           </li>
           <li id="error-message"></li>
           <li>
@@ -40,6 +40,36 @@
 </div>
 <script>
   (function () {
+//    验证码获取
+    function getVerifyImg() {
+      var xhr = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
+      var method ='GET';
+      var url = 'login/verifyimg';
+      var aysn = true;
+      var error = function (xhr, err) {
+        console.log(xhr, err);
+      };
+
+      url = url+'?'+new Date().getTime();
+      xhr.open(method, url , aysn);
+      xhr.setRequestHeader('content-type' , 'application/x-www-form-urlencoded');
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            var res = JSON.parse(xhr.responseText);
+
+            if (res.status === 1) {
+              document.getElementById("verify-img").setAttribute("src", res.verifyImg);
+            }
+          } else {
+            error && error();
+          }
+        }
+      }
+    }
+    getVerifyImg();
+
     function loginAjax () {
       var xhr = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
       var method ='POST';
@@ -64,6 +94,14 @@
               document.getElementById("error-message").innerText = res.message;
             }
             //todo route
+            if (res.status === 1) {
+              location.href = "/index.html";
+            }
+            if (res.status === 2) {
+              document.getElementById("error-message").innerText = res.message;
+              getVerifyImg();
+            }
+
           } else {
             error && error();
           }
@@ -94,7 +132,7 @@
       }
       password.style.outlineColor = "";
 
-      if (!verify.value.match(/^[a-z0-9]{4}$/i)) {
+      if (!verify.value.match(/^[\-0-9]{1,3}$/i)) {
         verify.focus();
         verify.style.outlineColor = "red";
         errorMessage.innerText = "非法的验证码";
@@ -112,6 +150,11 @@
       if (keyCode === 13) {
         loginButton.click();
       }
+    }
+
+//    刷新验证码
+    document.getElementById("verify-img").onclick = function () {
+      getVerifyImg();
     }
   })()
 
