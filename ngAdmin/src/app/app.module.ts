@@ -21,6 +21,8 @@ import { OperationComponent } from './operation/operation.component';
 import { FriendComponent } from './friend/friend.component';
 import { CommentComponent } from './comment/comment.component';
 
+import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,8 @@ import { CommentComponent } from './comment/comment.component';
     RegularSettingComponent,
     OperationComponent,
     FriendComponent,
-    CommentComponent
+    CommentComponent,
+    AddpostEditorDirective
   ],
   imports: [
     BrowserModule,

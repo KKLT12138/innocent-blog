@@ -1,6 +1,6 @@
 <div id="main" class="main">
   <div class="main-inner">
-    <div id="post-box">
+    <div id="post-box" addpost-editor>
       <div class="post-box-left">
         <h2>写文章</h2>
         <div id="editor">
@@ -10,7 +10,7 @@
             <li id="enlarge" title="放大模式"><i class="iconfont">&#xe724;</i></li>
           </ul>
           <form action="" id="editor-form" [ngClass]="setEditorMode()">
-            <textarea name="mark" id="mark" autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
+            <textarea name="mark" id="mark" #mark autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
           </form>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'admin-addpost',
@@ -9,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
     '../../public/css/addpost.css'
   ]
 })
-export class AddPostComponent implements OnInit {
+export class AddPostComponent implements OnInit, AfterViewInit {
 
   constructor() { }
+
+  @ViewChild('mark') mark;
 
   editorMode = {
     isNormal: true,
@@ -28,4 +30,7 @@ export class AddPostComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    console.dir(this.mark);
+  }
 }
