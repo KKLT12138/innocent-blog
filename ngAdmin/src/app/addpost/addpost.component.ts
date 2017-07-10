@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
+import { Reader } from '../../public/js/easy-markdown';
+
 @Component({
   selector: 'admin-addpost',
   templateUrl: './addpost.component.html',
@@ -10,19 +12,28 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
   ]
 })
 export class AddPostComponent implements OnInit, AfterViewInit {
+  @ViewChild('mark') mark;
+  @ViewChild('preview') preview;
+  activeMode = {
+    normal: true,
+    split: false,
+    enlarge: false
+  };
 
   constructor() { }
 
-  @ViewChild('mark') mark;
+  setActiveMode(mode) {
+    for (let value in this.activeMode) {
+      this.activeMode[value] = false;
+      this.activeMode[mode] = true;
+    }
+  }
 
-  editorMode = {
-    isNormal: true,
-    isPreview: false,
-    isLarge: false
-  };
-  setEditorMode() {
+  getEditorMode() {
     return {
-      "editor-form-normal": this.editorMode.isNormal,
+      'editor-form-normal': this.activeMode.normal,
+      'editor-form-split': this.activeMode.split,
+      'editor-form-enlarge': this.activeMode.enlarge
     };
   }
 
@@ -31,6 +42,16 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.dir(this.mark);
+    let mark = this.mark.nativeElement;
+    let preview = this.preview.nativeElement;
+    preview.style.height = getComputedStyle(mark).height || this.mark.currentStyle.height;
+
+
+    let markdown = new Reader("mark");
+    markdown.showHtml("preview");
+    document.getElementById("mark").addEventListener("keyup", function() {
+      let markdown = new Reader("mark");
+      markdown.showHtml("preview");
+    })
   }
 }

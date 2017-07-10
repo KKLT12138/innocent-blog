@@ -5,13 +5,14 @@
         <h2>写文章</h2>
         <div id="editor">
           <ul>
-            <li id="markdown" title="经典模式"><i class="iconfont">&#xe946;</i></li>
-            <li id="split" title="预览模式"><i class="iconfont">&#xe661;</i></li>
-            <li id="enlarge" title="放大模式"><i class="iconfont">&#xe724;</i></li>
+            <li id="markdown" [class.active-mode]="activeMode.normal" title="经典模式" (click)="setActiveMode('normal')"><i class="iconfont">&#xe946;</i></li>
+            <li id="split" [class.active-mode]="activeMode.split" title="预览模式" (click)="setActiveMode('split')"><i class="iconfont">&#xe661;</i></li>
+            <li id="enlarge" [class.active-mode]="activeMode.enlarge" title="放大模式" (click)="setActiveMode('enlarge')"><i class="iconfont">&#xe724;</i></li>
           </ul>
-          <form action="" id="editor-form" [ngClass]="setEditorMode()">
+          <form action="" id="editor-form" [ngClass]="getEditorMode()">
             <textarea name="mark" id="mark" #mark autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
           </form>
+          <div id="preview" #preview [ngStyle]="{'display': activeMode.split == true ? 'block' : 'none'}"></div>
         </div>
       </div>
 
