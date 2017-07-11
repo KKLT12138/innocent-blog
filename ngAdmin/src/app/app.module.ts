@@ -23,6 +23,7 @@ import { CommentComponent } from './comment/comment.component';
 
 import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,7 @@ import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
     Title,

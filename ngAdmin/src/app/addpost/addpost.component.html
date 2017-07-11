@@ -1,7 +1,7 @@
 <div id="main" class="main">
   <div class="main-inner">
     <div id="post-box" addpost-editor>
-      <div class="post-box-left">
+      <div class="post-box-left" #boxLeft>
         <h2>写文章</h2>
         <div id="editor">
           <ul>
@@ -10,13 +10,13 @@
             <li id="enlarge" [class.active-mode]="activeMode.enlarge" title="放大模式" (click)="setActiveMode('enlarge')"><i class="iconfont">&#xe724;</i></li>
           </ul>
           <form action="" id="editor-form" [ngClass]="getEditorMode()">
-            <textarea name="mark" id="mark" #mark autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
+            <textarea spellcheck="false" name="mark" id="mark" #mark autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
           </form>
-          <div id="preview" #preview [ngStyle]="{'display': activeMode.split == true ? 'block' : 'none'}"></div>
+          <div id="preview" #preview [ngStyle]="{'display': (activeMode.split || activeMode.enlarge) == true ? 'block' : 'none'}"></div>
         </div>
       </div>
 
-      <div class="post-box-right">
+      <div class="post-box-right" [ngStyle]="{'display': activeMode.enlarge == true ? 'none' : 'block'}">
         <div id="media">
           <h2>媒体库</h2>
         </div>
