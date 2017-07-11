@@ -24,15 +24,15 @@
         <form action="" id="post">
           <label class="post post-title">
             <p>标题：</p>
-            <input type="text" name="title" value="" placeholder="在此输入标题">
+            <input type="text" name="title" [(ngModel)]="editorForm.title" value="" placeholder="在此输入标题">
           </label>
           <label class="post post-author">
             <p>作者：</p>
-            <input type="text" name="author" value="" placeholder="输入作者">
+            <input type="text" name="author" [(ngModel)]="editorForm.author" value="" placeholder="输入作者">
           </label>
           <label class="post post-category">
             <p>分类：</p>
-            <select name="category" id="category">
+            <select name="category" [(ngModel)]="editorForm.category" id="category">
               <option value="javascript">javascript</option>
               <option value="javascript">javascript</option>
               <option value="javascript">javascript</option>
@@ -41,15 +41,15 @@
           </label>
           <label class="post post-category">
             <p>标签：<small>多个标签用,隔开</small></p>
-            <input type="text" name="tag" id="tag" value="" placeholder="输入标签">
+            <input type="text" name="tag" [(ngModel)]="editorForm.tag" id="tag" value="" placeholder="输入标签">
           </label>
           <label class="post post-order">
             <p>排序：<small>输入999默认置顶</small></p>
-            <input type="text" name="order" id="order" value="" placeholder="输入序号">
+            <input type="text" name="order" [(ngModel)]="editorForm.order" id="order" value="" placeholder="输入序号">
           </label>
           <label class="post post-date">
             <p>时间：</p>
-            <input type="text" name="date" value="" placeholder="在此输入标题">
+            <input type="text" name="date" [(ngModel)]="editorForm.date" value="" placeholder="在此输入标题">
           </label>
           <label class="post post-submit">
             <button class="btn btn-red">发布</button>

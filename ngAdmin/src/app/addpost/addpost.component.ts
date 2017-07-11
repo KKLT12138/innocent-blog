@@ -27,6 +27,15 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   };
   boxLeftWidth;
 
+  editorForm = {
+    title: '',
+    author: '',
+    category: '',
+    tag: '',
+    order: '',
+    date: '',
+  };
+
   constructor() { }
 
   setActiveMode(mode) {
