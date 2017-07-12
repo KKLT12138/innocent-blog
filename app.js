@@ -29,6 +29,13 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', index);
 app.use('/users', users);
 
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+  res.header('Access-Control-Allow-Methods','PUT,POST,GET,DELETE,OPTIONS');
+  next();
+});
+
 app.use(session({
   secret: 'helloworld',
   resave: true,
@@ -37,13 +44,14 @@ app.use(session({
 }));
 
 app.use('/admin', require('./api/login'));
+app.use('/api', require('./api/category'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {
   // res.type('text/plain');
   res.status(404);
   res.render('404');
-})
+});
 
 // error handler
 app.use(function(err, req, res, next) {

@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+
+import { CategoriesService } from './categories.service';
 
 @Component({
   selector: 'admin-categorieslist',
@@ -6,10 +8,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: [
     '../../public/css/main.css',
     '../../public/css/formmain.css',
+  ],
+  providers: [
+    CategoriesService
   ]
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoriesListComponent implements OnInit, AfterViewInit {
   @ViewChild('categoryName') categoryName;
+
+  categories;
 
   modal = {
     display: false,
@@ -25,9 +32,22 @@ export class CategoriesListComponent implements OnInit {
     }
   };
 
-  constructor() { }
+  constructor(
+    private _categoryService: CategoriesService
+  ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.getCategories();
+  }
+
+  getCategories() {
+    return this._categoryService.getCategories()
+      .subscribe(data => {
+        data.json();
+      });
   }
 
 }
