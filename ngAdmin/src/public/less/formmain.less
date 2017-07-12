@@ -39,6 +39,7 @@ input[type=text] {
 }
 
 .main-inner {
+  position: relative;
   padding: 20px 20px 20px 40px;
   color: @f_color;
   font-family: @font;
@@ -138,4 +139,38 @@ input[type=text] {
 }
 .btn-a-red {
   .a(#ff7043,#ff9800);
+}
+#add-modal {
+  display: inline-block;
+  position: absolute;
+  z-index: 999;
+  top: 30%;
+  left: 30%;
+  padding: 45px 100px 30px 60px;
+  border: 2px solid #eee;
+  background-color: white;
+  border-radius: 5px;
+  .add-modal-item {
+    margin-top: 20px;
+    label {
+      display: inline-block;
+      width: 100px;
+      text-align: right;
+    }
+  }
+  .btn-group {
+    margin-top: 40px;
+    text-align: center;
+    .btn-red {
+      margin-right: 35px;
+    }
+  }
+}
+#mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .5);
 }

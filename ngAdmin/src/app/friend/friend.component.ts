@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'admin-friend',
@@ -9,6 +9,21 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class FriendComponent implements OnInit {
+  @ViewChild('friendName') friendName;
+
+  modal = {
+    display: false,
+    open: () => {
+      this.modal.display = true;
+      setTimeout(() => {
+        this.friendName.nativeElement.focus();
+      }, 100);
+
+    },
+    close: () => {
+      this.modal.display = false;
+    }
+  };
 
   constructor() { }
 

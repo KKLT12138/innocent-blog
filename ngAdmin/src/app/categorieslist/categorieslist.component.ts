@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'admin-categorieslist',
@@ -6,10 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [
     '../../public/css/main.css',
     '../../public/css/formmain.css',
-    '../../public/css/categorieslist.css'
   ]
 })
 export class CategoriesListComponent implements OnInit {
+  @ViewChild('categoryName') categoryName;
+
+  modal = {
+    display: false,
+    open: () => {
+      this.modal.display = true;
+      setTimeout(() => {
+        this.categoryName.nativeElement.focus();
+      }, 100);
+
+    },
+    close: () => {
+      this.modal.display = false;
+    }
+  };
 
   constructor() { }
 

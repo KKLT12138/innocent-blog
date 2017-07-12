@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'admin-tagslist',
@@ -9,7 +9,21 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class TagsListComponent implements OnInit {
+  @ViewChild('tagName') tagName;
 
+  modal = {
+    display: false,
+    open: () => {
+      this.modal.display = true;
+      setTimeout(() => {
+        this.tagName.nativeElement.focus();
+      }, 100);
+
+    },
+    close: () => {
+      this.modal.display = false;
+    }
+  };
   constructor() { }
 
   ngOnInit() {

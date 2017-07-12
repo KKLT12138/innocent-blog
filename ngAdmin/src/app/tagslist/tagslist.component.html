@@ -3,21 +3,21 @@
     <h2>标签管理</h2>
     <form id="quick-tools">
       <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除">
-      <input type="button" name="add" class="quick-tools-add btn" value="新增">
+      <input type="button" name="add" class="quick-tools-add btn" value="新增" (click)="modal.open()">
     </form>
     <form id="form-main">
-      <table>
+      <table myCheckedAll #myCheckedAll>
         <thead>
-        <tr>
-          <th width="1%">
-            <input type="checkbox" class="check-all">
-          </th>
-          <th width="15%">ID</th>
-          <th width="20%">名称</th>
-          <th width="20%">文章数量</th>
-          <th width="15%">占比</th>
-          <th width="40%">操作</th>
-        </tr>
+          <tr>
+            <th width="1%">
+              <input type="checkbox" class="check check-all">
+            </th>
+            <th width="15%">ID</th>
+            <th width="20%">名称</th>
+            <th width="20%">文章数量</th>
+            <th width="15%">占比</th>
+            <th width="40%">操作</th>
+          </tr>
         </thead>
 
         <tr>
@@ -77,5 +77,19 @@
       </table>
 
     </form>
+
+    <div id="add-modal" [ngStyle]="{'display': modal.display ? 'block' : 'none'}">
+      <form action="" id="add-tag">
+        <label for="tag-name">标签名称：</label>
+        <input type="text" name="tag-name" id="tag-name" #tagName value="">
+        <div class="btn-group">
+          <input type="button" class="btn btn-red" value="确定">
+          <input type="button" class="btn" value="取消" (click)="modal.close()">
+        </div>
+
+      </form>
+    </div>
+
+    <div id="mask" [ngStyle]="{'display': modal.display ? 'block' : 'none'}"></div>
   </div>
 </div>

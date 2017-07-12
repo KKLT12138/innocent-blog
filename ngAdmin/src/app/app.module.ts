@@ -22,6 +22,7 @@ import { FriendComponent } from './friend/friend.component';
 import { CommentComponent } from './comment/comment.component';
 
 import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
+import { CheckedAllDirective } from './share/checkedAll.directive';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
     OperationComponent,
     FriendComponent,
     CommentComponent,
-    AddpostEditorDirective
+    AddpostEditorDirective,
+    CheckedAllDirective,
   ],
   imports: [
     BrowserModule,

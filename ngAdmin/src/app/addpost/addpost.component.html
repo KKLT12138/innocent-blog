@@ -18,39 +18,39 @@
 
       <div class="post-box-right" [ngStyle]="{'display': activeMode.enlarge == true ? 'none' : 'block'}">
         <div id="media">
-          <h2>媒体库</h2>
+          <button class="btn">媒体库（上传图片）</button>
         </div>
 
         <form action="" id="post">
-          <label class="post post-title">
-            <p>标题：</p>
-            <input type="text" name="title" [(ngModel)]="editorForm.title" value="" placeholder="在此输入标题">
-          </label>
-          <label class="post post-author">
-            <p>作者：</p>
-            <input type="text" name="author" [(ngModel)]="editorForm.author" value="" placeholder="输入作者">
-          </label>
-          <label class="post post-category">
-            <p>分类：</p>
+          <div class="post post-title">
+            <label for="title">标题：</label>
+            <input type="text" name="title" id="title" [(ngModel)]="editorForm.title" value="" placeholder="在此输入标题">
+          </div>
+          <div class="post post-author">
+            <label for="author">作者：</label>
+            <input type="text" name="author" id="author" [(ngModel)]="editorForm.author" value="" placeholder="输入作者">
+          </div>
+          <div class="post post-category">
+            <label for="category">分类：</label>
             <select name="category" [(ngModel)]="editorForm.category" id="category">
               <option value="javascript">javascript</option>
               <option value="javascript">javascript</option>
               <option value="javascript">javascript</option>
               <option value="javascript">javascript</option>
             </select>
-          </label>
-          <label class="post post-category">
-            <p>标签：<small>多个标签用,隔开</small></p>
-            <input type="text" name="tag" [(ngModel)]="editorForm.tag" id="tag" value="" placeholder="输入标签">
-          </label>
-          <label class="post post-order">
-            <p>排序：<small>输入999默认置顶</small></p>
-            <input type="text" name="order" [(ngModel)]="editorForm.order" id="order" value="" placeholder="输入序号">
-          </label>
-          <label class="post post-date">
-            <p>时间：</p>
-            <input type="text" name="date" [(ngModel)]="editorForm.date" value="" placeholder="在此输入标题">
-          </label>
+          </div>
+          <div class="post post-category">
+            <label for="tag">标签：<small>多个标签用,隔开</small></label>
+            <input type="text" name="tag" [(ngModel)]="editorForm.tag" id="tag" value="" placeholder="若标签不存在，则自动创建">
+          </div>
+          <div class="post post-order">
+            <label for="order">排序：<small>数字越大越靠前</small></label>
+            <input type="text" name="order" [(ngModel)]="editorForm.order" id="order" value="0" placeholder="输入序号">
+          </div>
+          <div class="post post-date">
+            <label for="date">时间：<small>格式：2017-01-07</small></label>
+            <input type="text" name="date" id="date" [(ngModel)]="editorForm.date" value="" placeholder="输入时间">
+          </div>
           <label class="post post-submit">
             <button class="btn btn-red">发布</button>
           </label>
