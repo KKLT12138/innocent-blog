@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'admin-tagslist',
@@ -10,6 +11,21 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class TagsListComponent implements OnInit {
   @ViewChild('tagName') tagName;
+
+  tags = [
+    {
+      id: 'test',
+      tagName: 'JavaScript',
+      numb: 35,
+      percent: 10
+    },
+    {
+      id: 2,
+      tagName: 'C++',
+      numb: 10,
+      percent: 60
+    }
+  ];
 
   modal = {
     display: false,

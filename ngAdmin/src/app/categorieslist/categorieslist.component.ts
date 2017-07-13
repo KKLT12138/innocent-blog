@@ -16,7 +16,14 @@ import { CategoriesService } from './categories.service';
 export class CategoriesListComponent implements OnInit, AfterViewInit {
   @ViewChild('categoryName') categoryName;
 
-  categories;
+  categories = [
+    {
+      id: 'test',
+      categoryName: 'JAVA',
+      numb: 15,
+      percent: 20
+    }
+  ];
 
   modal = {
     display: false,
