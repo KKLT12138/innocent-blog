@@ -20,9 +20,11 @@ import { RegularSettingComponent } from './regularsetting/regularsetting.compone
 import { OperationComponent } from './operation/operation.component';
 import { FriendComponent } from './friend/friend.component';
 import { CommentComponent } from './comment/comment.component';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
 import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 import { CheckedAllDirective } from './share/checkedAll.directive';
+import { ToDatePipe } from './share/timeToDate.pipe';
 
 
 @NgModule({
@@ -40,8 +42,10 @@ import { CheckedAllDirective } from './share/checkedAll.directive';
     OperationComponent,
     FriendComponent,
     CommentComponent,
+    MessageDialogComponent,
     AddpostEditorDirective,
     CheckedAllDirective,
+    ToDatePipe,
   ],
   imports: [
     BrowserModule,

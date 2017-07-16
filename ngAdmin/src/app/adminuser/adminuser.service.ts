@@ -1,32 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { Config } from '../share/config';
 
 @Injectable()
-export class CategoriesService {
+export class AdminuserService {
   constructor(
     private http: Http
   ) { }
 
-  getCategories(): Observable<any> {
-    let url = `${Config.apiRoot}api/category`;
+  getAdminusers(): Observable<any> {
+    let url = `${Config.apiRoot}api/adminuser`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
-  }
-
-  addCategory(categoryDate): Observable<any> {
-    let url = `${Config.apiRoot}api/category`;
-    let body = JSON.stringify(categoryDate);
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
-    return this.http.post(url, body, options)
-      .map(this.extraData)
-      .catch(this.handleError);
-
   }
 
   private extraData(res) {

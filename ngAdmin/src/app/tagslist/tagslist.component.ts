@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {forEach} from "@angular/router/src/utils/collection";
+
+import { TagService } from './tag.service';
 
 @Component({
   selector: 'admin-tagslist',
@@ -7,23 +8,20 @@ import {forEach} from "@angular/router/src/utils/collection";
   styleUrls: [
     '../../public/css/main.css',
     '../../public/css/formmain.css'
+  ],
+  providers: [
+    TagService
   ]
 })
 export class TagsListComponent implements OnInit {
   @ViewChild('tagName') tagName;
 
-  tags = [
+  tags: any[] = [
     {
-      id: 'test',
-      tagName: 'JavaScript',
-      numb: 35,
-      percent: 10
-    },
-    {
-      id: 2,
-      tagName: 'C++',
-      numb: 10,
-      percent: 60
+      id: 'loading..',
+      tagName: 'loading..',
+      numb: 'loading..',
+      percent: 'loading'
     }
   ];
 
@@ -40,9 +38,23 @@ export class TagsListComponent implements OnInit {
       this.modal.display = false;
     }
   };
-  constructor() { }
+  constructor(
+    private _tagService: TagService
+  ) { }
 
   ngOnInit() {
+    this.getTags();
+  }
+
+  getTags() {
+    return this._tagService.getTags()
+      .subscribe(datas => {
+        datas.forEach( (data, index) => {
+          this.tags[index] = {};
+          this.tags[index].id = data._id;
+          this.tags[index].tagName = data.name;
+        })
+      });
   }
 
 }

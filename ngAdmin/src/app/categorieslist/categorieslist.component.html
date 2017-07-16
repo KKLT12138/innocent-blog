@@ -41,9 +41,9 @@
     <div id="add-modal" [ngStyle]="{'display': modal.display ? 'block' : 'none'}">
       <form action="" id="add-category">
         <label for="category-name">分类名称：</label>
-        <input type="text" name="category-name" id="category-name" #categoryName value="">
+        <input type="text" name="category-name" id="category-name" #categoryName [(ngModel)]="curCategory.name">
         <div class="btn-group">
-          <input type="button" class="btn btn-red" value="确定">
+          <input type="button" class="btn btn-red" value="确定" (click)="addCategory()">
           <input type="button" class="btn" value="取消" (click)="modal.close()">
         </div>
 
@@ -51,5 +51,7 @@
     </div>
 
     <div id="mask" [ngStyle]="{'display': modal.display ? 'block' : 'none'}"></div>
+
+    <message-dialog></message-dialog>
   </div>
 </div>

@@ -33,6 +33,10 @@
   .pre(transition, @value);
 }
 
+.user-select(@value) {
+  .pre(user-select, @value);
+}
+
 input[type=text] {
   display: inline-block;
   padding: 5px;
@@ -173,4 +177,25 @@ input[type=text] {
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, .5);
+}
+
+#message-dialog {
+  position: fixed;
+  z-index: 99999;
+  top: 35%;
+  left: 42%;
+  padding: 30px 50px;
+  color: white;
+  font-size: @f_size + 4;
+  .border-radius(5px);
+  .user-select(none);
+  .transition(opacity 0.8s);
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.message-success {
+  background-color: rgba(102, 187, 106, .8);
+}
+.message-error {
+  background-color: rgba(255, 112, 67, .8);
 }

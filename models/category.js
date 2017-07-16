@@ -3,10 +3,6 @@ var mongoose = db.mongoose;
 
 var categorySchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      unique: true
-    },
     category: {
       type: String,
       unique: true,

@@ -3,10 +3,6 @@ var mongoose = db.mongoose;
 
 var auserSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      unique: true
-    },
     name: {
       type: String,
       unique: true,
@@ -26,13 +22,13 @@ var auserSchema = new mongoose.Schema(
       type: String
     },
     lastDate: {
-      type: String
+      type: Number
     },
     currentDate: {
-      type: String
+      type: Number
     },
     createDate: {
-      type: String
+      type: Number
     }
   },
   {
