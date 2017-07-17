@@ -21,6 +21,7 @@ import { OperationComponent } from './operation/operation.component';
 import { FriendComponent } from './friend/friend.component';
 import { CommentComponent } from './comment/comment.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { LoadingAnimateComponent } from './loading-animate/loading-animate.component';
 
 import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 import { CheckedAllDirective } from './share/checkedAll.directive';
@@ -43,6 +44,7 @@ import { ToDatePipe } from './share/timeToDate.pipe';
     FriendComponent,
     CommentComponent,
     MessageDialogComponent,
+    LoadingAnimateComponent,
     AddpostEditorDirective,
     CheckedAllDirective,
     ToDatePipe,

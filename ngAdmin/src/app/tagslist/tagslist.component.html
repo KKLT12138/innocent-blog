@@ -29,8 +29,8 @@
           <td>{{ tag.numb }}</td>
           <td>{{ tag.percent }}%</td>
           <td>
-            <a href="" class="btn-a form-main-edit">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
+            <a class="btn-a form-main-edit" (click)="modal.open(tag.id)">编辑</a>
+            <a class="btn-a btn-a-red form-main-delete">删除</a>
           </td>
         </tr>
 
@@ -41,15 +41,18 @@
     <div id="add-modal" [ngStyle]="{'display': modal.display ? 'block' : 'none'}">
       <form action="" id="add-tag">
         <label for="tag-name">标签名称：</label>
-        <input type="text" name="tag-name" id="tag-name" #tagName value="">
+        <input type="text" name="tag-name" id="tag-name" #tagName [(ngModel)]="curTag.name">
         <div class="btn-group">
-          <input type="button" class="btn btn-red" value="确定">
+          <input type="button" class="btn btn-red" [value]="addModal.btnValue" (click)="addTag()">
           <input type="button" class="btn" value="取消" (click)="modal.close()">
         </div>
 
       </form>
     </div>
 
-    <div id="mask" [ngStyle]="{'display': modal.display ? 'block' : 'none'}"></div>
+    <div id="mask" [ngStyle]="{'display': modal.display || mask.display ? 'block' : 'none'}"></div>
+
+    <loading-animate></loading-animate>
+    <message-dialog></message-dialog>
   </div>
 </div>

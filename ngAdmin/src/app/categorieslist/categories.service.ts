@@ -18,7 +18,7 @@ export class CategoriesService {
   }
 
   addCategory(categoryDate): Observable<any> {
-    let url = `${Config.apiRoot}api/category`;
+    let url = `${Config.apiAdminRoot}category`;
     let body = JSON.stringify(categoryDate);
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});

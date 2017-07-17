@@ -14,7 +14,13 @@ router.route('/category')
     });
   })
   .post(function (req, res, next) {
+    var id = req.body.id;
     var name = req.body.name;
+    if (id) {
+      var categoryQuery = CategoryModel.Category.findOne().where('_id', id);
+      categoryQuery.name = name;
+      CategoryModel.Category.save(categoryQuery);
+    }
     var categoryQuery = CategoryModel.Category.findOne().where('category', name);
     categoryQuery.exec(function (err, repeat) {
       if (repeat) {
@@ -28,7 +34,7 @@ router.route('/category')
         });
         newCategory.save(function (err) {
 
-        })
+        });
         res.json(200, {
           status: 1,
           message: lang.success

@@ -29,8 +29,8 @@
           <td>{{ category.numb }}</td>
           <td>{{ category.percent }}%</td>
           <td>
-            <a href="" class="btn-a form-main-edit">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
+            <a class="btn-a form-main-edit" (click)="modal.open(category.id)">编辑</a>
+            <a class="btn-a btn-a-red form-main-delete">删除</a>
           </td>
         </tr>
 
@@ -43,15 +43,16 @@
         <label for="category-name">分类名称：</label>
         <input type="text" name="category-name" id="category-name" #categoryName [(ngModel)]="curCategory.name">
         <div class="btn-group">
-          <input type="button" class="btn btn-red" value="确定" (click)="addCategory()">
+          <input type="button" class="btn btn-red" [value]="addModal.btnValue" (click)="addCategory()">
           <input type="button" class="btn" value="取消" (click)="modal.close()">
         </div>
 
       </form>
     </div>
 
-    <div id="mask" [ngStyle]="{'display': modal.display ? 'block' : 'none'}"></div>
+    <div id="mask" [ngStyle]="{'display': modal.display || mask.display ? 'block' : 'none'}"></div>
 
+    <loading-animate></loading-animate>
     <message-dialog></message-dialog>
   </div>
 </div>

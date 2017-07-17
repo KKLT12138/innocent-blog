@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { Config } from '../share/config';
@@ -15,6 +15,18 @@ export class TagService {
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
+  }
+
+  addTag(tagDate): Observable<any> {
+    let url = `${Config.apiAdminRoot}tag`;
+    let body = JSON.stringify(tagDate);
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.post(url, body, options)
+      .map(this.extraData)
+      .catch(this.handleError);
+
   }
 
   private extraData(res) {

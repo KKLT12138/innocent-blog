@@ -43,9 +43,9 @@ app.use(session({
 }));
 
 app.use('/admin', require('./api/login'));
-app.use('/api', require('./api/category'));
-app.use('/api', require('./api/tag'));
-app.use('/api', require('./api/adminuser'));
+app.use('/api/admin', require('./api/category'));
+app.use('/api/admin', require('./api/tag'));
+app.use('/api/admin', require('./api/adminuser'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {

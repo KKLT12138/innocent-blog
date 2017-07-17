@@ -17,10 +17,15 @@ export class MessageDialogComponent implements OnInit {
   messageDialog = {
     display: false,
     text: 'hello',
+    setText: (text) => {
+      this.messageDialog.text = text;
+    },
     setClass: (status) => {
       status == 1 ? this.messageDialogClass['message-success'] = true : this.messageDialogClass['message-error'] = true;
     },
-    open: () => {
+    open: (text, status) => {
+      this.messageDialog.setText(text);
+      this.messageDialog.setClass(status);
       this.messageDialog.display = true;
       this.myMessageDialog.nativeElement.style = 'opacity: 0;filter: alpha(opacity=0);';
       setTimeout(() => {
