@@ -11,7 +11,7 @@ export class TagService {
   ) { }
 
   getTags(): Observable<any> {
-    let url = `${Config.apiRoot}api/tag`;
+    let url = `${Config.apiAdminRoot}tag`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);

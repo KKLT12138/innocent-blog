@@ -18,29 +18,51 @@ router.route('/category')
     var name = req.body.name;
     if (id) {
       var categoryQuery = CategoryModel.Category.findOne().where('_id', id);
-      categoryQuery.name = name;
-      CategoryModel.Category.save(categoryQuery);
-    }
-    var categoryQuery = CategoryModel.Category.findOne().where('category', name);
-    categoryQuery.exec(function (err, repeat) {
-      if (repeat) {
-        res.json(200, {
-          status: 0,
-          message: lang.error + ': 分类已存在'
+      categoryQuery.exec(function (error, doc) {
+        doc.category = name;
+        doc.save(function (err) {
+          if (err) {
+            res.json(200, {
+              status: 0,
+              message: lang.error
+            })
+          } else {
+            res.json(200, {
+              status: 1,
+              message: lang.success
+            })
+          }
         })
-      } else {
-        var newCategory = new CategoryModel.Category({
-          category: name
-        });
-        newCategory.save(function (err) {
+      })
+    } else {
+      var categoryQuery = CategoryModel.Category.findOne({'category': {$regex: '^' + name + '$', $options: '$i'}});
+      categoryQuery.exec(function (err, repeat) {
+        if (repeat) {
+          res.json(200, {
+            status: 0,
+            message: lang.error + ': 分类已存在'
+          })
+        } else {
+          var newCategory = new CategoryModel.Category({
+            category: name
+          });
+          newCategory.save(function (err) {
+            if (err) {
+              res.json(200, {
+                status: 0,
+                message: lang.error
+              })
+            } else {
+              res.json(200, {
+                status: 1,
+                message: lang.success
+              })
+            }
+          })
+        }
+      });
+    }
 
-        });
-        res.json(200, {
-          status: 1,
-          message: lang.success
-        });
-      }
-    });
 
 
   })

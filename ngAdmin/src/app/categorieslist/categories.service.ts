@@ -11,7 +11,7 @@ export class CategoriesService {
   ) { }
 
   getCategories(): Observable<any> {
-    let url = `${Config.apiRoot}api/category`;
+    let url = `${Config.apiAdminRoot}category`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);

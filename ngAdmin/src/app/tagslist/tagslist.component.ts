@@ -31,13 +31,15 @@ export class TagsListComponent implements OnInit {
   ];
 
   curTag = {
+    id: '',
     name: ''
   };
 
   modal = {
     display: false,
-    open: (id: string = '') => {
-      this.curTag.name = id;
+    open: (id: string = '', name: string = '') => {
+      this.curTag.id = id;
+      this.curTag.name = name;
       this.modal.display = true;
       setTimeout(() => {
         this.tagName.nativeElement.focus();

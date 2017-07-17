@@ -210,3 +210,23 @@ input[type=text] {
   font-size: @f_size + 6;
   .user-select(none);
 }
+
+#confirm-dialog {
+  display: inline-block;
+  position: absolute;
+  z-index: 999;
+  top: 30%;
+  left: 30%;
+  padding: 20px 60px 30px 65px;
+  border: 2px solid #eee;
+  background-color: white;
+  border-radius: 5px;
+  .box-shadow(0 0 10px 5px #ccc);
+  .btn-group {
+    margin-top: 40px;
+    text-align: center;
+    .btn-red {
+      margin-right: 35px;
+    }
+  }
+}
