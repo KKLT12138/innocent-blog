@@ -88,6 +88,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
     this.getCategories();
   }
 
+  /* 获取分类列表 */
   getCategories() {
     return this._categoryService.getCategories()
       .subscribe(datas => {
@@ -106,6 +107,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
       });
   }
 
+  /* 新增、修改分类 */
   addCategory() {
     this.addModal.processing();
     return this._categoryService.addCategory(this.curCategory)
@@ -125,6 +127,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
       })
   }
 
+  /* 批量删除分类 */
   delCategories() {
     if (this.selectedCheckBox.length == 0) {
       this.messageDialogComponent.messageDialog.open('请选择要删除的项目', 0);
@@ -134,6 +137,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
 
   }
 
+  /* 整理复选框，将选中的项目id推入数组 */
   selectCheckBox(checked: boolean, value: string) {
     let index: number = this.selectedCheckBox.indexOf(value);
     if (checked) {
@@ -149,6 +153,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /* 全选、清空复选框 */
   selectAllCheckBox(checked: boolean) {
     this.selectedCheckBox = [];
     if (checked) {
@@ -158,6 +163,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /* 删除单条分类记录 */
   delCategory(event: any) {
     this.confirmDialogComponent.confirmDialog.processing();
     return this._categoryService.delCategory(event)
