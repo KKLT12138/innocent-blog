@@ -74,6 +74,8 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
     }
   };
 
+  selectedCheckBox = [];
+
   constructor(
     private _categoryService: CategoriesService
   ) { }
@@ -83,6 +85,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.getCategories();
   }
 
   getCategories() {
@@ -122,14 +125,62 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
       })
   }
 
-  delCategory(event: object) {
+  delCategories() {
+    if (this.selectedCheckBox.length == 0) {
+      this.messageDialogComponent.messageDialog.open('请选择要删除的项目', 0);
+    } else {
+      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.selectedCheckBox.length + '个分类吗？', this.selectedCheckBox)
+    }
+
+  }
+
+  selectCheckBox(checked: boolean, value: string) {
+    let index: number = this.selectedCheckBox.indexOf(value);
+    if (checked) {
+      if (index < 0) {
+        this.selectedCheckBox.push(value);
+      }
+    } else {
+      if (index > -1) {
+        this.selectedCheckBox = this.selectedCheckBox.filter((curValue, index) => {
+          return curValue != value;
+        })
+      }
+    }
+  }
+
+  selectAllCheckBox(checked: boolean) {
+    this.selectedCheckBox = [];
+    if (checked) {
+      this.categories.forEach((category, index) => {
+        this.selectedCheckBox.push(category.id)
+      })
+    }
+  }
+
+  delCategory(event: any) {
     this.confirmDialogComponent.confirmDialog.processing();
     return this._categoryService.delCategory(event)
       .subscribe(data => {
         if (data.status == 1) {
           this.confirmDialogComponent.confirmDialog.close();
           this.confirmDialogComponent.confirmDialog.reset();
-          this.getCategories();
+          if (event instanceof Array) {
+            for (let i = 0; i < event.length; i++) {
+              for (let j = 0; j < this.categories.length; j++) {
+                if (event.indexOf(this.categories[j].id) > -1) {
+                  this.categories.splice(j, 1);
+                }
+              }
+            }
+          } else {
+            this.categories.forEach( (category, index) => {
+              if (category.id == (<any>event).id) {
+                this.categories.splice(index, 1);
+              }
+            });
+          }
+
           this.messageDialogComponent.messageDialog.open(data.message, 1);
         } else if (data.status == 0) {
           this.confirmDialogComponent.confirmDialog.retry();
@@ -140,5 +191,6 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
         this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
       })
   }
+
 
 }

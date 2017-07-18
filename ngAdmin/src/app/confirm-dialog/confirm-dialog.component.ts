@@ -8,7 +8,7 @@ import { Config } from '../share/config';
   styleUrls: ['../../public/css/formmain.css']
 })
 export class ConfirmDialogComponent implements OnInit {
-  @Output() operateArg: EventEmitter<object> = new EventEmitter<object>();
+  @Output() operateArg: EventEmitter<any> = new EventEmitter<any>();
 
   confirmDialog = {
     display: false,

@@ -62,9 +62,32 @@ router.route('/category')
         }
       });
     }
-
-
-
+  })
+  .delete(function (req, res, next) {
+    var categoryQuery = CategoryModel.Category.find({'_id': {$in: req.body.id}});
+    categoryQuery.exec(function (err) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        categoryQuery.remove(function (err, doc) {
+          if (err) {
+            res.json(200, {
+              status: 0,
+              message: lang.error
+            })
+          } else {
+            res.json(200, {
+              status: 1,
+              message: lang.success,
+              doc: doc
+            })
+          }
+        });
+      }
+    })
   })
 
 

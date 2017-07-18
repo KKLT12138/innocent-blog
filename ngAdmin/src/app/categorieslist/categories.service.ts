@@ -30,7 +30,17 @@ export class CategoriesService {
 
   delCategory(categoryId): Observable<any> {
     let url = `${Config.apiAdminRoot}category`;
-    let body = JSON.stringify(categoryId.id);
+    let data: any = {};
+    if (categoryId instanceof Array) {
+      data = {
+        id: categoryId
+      }
+    } else {
+      data = {
+        id: [categoryId.id]
+      }
+    }
+    let body = JSON.stringify(data);
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({
       headers: headers,
