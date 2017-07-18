@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+import { Config } from '../share/config';
 
 @Component({
   selector: 'confirm-dialog',
@@ -6,19 +8,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../../public/css/formmain.css']
 })
 export class ConfirmDialogComponent implements OnInit {
+  @Output() operateArg: EventEmitter<object> = new EventEmitter<object>();
 
   confirmDialog = {
-    display: true,
-    text: '确定要删除吗？',
+    display: false,
+    text: '',
+    btnValue: Config.message.ok,
+    operateArg: {},
     setText: (text) => {
       this.confirmDialog.text = text;
     },
-    open: (text, status) => {
+    open: (text, operateArg) => {
       this.confirmDialog.setText(text);
+      this.confirmDialog.operateArg = operateArg;
       this.confirmDialog.display = true;
     },
     close: () => {
       this.confirmDialog.display = false;
+      this.confirmDialog.reset();
+    },
+    operate: () => {
+      this.operateArg.emit(this.confirmDialog.operateArg);
+    },
+    reset: () => {
+      this.confirmDialog.btnValue = Config.message.ok;
+    },
+    processing: () => {
+      this.confirmDialog.btnValue = Config.message.processing;
+    },
+    retry: () => {
+      this.confirmDialog.btnValue = Config.message.retry;
     }
   };
 

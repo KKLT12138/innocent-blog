@@ -30,7 +30,7 @@
           <td>{{ category.percent }}%</td>
           <td>
             <a class="btn-a form-main-edit" (click)="modal.open(category.id, category.categoryName)">编辑</a>
-            <a class="btn-a btn-a-red form-main-delete">删除</a>
+            <a class="btn-a btn-a-red form-main-delete" (click)="confirmDialogComponent.confirmDialog.open('确定要删除分类&quot;' + category.categoryName + '&quot;吗？', {id: category.id})">删除</a>
           </td>
         </tr>
 
@@ -49,7 +49,7 @@
 
       </form>
     </div>
-    <confirm-dialog></confirm-dialog>
+    <confirm-dialog (operateArg)="delCategory($event)"></confirm-dialog>
 
     <div id="mask" [ngStyle]="{'display': modal.display || mask.display ? 'block' : 'none'}"></div>
 

@@ -4,6 +4,7 @@ import { CategoriesService } from './categories.service';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 import { Config } from '../share/config';
 import { LoadingAnimateComponent } from '../loading-animate/loading-animate.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'admin-categorieslist',
@@ -21,6 +22,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
   @ViewChild('categoryName') categoryName;
   @ViewChild(MessageDialogComponent) messageDialogComponent: MessageDialogComponent;
   @ViewChild(LoadingAnimateComponent) loadingAnimateComponent: LoadingAnimateComponent;
+  @ViewChild(ConfirmDialogComponent) confirmDialogComponent: ConfirmDialogComponent;
 
   categories: any[] = [
     {
@@ -51,6 +53,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
       this.curCategory.id = '';
       this.curCategory.name = '';
       this.modal.display = false;
+      this.addModal.reset();
     }
   };
 
@@ -115,6 +118,25 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         this.addModal.retry();
+        this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
+      })
+  }
+
+  delCategory(event: object) {
+    this.confirmDialogComponent.confirmDialog.processing();
+    return this._categoryService.delCategory(event)
+      .subscribe(data => {
+        if (data.status == 1) {
+          this.confirmDialogComponent.confirmDialog.close();
+          this.confirmDialogComponent.confirmDialog.reset();
+          this.getCategories();
+          this.messageDialogComponent.messageDialog.open(data.message, 1);
+        } else if (data.status == 0) {
+          this.confirmDialogComponent.confirmDialog.retry();
+          this.messageDialogComponent.messageDialog.open(data.message, 0);
+        }
+      }, error => {
+        this.confirmDialogComponent.confirmDialog.retry();
         this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
       })
   }

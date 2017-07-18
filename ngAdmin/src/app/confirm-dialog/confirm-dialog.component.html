@@ -1,7 +1,7 @@
 <div id="confirm-dialog" [ngStyle]="{'display': confirmDialog.display ? 'block' : 'none'}">
   <p>{{confirmDialog.text}}</p>
   <div class="btn-group">
-    <input type="button" class="btn btn-red" value="确定">
-    <input type="button" class="btn" value="取消">
+    <input type="button" class="btn btn-red" [value]="confirmDialog.btnValue" (click)="confirmDialog.operate()">
+    <input type="button" class="btn" value="取消" (click)="confirmDialog.close()">
   </div>
 </div>

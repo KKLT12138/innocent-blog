@@ -26,7 +26,20 @@ export class CategoriesService {
     return this.http.post(url, body, options)
       .map(this.extraData)
       .catch(this.handleError);
+  }
 
+  delCategory(categoryId): Observable<any> {
+    let url = `${Config.apiAdminRoot}category`;
+    let body = JSON.stringify(categoryId.id);
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({
+      headers: headers,
+      body: body
+    });
+
+    return this.http.delete(url, options)
+      .map(this.extraData)
+      .catch(this.handleError);
   }
 
   private extraData(res) {
