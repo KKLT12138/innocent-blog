@@ -39,4 +39,9 @@
 
     </form>
   </div>
+
+  <div id="mask" [ngStyle]="{'display': modal.display || mask.display ? 'block' : 'none'}"></div>
+
+  <loading-animate></loading-animate>
+  <message-dialog></message-dialog>
 </div>
