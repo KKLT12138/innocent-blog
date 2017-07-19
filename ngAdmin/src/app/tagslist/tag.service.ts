@@ -26,7 +26,30 @@ export class TagService {
     return this.http.post(url, body, options)
       .map(this.extraData)
       .catch(this.handleError);
+  }
 
+  delTag(tagId): Observable<any> {
+    let url = `${Config.apiAdminRoot}tag`;
+    let data: any = {};
+    if (tagId instanceof Array) {
+      data = {
+        id: tagId
+      }
+    } else {
+      data = {
+        id: [tagId.id]
+      }
+    }
+    let body = JSON.stringify(data);
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({
+      headers: headers,
+      body: body
+    });
+
+    return this.http.delete(url, options)
+      .map(this.extraData)
+      .catch(this.handleError);
   }
 
   private extraData(res) {

@@ -4,6 +4,8 @@ import { TagService } from './tag.service';
 import { Config } from '../share/config';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 import { LoadingAnimateComponent } from '../loading-animate/loading-animate.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { SelectCheckBoxService } from '../share/selectCheckBox.service';
 
 @Component({
   selector: 'admin-tagslist',
@@ -20,6 +22,7 @@ export class TagsListComponent implements OnInit {
   @ViewChild('tagName') tagName;
   @ViewChild(MessageDialogComponent) messageDialogComponent: MessageDialogComponent;
   @ViewChild(LoadingAnimateComponent) loadingAnimateComponent: LoadingAnimateComponent;
+  @ViewChild(ConfirmDialogComponent) confirmDialogComponent: ConfirmDialogComponent;
 
   tags: any[] = [
     {
@@ -68,8 +71,11 @@ export class TagsListComponent implements OnInit {
     }
   };
 
+  checkBoxService = this.selectCheckBoxService;
+
   constructor(
-    private _tagService: TagService
+    private _tagService: TagService,
+    private selectCheckBoxService: SelectCheckBoxService
   ) { }
 
   ngOnInit() {
@@ -111,5 +117,50 @@ export class TagsListComponent implements OnInit {
         this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
       })
   }
+
+  delTag(event: any) {
+    this.confirmDialogComponent.confirmDialog.processing();
+    return this._tagService.delTag(event)
+      .subscribe(data => {
+        if (data.status == 1) {
+          this.confirmDialogComponent.confirmDialog.close();
+          this.confirmDialogComponent.confirmDialog.reset();
+          if (event instanceof Array) {
+            for (let i = 0; i < event.length; i++) {
+              for (let j = 0; j < this.tags.length; j++) {
+                if (event.indexOf(this.tags[j].id) > -1) {
+                  this.tags.splice(j, 1);
+                }
+              }
+            }
+          } else {
+            this.tags.forEach( (tag, index) => {
+              if (tag.id == (<any>event).id) {
+                this.tags.splice(index, 1);
+              }
+            });
+          }
+
+          this.messageDialogComponent.messageDialog.open(data.message, 1);
+        } else if (data.status == 0) {
+          this.confirmDialogComponent.confirmDialog.retry();
+          this.messageDialogComponent.messageDialog.open(data.message, 0);
+        }
+      }, error => {
+        this.confirmDialogComponent.confirmDialog.retry();
+        this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
+      })
+  }
+
+  /* 批量删除分类 */
+  delTags() {
+    if (this.selectCheckBoxService.selectedCheckBox.length == 0) {
+      this.messageDialogComponent.messageDialog.open('请选择要删除的项目', 0);
+    } else {
+      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.selectCheckBoxService.selectedCheckBox.length + '个分类吗？', this.selectCheckBoxService.selectedCheckBox)
+    }
+
+  }
+
 
 }

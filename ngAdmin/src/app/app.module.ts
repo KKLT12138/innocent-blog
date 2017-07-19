@@ -27,6 +27,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 import { CheckedAllDirective } from './share/checkedAll.directive';
 import { ToDatePipe } from './share/timeToDate.pipe';
+import { SelectCheckBoxService } from './share/selectCheckBox.service';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { ToDatePipe } from './share/timeToDate.pipe';
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    SelectCheckBoxService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,25 +1,31 @@
 /* 分类接口 */
 var express = require('express');
 var router = express.Router();
-var CategoryModel = require('../models/category');
-var lang = require('../lib/lang.json');
+var TagModel = require('../../models/tag');
+var lang = require('../../lib/lang.json');
 
-router.route('/category')
+router.route('/tag')
   .get(function (req, res, next) {
-    var categoryCollection;
-    var categoryQuery = CategoryModel.Category.find({});
-    categoryQuery.exec(function (err, categories) {
-      categoryCollection = categories;
-      res.json(200, categoryCollection);
+    var tagCollection;
+    var tagQuery = TagModel.Tag.find({});
+    tagQuery.exec(function (err, categories) {
+      tagCollection = categories;
+      res.json(200, tagCollection);
     });
   })
   .post(function (req, res, next) {
     var id = req.body.id;
     var name = req.body.name;
-    if (id) {
-      var categoryQuery = CategoryModel.Category.findOne().where('_id', id);
-      categoryQuery.exec(function (error, doc) {
-        doc.category = name;
+
+    if (!name.match(/^[A-z0-9]{0,20}$/)) {
+      res.json(200, {
+        status: 0,
+        message: lang.illegalInput
+      })
+    } else if (id) {
+      var tagQuery = TagModel.Tag.findOne().where('_id', id);
+      tagQuery.exec(function (error, doc) {
+        doc.name = name;
         doc.save(function (err) {
           if (err) {
             res.json(200, {
@@ -35,18 +41,18 @@ router.route('/category')
         })
       })
     } else {
-      var categoryQuery = CategoryModel.Category.findOne({'category': {$regex: '^' + name + '$', $options: '$i'}});
-      categoryQuery.exec(function (err, repeat) {
+      var tagQuery = TagModel.Tag.findOne({'name': {$regex: '^' + name + '$', $options: '$i'}});
+      tagQuery.exec(function (err, repeat) {
         if (repeat) {
           res.json(200, {
             status: 0,
             message: lang.error + ': 分类已存在'
           })
         } else {
-          var newCategory = new CategoryModel.Category({
-            category: name
+          var newTag = new TagModel.Tag({
+            name: name
           });
-          newCategory.save(function (err) {
+          newTag.save(function (err) {
             if (err) {
               res.json(200, {
                 status: 0,
@@ -56,7 +62,7 @@ router.route('/category')
               res.json(200, {
                 status: 1,
                 message: lang.success
-              })
+              });
             }
           })
         }
@@ -64,15 +70,15 @@ router.route('/category')
     }
   })
   .delete(function (req, res, next) {
-    var categoryQuery = CategoryModel.Category.find({'_id': {$in: req.body.id}});
-    categoryQuery.exec(function (err) {
+    var tagQuery = TagModel.Tag.find({'_id': {$in: req.body.id}});
+    tagQuery.exec(function (err) {
       if (err) {
         res.json(200, {
           status: 0,
           message: lang.error
         })
       } else {
-        categoryQuery.remove(function (err, doc) {
+        tagQuery.remove(function (err, doc) {
           if (err) {
             res.json(200, {
               status: 0,

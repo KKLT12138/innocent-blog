@@ -2,15 +2,15 @@
   <div class="main-inner">
     <h2>标签管理</h2>
     <form id="quick-tools">
-      <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除">
+      <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除" (click)="delTags()">
       <input type="button" name="add" class="quick-tools-add btn" value="新增" (click)="modal.open()">
     </form>
     <form id="form-main">
-      <table myCheckedAll #myCheckedAll>
+      <table myCheckedAll>
         <thead>
           <tr>
             <th width="1%">
-              <input type="checkbox" class="check check-all">
+              <input type="checkbox" class="check check-all" (click)="checkBoxService.selectAllCheckBox($event.target.checked, tags, 'id')">
             </th>
             <th width="15%">ID</th>
             <th width="20%">名称</th>
@@ -22,7 +22,7 @@
 
         <tr *ngFor="let tag of tags">
           <td>
-            <input type="checkbox" class="check">
+            <input type="checkbox" class="check" (click)="checkBoxService.selectCheckBox($event.target.checked, tag.id)">
           </td>
           <td>{{ tag.id }}</td>
           <td class="main-title">{{ tag.tagName }}</td>
@@ -30,7 +30,7 @@
           <td>{{ tag.percent }}%</td>
           <td>
             <a class="btn-a form-main-edit" (click)="modal.open(tag.id, tag.tagName)">编辑</a>
-            <a class="btn-a btn-a-red form-main-delete">删除</a>
+            <a class="btn-a btn-a-red form-main-delete" (click)="confirmDialogComponent.confirmDialog.open('确定要删除标签&quot;' + tag.tagName + '&quot;吗？', {id: tag.id})">删除</a>
           </td>
         </tr>
 
@@ -49,6 +49,7 @@
 
       </form>
     </div>
+    <confirm-dialog (operateArg)="delTag($event)"></confirm-dialog>
 
     <div id="mask" [ngStyle]="{'display': modal.display || mask.display ? 'block' : 'none'}"></div>
 

@@ -5,6 +5,7 @@ import { MessageDialogComponent } from '../message-dialog/message-dialog.compone
 import { Config } from '../share/config';
 import { LoadingAnimateComponent } from '../loading-animate/loading-animate.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { SelectCheckBoxService } from '../share/selectCheckBox.service';
 
 @Component({
   selector: 'admin-categorieslist',
@@ -74,10 +75,11 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
     }
   };
 
-  selectedCheckBox = [];
+  checkBoxService = this.selectCheckBoxService;
 
   constructor(
-    private _categoryService: CategoriesService
+    private _categoryService: CategoriesService,
+    private selectCheckBoxService: SelectCheckBoxService
   ) { }
 
   ngOnInit() {
@@ -129,37 +131,10 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
 
   /* 批量删除分类 */
   delCategories() {
-    if (this.selectedCheckBox.length == 0) {
+    if (this.checkBoxService.selectedCheckBox.length == 0) {
       this.messageDialogComponent.messageDialog.open('请选择要删除的项目', 0);
     } else {
-      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.selectedCheckBox.length + '个分类吗？', this.selectedCheckBox)
-    }
-
-  }
-
-  /* 整理复选框，将选中的项目id推入数组 */
-  selectCheckBox(checked: boolean, value: string) {
-    let index: number = this.selectedCheckBox.indexOf(value);
-    if (checked) {
-      if (index < 0) {
-        this.selectedCheckBox.push(value);
-      }
-    } else {
-      if (index > -1) {
-        this.selectedCheckBox = this.selectedCheckBox.filter((curValue, index) => {
-          return curValue != value;
-        })
-      }
-    }
-  }
-
-  /* 全选、清空复选框 */
-  selectAllCheckBox(checked: boolean) {
-    this.selectedCheckBox = [];
-    if (checked) {
-      this.categories.forEach((category, index) => {
-        this.selectedCheckBox.push(category.id)
-      })
+      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.checkBoxService.selectedCheckBox.length + '个分类吗？', this.checkBoxService.selectedCheckBox)
     }
   }
 

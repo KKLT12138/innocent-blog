@@ -4,5 +4,6 @@
   "forbidden": "无访问权限",
   "error": "操作失败",
   "success": "操作成功",
-  "verifyError": "验证码错误"
+  "verifyError": "验证码错误",
+  "illegalInput": "非法的输入"
 }

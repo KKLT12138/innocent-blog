@@ -1,8 +1,8 @@
 /* 分类接口 */
 var express = require('express');
 var router = express.Router();
-var AuserModel = require('../models/auser');
-var lang = require('../lib/lang.json');
+var AuserModel = require('../../models/auser');
+var lang = require('../../lib/lang.json');
 
 router.route('/adminuser')
   .get(function (req, res, next) {
