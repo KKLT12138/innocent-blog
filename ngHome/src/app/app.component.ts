@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { CategoryService } from './service/category.service';
+import { CategoryService } from './share/category.service';
 
 
 @Component({

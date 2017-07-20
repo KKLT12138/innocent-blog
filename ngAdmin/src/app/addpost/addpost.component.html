@@ -10,7 +10,7 @@
             <li id="enlarge" [class.active-mode]="activeMode.enlarge" title="放大模式" (click)="setActiveMode('enlarge')"><i class="iconfont">&#xe724;</i></li>
           </ul>
           <form action="" id="editor-form" [ngClass]="getEditorMode()">
-            <textarea spellcheck="false" name="mark" id="mark" #mark autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!"></textarea>
+            <textarea spellcheck="false" name="mark" id="mark" #mark autofocus placeholder="PI&nbsp;PI&nbsp;XIA,&nbsp;LET'S&nbsp;GO!" [(ngModel)]="editorForm.content"></textarea>
           </form>
           <div id="preview" #preview [ngStyle]="{'display': (activeMode.split || activeMode.enlarge) == true ? 'block' : 'none'}"></div>
         </div>

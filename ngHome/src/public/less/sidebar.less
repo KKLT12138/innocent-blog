@@ -122,14 +122,36 @@
       span {
         font-size: @f_size - 1;
       }
+      .wechat-img::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 28px;
+        z-index: 999;
+        display: block;
+        width: 0;
+        height: 0;
+        background-image: url("../img/myqrcode.jpg");
+        background-size: cover;
+        .transition(all 0.5s);
+      }
+      .wechat-img:hover::before {
+        //display: block;
 
+        top: -160px;
+        left: -46px;
+        width: 150px;
+        height: 150px;
+      }
       a {
         .a();
+        position: relative;
         display: inline-block;
         margin-right: 10px;
         margin-bottom: 10px;
         width: 56px;
         border-bottom: 1px solid #555;
+        cursor: pointer;
       }
     }
 
