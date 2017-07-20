@@ -11,7 +11,7 @@ export class AdminuserService {
   ) { }
 
   getAdminusers(): Observable<any> {
-    let url = `${Config.apiRoot}api/adminuser`;
+    let url = `${Config.apiAdminRoot}adminuser`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);

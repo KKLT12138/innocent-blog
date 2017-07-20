@@ -42,10 +42,11 @@ app.use(session({
   verify: ''
 }));
 
-app.use('/admin', require('./api/admin/login'));
+app.use('/admin', require('./api/login'));
 app.use('/api/admin', require('./api/admin/category'));
 app.use('/api/admin', require('./api/admin/tag'));
 app.use('/api/admin', require('./api/admin/adminuser'));
+app.use('/api/admin', require('./api/admin/post'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {

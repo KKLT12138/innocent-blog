@@ -1,4 +1,4 @@
-/* 分类接口 */
+/* 标签接口 */
 var express = require('express');
 var router = express.Router();
 var TagModel = require('../../models/tag');

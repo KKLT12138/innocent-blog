@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var AuserModel = require('../../models/auser');
-var lang = require('../../lib/lang.json');
-var hash = require('../../lib/hash');
-var imgVerify = require('../../lib/imgVerify');
+var AuserModel = require('../models/auser');
+var lang = require('../lib/lang.json');
+var hash = require('../lib/hash');
+var imgVerify = require('../lib/imgVerify');
 
 router.route('/login')
 /*
