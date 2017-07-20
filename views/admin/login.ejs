@@ -92,6 +92,7 @@
             console.log(res);
             if (res.status === 0) {
               document.getElementById("error-message").innerText = res.message;
+              getVerifyImg();
             }
             //todo route
             if (res.status === 1) {
