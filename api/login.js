@@ -78,6 +78,7 @@ router.route('/login')
                 });
               } else {
                 //登录失败，密码错误
+                req.session.verify = '';
                 res.json(200, {
                   status: 0,
                   message: lang.passwordError
@@ -93,6 +94,7 @@ router.route('/login')
           })
         });
       } else {
+        req.session.verify = '';
         res.json(200, {
           status: 2,
           message: lang.verifyError
