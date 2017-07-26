@@ -41,6 +41,8 @@ export class AdminUserComponent implements OnInit {
   getAdminusers() {
     return this._adminuserService.getAdminusers()
       .subscribe(datas => {
+        this.mask.display = false;
+        this.loadingAnimateComponent.loading.display = false;
         datas.forEach( (data, index) => {
           this.adminusers[index] = {};
           this.adminusers[index].id = data.id;

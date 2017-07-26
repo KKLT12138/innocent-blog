@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mecoepcoo/blog-tz.git"
+    "url": "git+https://github.com/mecoepcoo/innocent-blog.git"
   },
   "keywords": [
     "blog",
@@ -18,7 +18,7 @@
   ],
   "author": "Tianzhen",
   "license": "MIT",
-  "homepage": "https://github.com/mecoepcoo/blog-tz#readme",
+  "homepage": "https://github.com/mecoepcoo/innocent-blog#readme",
   "dependencies": {
     "body-parser": "~1.17.1",
     "canvas": "^1.6.5",

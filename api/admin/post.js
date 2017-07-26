@@ -10,7 +10,6 @@ router.route('/post')
     var postQuery = PostModel.Post.find({});
     postQuery.exec(function (err, posts) {
       postCollection = posts;
-      console.dir(postCollection);
       res.json(200, postCollection);
     });
   })

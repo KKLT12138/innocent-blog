@@ -1,8 +1,9 @@
 import {Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 
 import { Reader } from '../../public/js/easy-markdown';
-
-
+import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
+import { Config } from '../share/config';
+import { CategoriesService } from '../categorieslist/categories.service';
 
 @Component({
   selector: 'admin-addpost',
@@ -13,13 +14,20 @@ import { Reader } from '../../public/js/easy-markdown';
     '../../public/css/addpost.css'
   ],
   providers: [
-
+    CategoriesService
   ]
 })
 export class AddPostComponent implements OnInit, AfterViewInit {
+  @ViewChild(MessageDialogComponent) messageDialogComponent: MessageDialogComponent;
   @ViewChild('boxLeft') boxLeft;
   @ViewChild('mark') mark;
   @ViewChild('preview') preview;
+  @ViewChild('postForm') postForm;
+
+  @ViewChild('categorySelect') categorySelect;
+
+  isUpdate = false;
+
   activeMode = {
     normal: true,
     split: false,
@@ -32,11 +40,20 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     author: '',
     category: '',
     tag: '',
-    order: '',
-    date: '',
+    order: '0',
+    date: this.getNowDate(),
   };
 
-  constructor() { }
+  categories: any[] = [
+    {
+      id: 'loading..',
+      categoryName: 'loading..',
+    }
+  ];
+
+  constructor(
+    private _categoryService: CategoriesService,
+  ) { }
 
   setActiveMode(mode) {
     for (let value in this.activeMode) {
@@ -58,10 +75,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     };
   }
 
-
-
   ngOnInit() {
-
+    this.getCategories();
   }
 
   ngAfterViewInit() {
@@ -79,6 +94,53 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       markdown.showHtml('preview');
     });
 
+    let categorySelect = this.categorySelect.nativeElement;
 
+    console.dir(this.postForm)
+  }
+
+  getCategories() {
+    return this._categoryService.getCategories()
+      .subscribe(datas => {
+        datas.forEach( (data, index) => {
+          this.categories[index] = {};
+          this.categories[index].id = data._id;
+          this.categories[index].categoryName = data.category;
+        })
+
+        if (this.isUpdate) {
+
+        } else {
+          setTimeout(()=>{
+            this.editorForm.category = this.categorySelect.nativeElement[0].value;
+          }, 10)
+
+        }
+
+      }, error => {
+        this.messageDialogComponent.messageDialog.open('分类信息读取失败', 0);
+      });
+  }
+
+  getNowDate() {
+    let date = new Date();
+    let year = date.getFullYear() + '';
+    let month = date.getMonth() + 1 + '';
+    let day = date.getDate() + '';
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return `${year}-${month}-${day}`;
+  }
+
+  addPost() {
+    if (this.postForm.valid) {
+      console.dir(this.postForm.value)
+    }
   }
 }

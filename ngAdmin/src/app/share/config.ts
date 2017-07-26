@@ -1,6 +1,6 @@
 export let Config = {
-  apiAdminRoot: 'http://localhost:3000/api/admin/',
-  apiRoot: 'http://localhost:3000/',
+  apiAdminRoot: 'http://localhost:8080/api/admin/',
+  apiRoot: 'http://localhost:8080/',
   message: {
     getError: '数据获取失败，请重试',
     success: '操作成功',
