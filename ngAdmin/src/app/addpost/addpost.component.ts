@@ -1,9 +1,11 @@
 import {Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 import { Reader } from '../../public/js/easy-markdown';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 import { Config } from '../share/config';
 import { CategoriesService } from '../categorieslist/categories.service';
+import { TagService } from '../tagslist/tag.service';
 
 @Component({
   selector: 'admin-addpost',
@@ -14,7 +16,8 @@ import { CategoriesService } from '../categorieslist/categories.service';
     '../../public/css/addpost.css'
   ],
   providers: [
-    CategoriesService
+    CategoriesService,
+    TagService
   ]
 })
 export class AddPostComponent implements OnInit, AfterViewInit {
@@ -51,8 +54,14 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     }
   ];
 
+  tags: any[] = [];
+
+  inputTags: any[] = [];
+
+
   constructor(
     private _categoryService: CategoriesService,
+    private _tagService: TagService
   ) { }
 
   setActiveMode(mode) {
@@ -77,6 +86,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getCategories();
+    this.getTags();
   }
 
   ngAfterViewInit() {
@@ -94,9 +104,6 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       markdown.showHtml('preview');
     });
 
-    let categorySelect = this.categorySelect.nativeElement;
-
-    console.dir(this.postForm)
   }
 
   getCategories() {
@@ -106,7 +113,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
           this.categories[index] = {};
           this.categories[index].id = data._id;
           this.categories[index].categoryName = data.category;
-        })
+        });
 
         if (this.isUpdate) {
 
@@ -120,6 +127,50 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       }, error => {
         this.messageDialogComponent.messageDialog.open('分类信息读取失败', 0);
       });
+  }
+
+  getTags() {
+    return this._tagService.getTags()
+      .subscribe(datas => {
+        datas.forEach( (data, index) => {
+          this.tags[index] = {};
+          this.tags[index].id = data._id;
+          this.tags[index].tagName = data.name;
+          this.tags[index].isExist = false;
+        })
+      }, error => {
+        this.messageDialogComponent.messageDialog.open('标签信息读取失败', 0);
+      });
+  }
+
+  private searchTagsStream = new Subject<string>();
+  searchTags(inputString) {
+    let inputTags = inputString.trim().split(',');
+    inputTags.forEach((value, index) => {
+      if (value == '') {
+        inputTags.splice(index, 1);
+      }
+    });
+    inputTags.forEach((tagName, index) => {
+      this.inputTags[index] = {};
+      this.inputTags[index].id = '';
+      this.inputTags[index].tagName = tagName;
+      this.inputTags[index].isExist = false;
+    });
+    for (let i in this.inputTags) {
+      for (let j in this.tags) {
+        let reg = new RegExp('^' + this.tags[j].tagName.replace(/([\+\.\-\_])/g, "\\$1") + '$','i');
+        if (this.inputTags[i].tagName.match(reg)) {
+          this.inputTags[i].id = this.tags[j].id;
+          this.inputTags[i].isExist = true;
+        } else {
+          console.log(this.inputTags[i].tagName, this.tags[j].tagName)
+          this.inputTags[i].id = '';
+          this.inputTags[i].isExist = false;
+        }
+      }
+    }
+    console.log(this.inputTags);
   }
 
   getNowDate() {
@@ -141,6 +192,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   addPost() {
     if (this.postForm.valid) {
       console.dir(this.postForm.value)
+    } else {
+      this.messageDialogComponent.messageDialog.open('请正确填写表单', 0);
     }
   }
 }

@@ -36,13 +36,16 @@
               <option *ngFor="let category of categories" [value]="category.id">{{ category.categoryName }}</option>
             </select>
           </div>
-          <div class="post post-category">
+          <div class="post post-tag">
             <label for="tag">标签：<small>多个标签用,隔开</small></label>
-            <input type="text" name="tag" [(ngModel)]="editorForm.tag" id="tag" placeholder="若标签不存在，则自动创建" required pattern="^[\u4e00-\u9fa5\w\-\.]+$" title="标题只允许由中文、字母、数字、.-和_组成" spellcheck="false">
+            <div class="tag-items">
+              <span class="tag-item" [ngStyle]="{'background-color': inputTag.isExist == true ? 'rgba(102,187,106,.8)': 'rgba(255,112,67,.8)'}" *ngFor="let inputTag of inputTags">{{ inputTag.tagName }}</span>
+            </div>
+            <input type="text" name="tag" [(ngModel)]="editorForm.tag" id="tag" placeholder="若标签不存在，则自动创建" required pattern="([\u4e00-\u9fa5\w\-\.\+\#]+,*)+" title="标签只允许由中文、字母、数字、.-和_组成" spellcheck="false" (keyup)="searchTags(editorForm.tag)">
           </div>
           <div class="post post-order">
             <label for="order">排序：<small>数字越大越靠前</small></label>
-            <input type="text" name="order" [(ngModel)]="editorForm.order" id="order" placeholder="输入序号" required pattern="^[0-9]+$" title="标题只允许是数字" spellcheck="false">
+            <input type="text" name="order" [(ngModel)]="editorForm.order" id="order" placeholder="输入序号" required pattern="^[0-9]+$" title="排序只允许是数字" spellcheck="false">
           </div>
           <div class="post post-date">
             <label for="date">时间：<small>格式：2017-01-07</small></label>

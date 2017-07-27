@@ -17,7 +17,7 @@ router.route('/tag')
     var id = req.body.id;
     var name = req.body.name;
 
-    if (!name.match(/^[A-z0-9]{0,20}$/)) {
+    if (!name.match(/^[A-z0-9\u4e00-\u9fa5\+\#\.\-]{0,20}$/)) {
       res.json(200, {
         status: 0,
         message: lang.illegalInput
