@@ -8,7 +8,7 @@ var lang = require('../../lib/lang.json');
 router.route('/post')
   .get(function (req, res, next) {
     var postCollection;
-    var postQuery = PostModel.Post.find({}).sort({order: -1, date: 1});
+    var postQuery = PostModel.Post.find({}).sort({order: -1, date: -1});
     postQuery.exec(function (err, posts) {
       postCollection = posts;
       res.json(200, postCollection);
