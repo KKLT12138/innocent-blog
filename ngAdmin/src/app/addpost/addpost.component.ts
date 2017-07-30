@@ -1,4 +1,6 @@
 import {Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import 'rxjs/add/operator/switchMap';
 
 import { Reader } from '../../public/js/easy-markdown';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
@@ -48,6 +50,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     tag: [],
     order: '0',
     date: this.getNowDate(),
+    content: ''
   };
 
   formData = {
@@ -76,7 +79,9 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   constructor(
     private _categoryService: CategoriesService,
     private _tagService: TagService,
-    private _addPostService: AddPostService
+    private _addPostService: AddPostService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   setActiveMode(mode) {
@@ -112,8 +117,28 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     let pre = preview.getElementsByTagName('pre');
     preview.style.height = getComputedStyle(mark).height || this.mark.currentStyle.height;
 
-    this.markdown = new Reader('mark');
-    this.markdown.showHtml('preview');
+    this.activatedRoute.params
+      .subscribe((param) => {
+        this.formData.id = param.id;
+        if (this.formData.id) {
+          this._addPostService.getPost(this.formData.id)
+            .subscribe((data) => {
+              this.editorForm.title = data.title;
+              this.editorForm.author = data.author;
+              this.editorForm.category = data.category;
+              this.editorForm.tag = data.tags.join();
+              this.editorForm.order = data.order;
+              this.editorForm.date = this.getNowDate(data.date);
+              this.searchTags(this.editorForm.tag);
+              this.editorForm.content = data.content;
+              mark.value = data.content;
+              this.markdown = new Reader('mark');
+              this.markdown.showHtml('preview');
+            });
+        }
+      });
+
+
     document.getElementById('mark').addEventListener('keyup', () => {
       this.markdown = new Reader('mark');
       this.markdown.showHtml('preview');
@@ -190,11 +215,10 @@ export class AddPostComponent implements OnInit, AfterViewInit {
         }
       }
     }
-    console.log(this.inputTags);
   }
 
-  getNowDate() {
-    let date = new Date();
+  getNowDate(stamp?: number) {
+    let date = stamp ? new Date(stamp) : new Date();
     let year = date.getFullYear() + '';
     let month = date.getMonth() + 1 + '';
     let day = date.getDate() + '';
@@ -211,6 +235,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   addPost() {
     if (this.postForm.valid) {
+      console.log(this.formData.id)
       this.formData = {
         id: this.formData.id,
         title: this.postForm.value.title,
@@ -219,12 +244,15 @@ export class AddPostComponent implements OnInit, AfterViewInit {
         tag: this.inputTags,
         order: this.postForm.value.order,
         date: new Date(this.postForm.value.date.replace(/\-/g, '/')).getTime(),
-        content: this.markdown.readerTransfer
+        content: this.markdown.reader
       };
       this._addPostService.addPost(this.formData)
         .subscribe(data => {
           if (data.status == 1) {
-            this.messageDialogComponent.messageDialog.open(data.message, 1);
+            this.messageDialogComponent.messageDialog.open(`${data.message},2秒后自动跳转`, 1);
+            setTimeout(() => {
+              this.router.navigate(['/admin/postlist']);
+            }, 2000);
           } else if (data.status == 0) {
             this.messageDialogComponent.messageDialog.open(data.message, 0);
           }

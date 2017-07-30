@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { PostListService } from './postlist.service';
 import { Config } from '../share/config';
@@ -52,7 +53,8 @@ export class PostListComponent implements OnInit {
 
   constructor(
     private _postListService: PostListService,
-    private selectCheckBoxService: SelectCheckBoxService
+    private selectCheckBoxService: SelectCheckBoxService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -81,5 +83,9 @@ export class PostListComponent implements OnInit {
         this.loadingAnimateComponent.loading.display = false;
         this.messageDialogComponent.messageDialog.open(Config.message.getError, 0);
       });
+  }
+
+  getEdit(id) {
+    this.router.navigate(['/admin/addpost', id]);
   }
 }

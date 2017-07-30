@@ -46,7 +46,7 @@ router.route('/tag')
         if (repeat) {
           res.json(200, {
             status: 0,
-            message: lang.error + ': 分类已存在'
+            message: lang.error + ': 标签已存在'
           })
         } else {
           var newTag = new TagModel.Tag({
@@ -57,7 +57,7 @@ router.route('/tag')
               res.json(200, {
                 status: 0,
                 message: lang.error
-              })
+              });
             } else {
               res.json(200, {
                 status: 1,

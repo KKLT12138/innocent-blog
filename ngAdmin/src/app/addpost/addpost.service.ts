@@ -10,8 +10,8 @@ export class AddPostService {
     private http: Http
   ) { }
 
-  getPost(): Observable<any> {
-    let url = `${Config.apiAdminRoot}post`;
+  getPost(id): Observable<any> {
+    let url = `${Config.apiAdminRoot}post/${id}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
