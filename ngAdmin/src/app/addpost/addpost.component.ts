@@ -1,11 +1,11 @@
 import {Component, OnInit, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 
 import { Reader } from '../../public/js/easy-markdown';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 import { Config } from '../share/config';
 import { CategoriesService } from '../categorieslist/categories.service';
 import { TagService } from '../tagslist/tag.service';
+import { AddPostService } from './addpost.service';
 
 @Component({
   selector: 'admin-addpost',
@@ -17,7 +17,8 @@ import { TagService } from '../tagslist/tag.service';
   ],
   providers: [
     CategoriesService,
-    TagService
+    TagService,
+    AddPostService
   ]
 })
 export class AddPostComponent implements OnInit, AfterViewInit {
@@ -31,6 +32,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   isUpdate = false;
 
+  markdown: any;
+
   activeMode = {
     normal: true,
     split: false,
@@ -42,9 +45,20 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     title: '',
     author: '',
     category: '',
-    tag: '',
+    tag: [],
     order: '0',
     date: this.getNowDate(),
+  };
+
+  formData = {
+    id: '',
+    title: '',
+    author: '',
+    category: '',
+    tag: [],
+    order: '0',
+    date: 0,
+    content: ''
   };
 
   categories: any[] = [
@@ -61,7 +75,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _categoryService: CategoriesService,
-    private _tagService: TagService
+    private _tagService: TagService,
+    private _addPostService: AddPostService
   ) { }
 
   setActiveMode(mode) {
@@ -97,11 +112,11 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     let pre = preview.getElementsByTagName('pre');
     preview.style.height = getComputedStyle(mark).height || this.mark.currentStyle.height;
 
-    let markdown = new Reader('mark');
-    markdown.showHtml('preview');
+    this.markdown = new Reader('mark');
+    this.markdown.showHtml('preview');
     document.getElementById('mark').addEventListener('keyup', () => {
-      let markdown = new Reader('mark');
-      markdown.showHtml('preview');
+      this.markdown = new Reader('mark');
+      this.markdown.showHtml('preview');
     });
 
   }
@@ -143,14 +158,23 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       });
   }
 
-  private searchTagsStream = new Subject<string>();
+
   searchTags(inputString) {
-    let inputTags = inputString.trim().split(',');
-    inputTags.forEach((value, index) => {
+    let inputTagsOrigin = inputString.trim().split(',');
+    inputTagsOrigin.forEach((value, index) => {
       if (value == '') {
-        inputTags.splice(index, 1);
+        inputTagsOrigin.splice(index, 1);
       }
     });
+    let uniqueObj = {};
+    let inputTags = [];
+    inputTagsOrigin.forEach((value, index) => {
+      if (!uniqueObj[value]) {
+        inputTags.push(value);
+        uniqueObj[value] = 1;
+      }
+    });
+    this.inputTags = [];
     inputTags.forEach((tagName, index) => {
       this.inputTags[index] = {};
       this.inputTags[index].id = '';
@@ -159,14 +183,10 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     });
     for (let i in this.inputTags) {
       for (let j in this.tags) {
-        let reg = new RegExp('^' + this.tags[j].tagName.replace(/([\+\.\-\_])/g, "\\$1") + '$','i');
+        let reg = new RegExp('^' + this.tags[j].tagName.replace(/([\+\.\-\_\#])/g, "\\$1") + '$','i');
         if (this.inputTags[i].tagName.match(reg)) {
           this.inputTags[i].id = this.tags[j].id;
           this.inputTags[i].isExist = true;
-        } else {
-          console.log(this.inputTags[i].tagName, this.tags[j].tagName)
-          this.inputTags[i].id = '';
-          this.inputTags[i].isExist = false;
         }
       }
     }
@@ -191,7 +211,26 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   addPost() {
     if (this.postForm.valid) {
-      console.dir(this.postForm.value)
+      this.formData = {
+        id: this.formData.id,
+        title: this.postForm.value.title,
+        author: this.postForm.value.author,
+        category: this.postForm.value.category,
+        tag: this.inputTags,
+        order: this.postForm.value.order,
+        date: new Date(this.postForm.value.date.replace(/\-/g, '/')).getTime(),
+        content: this.markdown.readerTransfer
+      };
+      this._addPostService.addPost(this.formData)
+        .subscribe(data => {
+          if (data.status == 1) {
+            this.messageDialogComponent.messageDialog.open(data.message, 1);
+          } else if (data.status == 0) {
+            this.messageDialogComponent.messageDialog.open(data.message, 0);
+          }
+        }, error => {
+          this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
+        })
     } else {
       this.messageDialogComponent.messageDialog.open('请正确填写表单', 0);
     }

@@ -13,6 +13,11 @@ router.route('/post')
       res.json(200, postCollection);
     });
   })
+  .post(function (req, res, next) {
+    var id = req.body.id;
+    console.dir(req.body)
+
+  })
 
 
 module.exports = router;
