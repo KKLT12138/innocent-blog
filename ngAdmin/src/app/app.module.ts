@@ -23,6 +23,7 @@ import { CommentComponent } from './comment/comment.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 import { LoadingAnimateComponent } from './loading-animate/loading-animate.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { PageComponent } from './page/page.component';
 
 import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 import { CheckedAllDirective } from './share/checkedAll.directive';
@@ -48,6 +49,7 @@ import { SelectCheckBoxService } from './share/selectCheckBox.service';
     MessageDialogComponent,
     LoadingAnimateComponent,
     ConfirmDialogComponent,
+    PageComponent,
     AddpostEditorDirective,
     CheckedAllDirective,
     ToDatePipe,

@@ -106,6 +106,7 @@ export class PostListComponent implements OnInit {
         if (data.status == 1) {
           this.confirmDialogComponent.confirmDialog.close();
           this.confirmDialogComponent.confirmDialog.reset();
+          //todo 由于文章列表需要分页，删除文章后应该重新获取文章列表，因此这里需要修改 | 没有分页的列表，用此方法可以节约一次http请求
           if (event instanceof Array) {
             for (let i = 0; i < event.length; i++) {
               for (let j = 0; j < this.posts.length; j++) {
