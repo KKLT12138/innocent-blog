@@ -18,7 +18,7 @@ export class PostListService {
   }
 
   delPost(postId): Observable<any> {
-    let url = `${Config.apiAdminRoot}tag`;
+    let url = `${Config.apiAdminRoot}post`;
     let data: any = {};
     if (postId instanceof Array) {
       data = {

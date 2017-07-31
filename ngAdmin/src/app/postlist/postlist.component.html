@@ -17,7 +17,7 @@
       <input type="reset" class="btn btn-red reset" value="清空">
     </form>
     <form id="quick-tools">
-      <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除">
+      <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除" (click)="delPosts()">
     </form>
     <form id="form-main">
       <table myCheckedAll>
@@ -39,7 +39,7 @@
 
         <tr *ngFor="let post of posts">
           <td>
-            <input type="checkbox" class="check">
+            <input type="checkbox" class="check" (click)="checkBoxService.selectCheckBox($event.target.checked, post.id)">
           </td>
           <td>{{ post.id }}</td>
           <td class="main-title">{{ post.title }}</td>
@@ -50,7 +50,7 @@
           <td>{{ post.date | dateFormat: 0 }}</td>
           <td>
             <a class="btn-a form-main-edit" (click)="getEdit(post.id)">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
+            <a class="btn-a btn-a-red form-main-delete" (click)="confirmDialogComponent.confirmDialog.open('确定要删除文章&quot;' + post.title + '&quot;吗？', {id: post.id})">删除</a>
           </td>
         </tr>
 
@@ -59,8 +59,8 @@
 
     </form>
 
+    <confirm-dialog (operateArg)="delPost($event)"></confirm-dialog>
     <div id="mask" [ngStyle]="{'display': mask.display ? 'block' : 'none'}"></div>
-
     <loading-animate></loading-animate>
     <message-dialog></message-dialog>
 

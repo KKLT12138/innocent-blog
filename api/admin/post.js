@@ -113,6 +113,32 @@ router.route('/post')
         })
       }
     }
+  })
+  .delete(function (req, res, next) {
+    var postQuery = PostModel.Post.find({'_id': {$in: req.body.id}});
+    postQuery.exec(function (err) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        postQuery.remove(function (err, doc) {
+          if (err) {
+            res.json(200, {
+              status: 0,
+              message: lang.error
+            })
+          } else {
+            res.json(200, {
+              status: 1,
+              message: lang.success,
+              doc: doc
+            })
+          }
+        });
+      }
+    })
   });
 
 router.route('/post/:id')

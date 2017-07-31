@@ -88,4 +88,48 @@ export class PostListComponent implements OnInit {
   getEdit(id) {
     this.router.navigate(['/admin/addpost', id]);
   }
+
+  /* 批量删除文章 */
+  delPosts() {
+    if (this.checkBoxService.selectedCheckBox.length == 0) {
+      this.messageDialogComponent.messageDialog.open('请选择要删除的项目', 0);
+    } else {
+      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.checkBoxService.selectedCheckBox.length + '篇文章吗？', this.checkBoxService.selectedCheckBox)
+    }
+  }
+
+  /* 删除单条文章记录 */
+  delPost(event: any) {
+    this.confirmDialogComponent.confirmDialog.processing();
+    return this._postListService.delPost(event)
+      .subscribe(data => {
+        if (data.status == 1) {
+          this.confirmDialogComponent.confirmDialog.close();
+          this.confirmDialogComponent.confirmDialog.reset();
+          if (event instanceof Array) {
+            for (let i = 0; i < event.length; i++) {
+              for (let j = 0; j < this.posts.length; j++) {
+                if (event.indexOf(this.posts[j].id) > -1) {
+                  this.posts.splice(j, 1);
+                }
+              }
+            }
+          } else {
+            this.posts.forEach( (category, index) => {
+              if (category.id == (<any>event).id) {
+                this.posts.splice(index, 1);
+              }
+            });
+          }
+
+          this.messageDialogComponent.messageDialog.open(data.message, 1);
+        } else if (data.status == 0) {
+          this.confirmDialogComponent.confirmDialog.retry();
+          this.messageDialogComponent.messageDialog.open(data.message, 0);
+        }
+      }, error => {
+        this.confirmDialogComponent.confirmDialog.retry();
+        this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
+      })
+  }
 }
