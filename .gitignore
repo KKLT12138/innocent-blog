@@ -44,5 +44,5 @@ Thumbs.db
 #custom
 node_modules
 e2e
-
+/config/db.json
 

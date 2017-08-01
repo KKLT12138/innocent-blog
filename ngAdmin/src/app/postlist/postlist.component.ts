@@ -123,22 +123,7 @@ export class PostListComponent implements OnInit {
         if (data.status == 1) {
           this.confirmDialogComponent.confirmDialog.close();
           this.confirmDialogComponent.confirmDialog.reset();
-          //todo 由于文章列表需要分页，删除文章后应该重新获取文章列表，因此这里需要修改 | 没有分页的列表，用此方法可以节约一次http请求
-          if (event instanceof Array) {
-            for (let i = 0; i < event.length; i++) {
-              for (let j = 0; j < this.posts.length; j++) {
-                if (event.indexOf(this.posts[j].id) > -1) {
-                  this.posts.splice(j, 1);
-                }
-              }
-            }
-          } else {
-            this.posts.forEach( (category, index) => {
-              if (category.id == (<any>event).id) {
-                this.posts.splice(index, 1);
-              }
-            });
-          }
+          this.getPosts(this.pageConfig.currentPage, this.pageConfig.pageSize);
 
           this.messageDialogComponent.messageDialog.open(data.message, 1);
         } else if (data.status == 0) {
