@@ -59,7 +59,7 @@
 
     </form>
 
-    <my-page [pageConfig]="{totalNum:177,currentPage:15,totalPage:38}"></my-page>
+    <my-page [pageConfig]="pageConfig" (changePage)="getPageData($event)"></my-page>
 
     <confirm-dialog (operateArg)="delPost($event)"></confirm-dialog>
     <div id="mask" [ngStyle]="{'display': mask.display ? 'block' : 'none'}"></div>

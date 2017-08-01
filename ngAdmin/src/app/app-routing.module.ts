@@ -28,6 +28,10 @@ const routes: Routes = [
     component: PostListComponent
   },
   {
+    path: 'admin/postlist/:id',
+    component: PostListComponent
+  },
+  {
     path: 'admin/addpost',
     component: AddPostComponent
   },

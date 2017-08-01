@@ -10,8 +10,8 @@ export class PostListService {
     private http: Http
   ) { }
 
-  getPosts(): Observable<any> {
-    let url = `${Config.apiAdminRoot}post`;
+  getPosts(currentPage, pageSize): Observable<any> {
+    let url = `${Config.apiAdminRoot}post?page=${currentPage}&size=${pageSize}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);

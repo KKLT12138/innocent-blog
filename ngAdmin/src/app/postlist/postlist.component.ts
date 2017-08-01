@@ -51,22 +51,39 @@ export class PostListComponent implements OnInit {
 
   checkBoxService = this.selectCheckBoxService;
 
+  urlQuery;
+
+  pageConfig = {
+    totalNum: 0,
+    currentPage: 1,
+    totalPage: 0,
+    pageSize: 10
+  };
+
   constructor(
     private _postListService: PostListService,
     private selectCheckBoxService: SelectCheckBoxService,
     private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.getPosts();
+    this.activatedRoute.params
+      .subscribe((param) => {
+        param.id ? this.pageConfig.currentPage = +param.id : this.pageConfig.currentPage = 1;
+        this.getPosts(this.pageConfig.currentPage, this.pageConfig.pageSize);
+      });
   }
 
-  getPosts() {
-    return this._postListService.getPosts()
+  getPosts(currentPage, pageSize) {
+    return this._postListService.getPosts(currentPage, pageSize)
       .subscribe(datas => {
         this.mask.display = false;
         this.loadingAnimateComponent.loading.display = false;
-        datas.forEach( (data, index) => {
+        this.posts = [];
+        this.pageConfig.totalNum = datas.totalNum;
+        this.pageConfig.totalPage = Math.ceil(this.pageConfig.totalNum / this.pageConfig.pageSize);
+        datas.data.forEach( (data, index) => {
           this.posts[index] = {};
           this.posts[index].id = data._id;
           this.posts[index].title = data.title;
@@ -132,5 +149,10 @@ export class PostListComponent implements OnInit {
         this.confirmDialogComponent.confirmDialog.retry();
         this.messageDialogComponent.messageDialog.open(`${Config.message.error}，请重试`, 0);
       })
+  }
+
+  getPageData(currentPage) {
+    this.router.navigate(['/admin/postlist', currentPage]);
+    this.getPosts(this.pageConfig.currentPage, this.pageConfig.pageSize);
   }
 }
