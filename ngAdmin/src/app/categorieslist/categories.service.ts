@@ -17,6 +17,20 @@ export class CategoriesService {
       .catch(this.handleError);
   }
 
+  getCategoryNum(): Observable<any> {
+    let url = `${Config.apiAdminRoot}categorynum`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
+  getPostNum(): Observable<any> {
+    let url = `${Config.apiAdminRoot}postnum`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
   addCategory(categoryDate): Observable<any> {
     let url = `${Config.apiAdminRoot}category`;
     let body = JSON.stringify(categoryDate);

@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var TagModel = require('../../models/tag');
+var PostModel = require('../../models/post');
 var lang = require('../../lib/lang.json');
 
 router.route('/tag')
@@ -92,6 +93,28 @@ router.route('/tag')
             })
           }
         });
+      }
+    })
+  });
+
+router.route('/taginfo')
+  .get(function (req, res, next) {
+    PostModel.Post.aggregate({
+      $project: {
+        tags: 1
+      }
+    }).exec(function (err, doc) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          data: doc
+        })
       }
     })
   })

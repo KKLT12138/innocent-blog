@@ -12,7 +12,7 @@ router.route('/post')
     var page = +req.query.page;
     var totalNum;
     //这种分页处理方式在数据量小时性能更佳，它占用更少的内存
-    PostModel.Post.find({}).count().exec(function (err, count) {
+    PostModel.Post.count().exec(function (err, count) {
       totalNum = count;
       var postQuery = PostModel.Post.find({}).sort({order: -1, date: -1}).skip((page - 1) * size).limit(size);
       postQuery.exec(function (err, posts) {
@@ -171,12 +171,22 @@ router.route('/post/:id')
 
 router.route('/postnum')
   .get(function (req, res, next) {
-    var postNum;
-    PostModel.Post.find({}).count().exec(function (err, num) {
-      postNum = num;
-
-    })
-  });
+    PostModel.Post.count()
+      .exec(function (err, num) {
+        if (err) {
+          res.json(200, {
+            status: 0,
+            message: lang.error
+          })
+        } else {
+          res.json(200, {
+            status: 1,
+            message: lang.success,
+            num: num
+          })
+        }
+      })
+  })
 
 
 module.exports = router;

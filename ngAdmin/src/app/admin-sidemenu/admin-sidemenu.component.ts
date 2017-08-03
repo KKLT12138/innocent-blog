@@ -6,9 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [
     '../../public/css/index.css',
     '../../public/css/main.css'
-  ]
+  ],
+/*  animations: [
+    trigger('slide', [
+      state('slideUp', style({
+        'height': '0'
+      }))
+    ])
+  ]*/
 })
 export class AdminSideMenuComponent implements OnInit {
+  menuState = {
+    post: 'slideDown',
+    user: 'slideUp',
+    site: 'slideUp'
+  };
 
   constructor() { }
 

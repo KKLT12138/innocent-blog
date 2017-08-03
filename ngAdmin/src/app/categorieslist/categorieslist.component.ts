@@ -87,11 +87,12 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.getCategories();
+
   }
 
   /* 获取分类列表 */
   getCategories() {
+    let postNum: number;
     return this._categoryService.getCategories()
       .subscribe(datas => {
         this.mask.display = false;
@@ -99,9 +100,25 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
         datas.forEach( (data, index) => {
           this.categories[index] = {};
           this.categories[index].id = data._id;
+          this.categories[index].numb = 0;
+          this.categories[index].percent = 0;
           this.categories[index].categoryName = data.category;
-        })
-
+        });
+        this._categoryService.getPostNum()
+          .subscribe(data => {
+            postNum = data.num;
+            this._categoryService.getCategoryNum()
+              .subscribe(datas => {
+                for (let i in datas.data) {
+                  for (let j in this.categories) {
+                    if (datas.data[i]['_id'] == this.categories[j].id ) {
+                      this.categories[j].numb = datas.data[i].count;
+                      this.categories[j].percent = (datas.data[i].count / postNum * 100).toFixed(1);
+                    }
+                  }
+                }
+              })
+          });
       }, error => {
         this.mask.display = false;
         this.loadingAnimateComponent.loading.display = false;
@@ -140,6 +157,23 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
 
   /* 删除单条分类记录 */
   delCategory(event: any) {
+    if (event instanceof Array) {
+      for (let id of event) {
+        for (let category of this.categories) {
+          if (category.numb != 0 && id == category.id) {
+            this.messageDialogComponent.messageDialog.open('有包含该分类的文章存在，不能删除', 0);
+            return;
+          }
+        }
+      }
+    } else {
+      for (let category of this.categories) {
+        if (category.numb != 0 && event.id == category.id) {
+          this.messageDialogComponent.messageDialog.open('有包含该分类的文章存在，不能删除', 0);
+          return;
+        }
+      }
+    }
     this.confirmDialogComponent.confirmDialog.processing();
     return this._categoryService.delCategory(event)
       .subscribe(data => {

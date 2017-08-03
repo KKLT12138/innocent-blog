@@ -17,6 +17,20 @@ export class TagService {
       .catch(this.handleError);
   }
 
+  getTagInfo(): Observable<any> {
+    let url = `${Config.apiAdminRoot}taginfo`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
+  getPostNum(): Observable<any> {
+    let url = `${Config.apiAdminRoot}postnum`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
   addTag(tagDate): Observable<any> {
     let url = `${Config.apiAdminRoot}tag`;
     let body = JSON.stringify(tagDate);

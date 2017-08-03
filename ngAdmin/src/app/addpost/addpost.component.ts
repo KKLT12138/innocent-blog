@@ -235,7 +235,6 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   addPost() {
     if (this.postForm.valid) {
-      console.log(this.formData.id)
       this.formData = {
         id: this.formData.id,
         title: this.postForm.value.title,

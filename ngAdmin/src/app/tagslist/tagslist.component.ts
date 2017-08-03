@@ -83,6 +83,7 @@ export class TagsListComponent implements OnInit {
   }
 
   getTags() {
+    let postNum: number;
     return this._tagService.getTags()
       .subscribe(datas => {
         this.mask.display = false;
@@ -91,7 +92,30 @@ export class TagsListComponent implements OnInit {
           this.tags[index] = {};
           this.tags[index].id = data._id;
           this.tags[index].tagName = data.name;
+          this.tags[index].numb = 0;
+          this.tags[index].percent = 0;
         })
+        this._tagService.getPostNum()
+          .subscribe(data => {
+            postNum = data.num;
+            this._tagService.getTagInfo()
+              .subscribe(datas => {
+                let tagsArr = [];
+                for (let data of datas.data) {
+                  tagsArr.push(...data.tags);
+                }
+                for (let tag of this.tags) {
+                  for (let tagArrElement of tagsArr) {
+                    if (tag.id == tagArrElement) {
+                      tag.numb++;
+                    }
+                  }
+                }
+                for (let tag of this.tags) {
+                  tag.percent = (tag.numb / postNum * 100).toFixed(1);
+                }
+              })
+          })
       }, error => {
         this.mask.display = false;
         this.loadingAnimateComponent.loading.display = false;
@@ -119,6 +143,23 @@ export class TagsListComponent implements OnInit {
   }
 
   delTag(event: any) {
+    if (event instanceof Array) {
+      for (let id of event) {
+        for (let tag of this.tags) {
+          if (tag.numb != 0 && id == tag.id) {
+            this.messageDialogComponent.messageDialog.open('有包含该标签的文章存在，不能删除', 0);
+            return;
+          }
+        }
+      }
+    } else {
+      for (let tag of this.tags) {
+        if (tag.numb != 0 && event.id == tag.id) {
+          this.messageDialogComponent.messageDialog.open('有包含该标签的文章存在，不能删除', 0);
+          return;
+        }
+      }
+    }
     this.confirmDialogComponent.confirmDialog.processing();
     return this._tagService.delTag(event)
       .subscribe(data => {
@@ -152,12 +193,12 @@ export class TagsListComponent implements OnInit {
       })
   }
 
-  /* 批量删除分类 */
+  /* 批量删除标签 */
   delTags() {
     if (this.selectCheckBoxService.selectedCheckBox.length == 0) {
       this.messageDialogComponent.messageDialog.open('请选择要删除的项目', 0);
     } else {
-      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.selectCheckBoxService.selectedCheckBox.length + '个分类吗？', this.selectCheckBoxService.selectedCheckBox)
+      this.confirmDialogComponent.confirmDialog.open('确定要删除' + this.selectCheckBoxService.selectedCheckBox.length + '个标签吗？', this.selectCheckBoxService.selectedCheckBox)
     }
 
   }

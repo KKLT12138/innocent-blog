@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var CategoryModel = require('../../models/category');
+var PostModel = require('../../models/post');
 var lang = require('../../lib/lang.json');
 
 router.route('/category')
@@ -95,6 +96,31 @@ router.route('/category')
       }
     })
   });
+
+router.route('/categorynum')
+  .get(function (req, res, next) {
+    PostModel.Post.aggregate({
+      $group: {
+        _id: "$category",
+        count: {
+          $sum: 1
+        }
+      }
+    }).exec(function (err, doc) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          data: doc
+        })
+      }
+    })
+  })
 
 
 module.exports = router;
