@@ -2,7 +2,7 @@
   <div class="main-inner">
     <h2>友链管理</h2>
     <form id="quick-tools">
-      <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除">
+      <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除" (click)="delFriends()">
       <input type="button" name="add" class="quick-tools-add btn" value="新增" (click)="modal.open()">
     </form>
     <form id="form-main">
@@ -10,7 +10,7 @@
         <thead>
         <tr>
           <th width="1%">
-            <input type="checkbox" class="check check-all">
+            <input type="checkbox" class="check check-all" (click)="checkBoxService.selectAllCheckBox($event.target.checked, friends, 'id')">
           </th>
           <th width="15%">ID</th>
           <th width="20%">名称</th>
@@ -20,58 +20,17 @@
         </tr>
         </thead>
 
-        <tr>
+        <tr *ngFor="let friend of friends">
           <td>
-            <input type="checkbox" class="check">
+            <input type="checkbox" class="check" (click)="checkBoxService.selectCheckBox($event.target.checked, friend.id)">
           </td>
-          <td>1</td>
-          <td class="main-title">javascript</td>
-          <td>35</td>
-          <td>21%</td>
+          <td>{{ friend.id }}</td>
+          <td class="main-title">{{ friend.name }}</td>
+          <td>{{ friend.url }}</td>
+          <td>{{ friend.order }}</td>
           <td>
-            <a href="" class="btn-a form-main-edit">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
-          </td>
-        </tr>
-
-        <!--测试数据开始-->
-        <tr>
-          <td>
-            <input type="checkbox" class="check">
-          </td>
-          <td>1</td>
-          <td class="main-title">javascript</td>
-          <td>35</td>
-          <td>21%</td>
-          <td>
-            <a href="" class="btn-a form-main-edit">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox" class="check">
-          </td>
-          <td>1</td>
-          <td class="main-title">javascript</td>
-          <td>35</td>
-          <td>21%</td>
-          <td>
-            <a href="" class="btn-a form-main-edit">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox" class="check">
-          </td>
-          <td>1</td>
-          <td class="main-title">javascript</td>
-          <td>35</td>
-          <td>21%</td>
-          <td>
-            <a href="" class="btn-a form-main-edit">编辑</a>
-            <a href="" class="btn-a btn-a-red form-main-delete">删除</a>
+            <a class="btn-a form-main-edit" (click)="modal.open(friend.id, friend.name, friend.url, friend.order)">编辑</a>
+            <a class="btn-a btn-a-red form-main-delete" (click)="confirmDialogComponent.confirmDialog.open('确定要删除友链&quot;' + friend.name + '&quot;吗？', {id: friend.id})">删除</a>
           </td>
         </tr>
       </table>
@@ -82,24 +41,29 @@
       <form action="" id="add-friend">
         <div class="add-modal-item">
           <label for="friend-name">友链名称：</label>
-          <input type="text" name="friend-name" id="friend-name" #friendName value="">
+          <input type="text" name="friend-name" id="friend-name" #friendName [(ngModel)]="curFriend.name" autocomplete=off spellcheck="false">
         </div>
         <div class="add-modal-item">
           <label for="friend-link">友链链接：</label>
-          <input type="text" name="friend-link" id="friend-link" value="">
+          <input type="text" name="friend-link" id="friend-link" [(ngModel)]="curFriend.url" autocomplete=off spellcheck="false" placeholder="http://">
         </div>
         <div class="add-modal-item">
           <label for="friend-order">友链排序：</label>
-          <input type="text" name="friend-order" id="friend-order" value="">
+          <input type="text" name="friend-order" id="friend-order" [(ngModel)]="curFriend.order" autocomplete=off spellcheck="false">
         </div>
         <div class="btn-group">
-          <input type="button" class="btn btn-red" value="确定">
+          <input type="button" class="btn btn-red" [value]="addModal.btnValue" (click)="addFriend()">
           <input type="button" class="btn" value="取消" (click)="modal.close()">
         </div>
 
       </form>
     </div>
 
-    <div id="mask" [ngStyle]="{'display': modal.display ? 'block' : 'none'}"></div>
+    <confirm-dialog (operateArg)="delFriend($event)"></confirm-dialog>
+
+    <div id="mask" [ngStyle]="{'display': modal.display || mask.display ? 'block' : 'none'}"></div>
+
+    <loading-animate></loading-animate>
+    <message-dialog></message-dialog>
   </div>
 </div>

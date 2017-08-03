@@ -5,28 +5,39 @@ import { Observable } from 'rxjs/Rx';
 import { Config } from '../share/config';
 
 @Injectable()
-export class PostListService {
+export class FriendService {
   constructor(
     private http: Http
   ) { }
 
-  getPosts(currentPage, pageSize): Observable<any> {
-    let url = `${Config.apiAdminRoot}post?page=${currentPage}&size=${pageSize}`;
+  getFriends(): Observable<any> {
+    let url = `${Config.apiAdminRoot}friend`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
   }
 
-  delPost(postId): Observable<any> {
-    let url = `${Config.apiAdminRoot}post`;
+  addFriend(friendDate): Observable<any> {
+    let url = `${Config.apiAdminRoot}friend`;
+    let body = JSON.stringify(friendDate);
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.post(url, body, options)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
+  delFriend(friendId): Observable<any> {
+    let url = `${Config.apiAdminRoot}friend`;
     let data: any = {};
-    if (postId instanceof Array) {
+    if (friendId instanceof Array) {
       data = {
-        id: postId
+        id: friendId
       }
     } else {
       data = {
-        id: [postId.id]
+        id: [friendId.id]
       }
     }
     let body = JSON.stringify(data);

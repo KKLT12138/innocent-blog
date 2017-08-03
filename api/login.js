@@ -4,6 +4,10 @@ var AuserModel = require('../models/auser');
 var lang = require('../lib/lang.json');
 var hash = require('../lib/hash');
 var imgVerify = require('../lib/imgVerify');
+var jwt = require('jwt-simple');
+
+// JWT-tokenSecret
+var jwtSecret = '101littleBugsInTheCode';
 
 router.route('/login')
 /*
@@ -58,6 +62,16 @@ router.route('/login')
               password = hash.communism(password, auser.salt);
               if (password === auser.password) {
                 //登录成功
+                var token = jwt.encode(
+                  {
+                    username: username,
+                    time: new Date().getTime()
+                  },
+                  jwtSecret
+                );
+
+                // req.session.username = username;
+
                 var currentIp = auser.currentIp;
                 var currentDate = auser.currentDate;
                 var dateNow = Date.now();
@@ -74,7 +88,9 @@ router.route('/login')
 
                 res.json(200, {
                   status: 1,
-                  message: lang.success
+                  message: lang.success,
+                  token: token,
+                  username: username
                 });
               } else {
                 //登录失败，密码错误
@@ -102,8 +118,7 @@ router.route('/login')
       }
 
     }
-
-  })
+  });
 
 router.route('/login/verifyimg')
   .get(function (req, res, next) {

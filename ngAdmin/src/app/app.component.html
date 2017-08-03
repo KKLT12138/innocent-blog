@@ -2,11 +2,11 @@
 <div class="main">
   <header id="header" class="header">
     <ul class="header-left">
-      <li>欢迎 xxx</li>
+      <li>欢迎 {{ username }}</li>
     </ul>
     <ul class="header-right">
       <li><a href="">前台首页</a></li>
-      <li><a href="">退出</a></li>
+      <li><a (click)="logout()">退出</a></li>
     </ul>
   </header>
 

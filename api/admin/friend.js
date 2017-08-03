@@ -1,32 +1,34 @@
 /* 分类接口 */
 var express = require('express');
 var router = express.Router();
-var CategoryModel = require('../../models/category');
-var PostModel = require('../../models/post');
+var FriendModel = require('../../models/friend');
 var lang = require('../../lib/lang.json');
 
-router.route('/category')
+router.route('/friend')
   .get(function (req, res, next) {
-    var categoryCollection;
-    var categoryQuery = CategoryModel.Category.find({});
-    categoryQuery.exec(function (err, categories) {
-      categoryCollection = categories;
-      res.json(200, categoryCollection);
+    var friendCollection;
+    var friendQuery = FriendModel.Friend.find({}).sort({order: -1});
+    friendQuery.exec(function (err, friends) {
+      friendCollection = friends;
+      res.json(200, friendCollection);
     });
   })
   .post(function (req, res, next) {
     var id = req.body.id;
     var name = req.body.name;
+    var url = req.body.url;
+    var order = '' + req.body.order;
 
-    if (!name.match(/^[A-z0-9\u4e00-\u9fa5\+\#\.\-]{0,20}$/)) {
+    if (!(name.match(/^[A-z0-9\u4e00-\u9fa5\+\#\.\-]{0,20}$/) && url.match(/^(https|http)?:\/\/(([a-zA-Z0-9_-])+(\.)?)*(:\d+)?(\/((\.)?(\?)?=?&?[a-zA-Z0-9_-](\?)?)*)*$/i) && order.match(/^[0-9]+$/))) {
       res.json(200, {
         status: 0,
         message: lang.illegalInput
       })
     } else if (id) {
-        var categoryQuery = CategoryModel.Category.findOne().where('_id', id);
-        categoryQuery.exec(function (error, doc) {
-          doc.category = name;
+        var friendQuery = FriendModel.Friend.findOne().where('_id', id);
+        friendQuery.exec(function (error, doc) {
+          doc.name = name;
+          doc.url = url;
           doc.save(function (err) {
             if (err) {
               res.json(200, {
@@ -42,44 +44,36 @@ router.route('/category')
           })
         })
       } else {
-        var categoryQuery = CategoryModel.Category.findOne({'category': {$regex: '^' + name + '$', $options: '$i'}});
-        categoryQuery.exec(function (err, repeat) {
-          if (repeat) {
+        var newFriend = new FriendModel.Friend({
+          name: name,
+          url: url,
+          order: order
+        });
+        newFriend.save(function (err) {
+          if (err) {
             res.json(200, {
               status: 0,
-              message: lang.error + ': 分类已存在'
+              message: lang.error
             })
           } else {
-            var newCategory = new CategoryModel.Category({
-              category: name
-            });
-            newCategory.save(function (err) {
-              if (err) {
-                res.json(200, {
-                  status: 0,
-                  message: lang.error
-                })
-              } else {
-                res.json(200, {
-                  status: 1,
-                  message: lang.success
-                })
-              }
+            res.json(200, {
+              status: 1,
+              message: lang.success
             })
           }
-        });
+        })
       }
   })
   .delete(function (req, res, next) {
-    var categoryQuery = CategoryModel.Category.find({'_id': {$in: req.body.id}});
-    categoryQuery.exec(function (err) {
+    var friendQuery = FriendModel.Friend.find({'_id': {$in: req.body.id}});
+    friendQuery.exec(function (err) {
       if (err) {
         res.json(200, {
           status: 0,
           message: lang.error
         })
       } else {
-        categoryQuery.remove(function (err, doc) {
+        friendQuery.remove(function (err, doc) {
           if (err) {
             res.json(200, {
               status: 0,
@@ -96,31 +90,6 @@ router.route('/category')
       }
     })
   });
-
-router.route('/categorynum')
-  .get(function (req, res, next) {
-    PostModel.Post.aggregate({
-      $group: {
-        _id: "$category",
-        count: {
-          $sum: 1
-        }
-      }
-    }).exec(function (err, doc) {
-      if (err) {
-        res.json(200, {
-          status: 0,
-          message: lang.error
-        })
-      } else {
-        res.json(200, {
-          status: 1,
-          message: lang.success,
-          data: doc
-        })
-      }
-    })
-  })
 
 
 module.exports = router;

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -31,6 +30,7 @@ import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 import { CheckedAllDirective } from './share/checkedAll.directive';
 import { ToDatePipe } from './share/timeToDate.pipe';
 import { SelectCheckBoxService } from './share/selectCheckBox.service';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 
 @NgModule({
@@ -69,7 +69,8 @@ import { SelectCheckBoxService } from './share/selectCheckBox.service';
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
-    SelectCheckBoxService
+    SelectCheckBoxService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

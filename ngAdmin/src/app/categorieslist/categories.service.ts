@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { CookieService } from "angular2-cookie/services/cookies.service";
 
 import { Config } from '../share/config';
 
 @Injectable()
 export class CategoriesService {
+  token: string;
+
   constructor(
-    private http: Http
-  ) { }
+    private http: Http,
+    private _cookieService: CookieService
+  ) {
+    this.token = _cookieService.get('token');
+  }
 
   getCategories(): Observable<any> {
     let url = `${Config.apiAdminRoot}category`;
@@ -35,6 +41,9 @@ export class CategoriesService {
     let url = `${Config.apiAdminRoot}category`;
     let body = JSON.stringify(categoryDate);
     let headers = new Headers({'Content-Type': 'application/json'});
+    headers.append('X-Access-Token',this.token);
+    console.log(headers);
+
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(url, body, options)

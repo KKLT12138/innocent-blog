@@ -20,7 +20,7 @@
         </tr>
         </thead>
 
-        <tr *ngFor="let category of categories; let i=index">
+        <tr *ngFor="let category of categories">
           <td>
             <input type="checkbox" class="check" (click)="checkBoxService.selectCheckBox($event.target.checked, category.id)">
           </td>

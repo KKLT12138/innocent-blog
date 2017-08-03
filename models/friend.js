@@ -20,6 +20,6 @@ var friendSchema = new mongoose.Schema(
     collection: 'friends'
   });
 
-Friend = mongoose.model('friends', categorySchema, 'friends');
+Friend = mongoose.model('friends', friendSchema, 'friends');
 
 exports.Friend = Friend;

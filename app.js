@@ -30,7 +30,7 @@ app.use('/users', users);
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With');
+  res.header('Access-Control-Allow-Headers', 'Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With, X-Access-Token');
   res.header('Access-Control-Allow-Methods','PUT,POST,GET,DELETE,OPTIONS');
   next();
 });
@@ -40,13 +40,15 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   verify: ''
+  // username: ''
 }));
 
-// app.use('/admin', require('./api/login'));
+app.use('/admin', require('./api/login'));
 app.use('/api/admin', require('./api/admin/category'));
 app.use('/api/admin', require('./api/admin/tag'));
 app.use('/api/admin', require('./api/admin/adminuser'));
 app.use('/api/admin', require('./api/admin/post'));
+app.use('/api/admin', require('./api/admin/friend'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {
