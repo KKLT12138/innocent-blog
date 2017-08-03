@@ -1,16 +1,17 @@
-/* 友情链接接口 */
+/* 分类接口 */
 var express = require('express');
 var router = express.Router();
-var FriendModel = require('../../models/friend');
+var CategoryModel = require('../../models/category');
+var PostModel = require('../../models/post');
 var lang = require('../../lib/lang.json');
 
-router.route('/friend')
+router.route('/category')
   .get(function (req, res, next) {
-    var friendCollection;
-    var friendQuery = FriendModel.Friend.find({});
-    friendQuery.exec(function (err, friends) {
-      friendCollection = friends;
-      res.json(200, friendCollection);
+    var categoryCollection;
+    var categoryQuery = CategoryModel.Category.find({});
+    categoryQuery.exec(function (err, categories) {
+      categoryCollection = categories;
+      res.json(200, categoryCollection);
     });
   })
   .post(function (req, res, next) {

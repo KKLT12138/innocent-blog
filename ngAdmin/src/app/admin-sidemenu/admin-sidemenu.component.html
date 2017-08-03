@@ -6,8 +6,8 @@
 
     <ul class="sidemenu-nav">
       <li class="sidemenu-nav-item">
-        <a href="">文章管理<span>&gt;</span></a>
-        <ul class="second-nav">
+        <a (click)="slideMenu('post')">文章管理<span>&gt;</span></a>
+        <ul class="second-nav" [@slide]="menuState.post" (@slide.start)="menuState.inAnimate=true" (@slide.done)="menuState.inAnimate=false">
           <li class="second-nav-item">
             <a routerLink="/admin/postlist">文章列表</a>
           </li>
@@ -26,16 +26,16 @@
         </ul>
       </li>
       <li class="sidemenu-nav-item">
-        <a href="">用户管理<span>&gt;</span></a>
-        <ul class="second-nav">
+        <a (click)="slideMenu('user')">用户管理<span>&gt;</span></a>
+        <ul class="second-nav" [@slide]="menuState.user" (@slide.start)="menuState.inAnimate=true" (@slide.done)="menuState.inAnimate=false">
           <li class="second-nav-item">
             <a routerLink="/admin/adminuser">管理员</a>
           </li>
         </ul>
       </li>
       <li class="sidemenu-nav-item">
-        <a href="">站点管理<span>&gt;</span></a>
-        <ul class="second-nav">
+        <a (click)="slideMenu('site')">站点管理<span>&gt;</span></a>
+        <ul class="second-nav" [@slide]="menuState.site" (@slide.start)="menuState.inAnimate=true" (@slide.done)="menuState.inAnimate=false">
           <li class="second-nav-item">
             <a routerLink="/admin/regular">常规设置</a>
           </li>

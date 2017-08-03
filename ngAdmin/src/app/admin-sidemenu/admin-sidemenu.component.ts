@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SlideAnimate } from './slideMenu.animate';
 
 @Component({
   selector: 'admin-sidemenu',
@@ -7,16 +8,13 @@ import { Component, OnInit } from '@angular/core';
     '../../public/css/index.css',
     '../../public/css/main.css'
   ],
-/*  animations: [
-    trigger('slide', [
-      state('slideUp', style({
-        'height': '0'
-      }))
-    ])
-  ]*/
+  animations: [
+    SlideAnimate
+  ]
 })
 export class AdminSideMenuComponent implements OnInit {
   menuState = {
+    inAnimate: false,
     post: 'slideDown',
     user: 'slideUp',
     site: 'slideUp'
@@ -25,6 +23,27 @@ export class AdminSideMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  slideMenu(option) {
+    if (this.menuState.inAnimate) {
+      return;
+    }
+    let toggleSlide = (state) => {
+      this.menuState[state] == 'slideUp' ? this.menuState[state] = 'slideDown' : this.menuState[state] = 'slideUp';
+    };
+    switch (option) {
+      case 'post':
+        toggleSlide(option);
+        break;
+      case 'user':
+        toggleSlide(option);
+        break;
+      case 'site':
+        toggleSlide(option);
+        break;
+    }
+
   }
 
 }
