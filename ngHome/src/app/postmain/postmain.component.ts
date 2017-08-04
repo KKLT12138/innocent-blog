@@ -14,10 +14,22 @@ export class PostmainComponent implements OnInit {
 
   constructor(private postService: PostService) { }
 
-  posts = this.postService.getPostList();
+  posts;
+
+  pageConfig = {
+    totalNum: 50,
+    currentPage: 2,
+    totalPage: 5,
+    pageSize: 10
+  };
 
   ngOnInit() {
     // console.log(this.postService.getPostList());
+  }
+
+  getPageData(currentPage) {
+    // this.router.navigate(['/admin/postlist', currentPage]);
+    // this.getPosts(this.pageConfig.currentPage, this.pageConfig.pageSize);
   }
 
 }

@@ -28,16 +28,7 @@
           </div>
         </div>
 
-        <div class="posts-pages">
-          <a href="" class="page">&lt;&lt;</a>
-          <a href="" class="page">prev</a>
-          <a href="" class="page active">1</a>
-          <a href="" class="page">2</a>
-          <a href="" class="page">3</a>
-          <a href="" class="page">4</a>
-          <a href="" class="page">next</a>
-          <a href="" class="page">&gt;&gt;</a>
-        </div>
+        <my-page [pageConfig]="pageConfig" (changePage)="getPageData($event)"></my-page>
       </div>
 
     </div>

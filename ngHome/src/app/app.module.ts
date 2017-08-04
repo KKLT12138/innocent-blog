@@ -18,6 +18,7 @@ import { ArchivesComponent } from './archives/archives.component';
 import { TagsComponent } from './tags/tags.component';
 import { AboutComponent } from './about/about.component';
 import { PostComponent } from './post/post.component';
+import { PageComponent } from './page/page.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PostComponent } from './post/post.component';
     TagsComponent,
     AboutComponent,
     PostComponent,
+    PageComponent,
   ],
   imports: [
     BrowserModule,

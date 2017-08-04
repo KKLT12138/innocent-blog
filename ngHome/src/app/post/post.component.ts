@@ -27,7 +27,7 @@ export class PostComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => params["id"])
       .subscribe(id => this.id += id);
-    this.post = this.postService.getPostById(this.id);
+    // this.post = this.postService.getPostById(this.id);
     // console.log(this.post);
   }
 

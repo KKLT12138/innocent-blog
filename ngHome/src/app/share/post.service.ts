@@ -1,66 +1,38 @@
 //文章相关服务
 import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
-let post:any = [
-  {
-    "id": "abc",
-    "title": "文章1",
-    "author": "tianzhen",
-    "category": 0,
-    "tags": [0, 2, 3],
-    "order": 99,
-    "time": "1498054505",
-    "click": 100,
-    "content": "三年级时，我曾是一个胆小如鼠的女孩",
-  },
-  {
-    "id": "hel",
-    "title": "文章2",
-    "author": "tianzhen2",
-    "category": 2,
-    "tags": [0, 1, 2],
-    "order": 35,
-    "time": "1498050000",
-    "click": 45,
-    "content": "三年级时，我曾是一个胆小如鼠的女孩2",
-  },
-  {
-    "id": "gsw",
-    "title": "文章3",
-    "author": "tianzhen",
-    "category": 0,
-    "tags": [0, 1, 3],
-    "order": 99,
-    "time": "1498034505",
-    "click": 2,
-    "content": "三年级时，我曾是一个胆小如鼠的女孩3",
-  },
-];
-
-let postById = {
-    "id": "abc",
-    "title": "文章1",
-    "author": "tianzhen",
-    "category": 0,
-    "tags": [0, 2, 3],
-    "order": 99,
-    "time": "1498054505",
-    "click": 100,
-    "content": "三年级时，我曾是一个胆小如鼠的女孩",
-  };
+import { Config } from '../share/config';
 
 @Injectable()
 export class PostService {
 
-  constructor() { }
+  constructor(
+    private http: Http
+  ) { }
 
 
-  getPostList() {
-    return post;
+  getPostList(currentPage, pageSize) {
+    let url = `${Config.apiAdminRoot}post?page=${currentPage}&size=${pageSize}`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
   }
 
   getPostById(id: string) {
-    return postById;
+
+  }
+
+  private extraData(res) {
+    let body = res.json();
+    return body || [];
+  }
+
+  private handleError (error) {
+    let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : `Server error`;
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
 
 }
