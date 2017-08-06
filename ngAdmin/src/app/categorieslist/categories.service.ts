@@ -17,21 +17,21 @@ export class CategoriesService {
   }
 
   getCategories(): Observable<any> {
-    let url = `${Config.apiAdminRoot}category`;
+    let url = `${Config.apiAdminRoot}category?token=${this.token}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
   }
 
   getCategoryNum(): Observable<any> {
-    let url = `${Config.apiAdminRoot}categorynum`;
+    let url = `${Config.apiAdminRoot}categorynum?token=${this.token}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
   }
 
   getPostNum(): Observable<any> {
-    let url = `${Config.apiAdminRoot}postnum`;
+    let url = `${Config.apiAdminRoot}postnum?token=${this.token}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
@@ -41,8 +41,7 @@ export class CategoriesService {
     let url = `${Config.apiAdminRoot}category`;
     let body = JSON.stringify(categoryDate);
     let headers = new Headers({'Content-Type': 'application/json'});
-    headers.append('X-Access-Token',this.token);
-    console.log(headers);
+    headers.append('x-access-token',this.token);
 
     let options = new RequestOptions({headers: headers});
 
@@ -65,6 +64,7 @@ export class CategoriesService {
     }
     let body = JSON.stringify(data);
     let headers = new Headers({'Content-Type': 'application/json'});
+    headers.append('x-access-token',this.token);
     let options = new RequestOptions({
       headers: headers,
       body: body
@@ -83,6 +83,11 @@ export class CategoriesService {
   private handleError (error) {
     let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : `Server error`;
     console.error(errMsg);
+
+    if (error.status == 302) {
+      alert('权限不足，请用管理员账户登录！');
+      location.href = '/admin';
+    }
     return Observable.throw(errMsg);
   }
 }

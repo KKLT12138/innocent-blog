@@ -1,0 +1,80 @@
+@f_color: #555;
+@font: "Microsoft YaHei","Ubuntu", "Sans Regular";
+@f_size: 16px;
+.a(@f_color, @hover_color) {
+  color: @f_color;
+  text-decoration: none;
+  &:hover {
+    color: @hover_color;
+  }
+}
+
+.pre(@style, @value) {
+  -webkit-@{style}: @value;
+  -moz-@{style}: @value;
+  -ms-@{style}: @value;
+  -o-@{style}: @value;
+    @{style}: @value;
+}
+
+.box-shadow(@value) {
+  .pre(box-shadow, @value);
+}
+
+.border-radius(@value) {
+  .pre(border-radius, @value);
+}
+
+.transform(@value) {
+  .pre(transform, @value);
+}
+
+.transition(@value) {
+  .pre(transition, @value);
+}
+
+.user-select(@value) {
+  .pre(user-select, @value);
+}
+
+#mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+#message-dialog {
+  position: fixed;
+  z-index: 99999;
+  top: 35%;
+  left: 42%;
+  padding: 30px 50px;
+  color: white;
+  font-size: @f_size + 4;
+  .border-radius(5px);
+  .user-select(none);
+  .transition(opacity 0.8s);
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.message-success {
+  background-color: rgba(102, 187, 106, .8);
+}
+.message-error {
+  background-color: rgba(255, 112, 67, .8);
+}
+
+#loading {
+  position: fixed;
+  z-index: 99999;
+  top: 35%;
+  left: 45%;
+  padding: 30px 50px;
+  color: white;
+  font-size: @f_size + 6;
+  .user-select(none);
+}
+

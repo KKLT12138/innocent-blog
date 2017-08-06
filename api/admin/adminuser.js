@@ -3,9 +3,11 @@ var express = require('express');
 var router = express.Router();
 var AuserModel = require('../../models/auser');
 var lang = require('../../lib/lang.json');
+var checkLogin = require('../checkLogin').checkLogin;
+var checkVisitor = require('../checkLogin').checkVisitor;
 
 router.route('/adminuser')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     var auserCollection = [];
     var auserQuery = AuserModel.Auser.find({});
     auserQuery.exec(function (err, ausers) {
@@ -19,7 +21,7 @@ router.route('/adminuser')
       });
       res.json(200, auserCollection);
     });
-  })
+  });
 
 
 module.exports = router;

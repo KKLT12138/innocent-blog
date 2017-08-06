@@ -12,13 +12,16 @@ var postSchema = new mongoose.Schema(
       required: true
     },
     category : {
-      type: String,
-      required: true
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'categories'
     },
-    tags : {
-      type: [String],
-      required: true
-    },
+    tags : [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tags'
+      }
+    ],
     order : {
       type: Number,
       required: true

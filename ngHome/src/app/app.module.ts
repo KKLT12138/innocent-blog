@@ -19,6 +19,8 @@ import { TagsComponent } from './tags/tags.component';
 import { AboutComponent } from './about/about.component';
 import { PostComponent } from './post/post.component';
 import { PageComponent } from './page/page.component';
+import { LoadingAnimateComponent } from './loading-animate/loading-animate.component';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { PageComponent } from './page/page.component';
     AboutComponent,
     PostComponent,
     PageComponent,
+    LoadingAnimateComponent,
+    MessageDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,9 +4,11 @@ var router = express.Router();
 var PostModel = require('../../models/post');
 var TagModel = require('../../models/tag');
 var lang = require('../../lib/lang.json');
+var checkLogin = require('../checkLogin').checkLogin;
+var checkVisitor = require('../checkLogin').checkVisitor;
 
 router.route('/post')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     var postCollection;
     var size = +req.query.size;
     var page = +req.query.page;
@@ -25,7 +27,7 @@ router.route('/post')
     });
 
   })
-  .post(function (req, res, next) {
+  .post(checkLogin, function (req, res, next) {
     var id = req.body.id;
     var title = req.body.title;
     var author = req.body.author;
@@ -125,7 +127,7 @@ router.route('/post')
       }
     }
   })
-  .delete(function (req, res, next) {
+  .delete(checkLogin, function (req, res, next) {
     var postQuery = PostModel.Post.find({'_id': {$in: req.body.id}});
     postQuery.exec(function (err) {
       if (err) {
@@ -153,7 +155,7 @@ router.route('/post')
   });
 
 router.route('/post/:id')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     var postCollection;
     var postQuery = PostModel.Post.findOne({'_id': req.params.id});
     postQuery.exec(function (err, posts) {
@@ -161,16 +163,16 @@ router.route('/post/:id')
       var tagQuery = TagModel.Tag.find({'_id': {$in: postCollection.tags}});
       tagQuery.exec(function (err, tags) {
         postCollection.tags = [];
-        tags.forEach(function (tag, index) {
-          postCollection.tags.push(tag.name);
-        });
+        for (var i in tags) {
+          postCollection.tags[i] = tags[i].name;
+        }
         res.json(200, postCollection);
       });
     });
   });
 
 router.route('/postnum')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     PostModel.Post.count()
       .exec(function (err, num) {
         if (err) {
@@ -186,7 +188,7 @@ router.route('/postnum')
           })
         }
       })
-  })
+  });
 
 
 module.exports = router;

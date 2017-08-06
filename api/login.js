@@ -5,9 +5,7 @@ var lang = require('../lib/lang.json');
 var hash = require('../lib/hash');
 var imgVerify = require('../lib/imgVerify');
 var jwt = require('jwt-simple');
-
-// JWT-tokenSecret
-var jwtSecret = '101littleBugsInTheCode';
+var config = require('../config/config.js');
 
 router.route('/login')
 /*
@@ -56,18 +54,22 @@ router.route('/login')
       if (verify == sessionVerify) {
         var auserQuery = AuserModel.Auser.find({});
         auserQuery.exec(function (err, ausers) {
+          var usernameCheck = false;
+          var passwordCheck = false;
+          var token;
           ausers.forEach(function (auser, index) {
             if (username === auser.name) {
               //用户名正确
+              usernameCheck = true;
               password = hash.communism(password, auser.salt);
               if (password === auser.password) {
                 //登录成功
-                var token = jwt.encode(
+                token = jwt.encode(
                   {
                     username: username,
                     time: new Date().getTime()
                   },
-                  jwtSecret
+                  config.jwtSecret
                 );
 
                 // req.session.username = username;
@@ -83,31 +85,41 @@ router.route('/login')
                   currentDate: dateNow
                 };
                 auserQuery.update(setAuser, function (err, doc) {
-                  console.log(err, doc);
+                  if (err) {
+                    console.log(err);
+                  }
                 });
 
-                res.json(200, {
-                  status: 1,
-                  message: lang.success,
-                  token: token,
-                  username: username
-                });
-              } else {
-                //登录失败，密码错误
-                req.session.verify = '';
-                res.json(200, {
-                  status: 0,
-                  message: lang.passwordError
-                });
+                passwordCheck = true;
               }
+            }
+          });
+
+          if (usernameCheck) {
+            if (passwordCheck) {
+              //登录成功
+              res.json(200, {
+                status: 1,
+                message: lang.success,
+                token: token,
+                username: username
+              });
             } else {
-              //用户名不存在
+              //登录失败，密码错误
+              req.session.verify = '';
               res.json(200, {
                 status: 0,
-                message: lang.usernameError
+                message: lang.passwordError
               });
             }
-          })
+          } else {
+            //用户名不存在
+            res.json(200, {
+              status: 0,
+              message: lang.usernameError
+            });
+          }
+
         });
       } else {
         req.session.verify = '';

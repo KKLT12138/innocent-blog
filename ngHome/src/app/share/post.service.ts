@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { Config } from '../share/config';
+import { Config } from './config';
 
 @Injectable()
 export class PostService {
@@ -14,7 +14,7 @@ export class PostService {
 
 
   getPostList(currentPage, pageSize) {
-    let url = `${Config.apiAdminRoot}post?page=${currentPage}&size=${pageSize}`;
+    let url = `${Config.apiUserRoot}postlist?page=${currentPage}&size=${pageSize}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);

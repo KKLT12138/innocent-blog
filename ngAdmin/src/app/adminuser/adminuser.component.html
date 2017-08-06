@@ -4,6 +4,7 @@
     <form id="quick-tools">
       <input type="button" name="delete" class="quick-tools-delete btn btn-red" value="批量删除">
       <input type="button" name="add" class="quick-tools-add btn" value="新增">
+      <input type="button" name="new" class="quick-tools-add btn" value="生成秘钥" (click)="modal.open()">
     </form>
     <form id="form-main">
       <table myCheckedAll>
@@ -38,6 +39,29 @@
       </table>
 
     </form>
+
+    <div id="add-modal" [ngStyle]="{'display': modal.display ? 'block' : 'none'}">
+      <form action="" id="add-key">
+        <div class="add-modal-item">
+          <label for="key-name">密码：</label>
+          <input type="text" name="key-name" id="key-name" #keyName [(ngModel)]="key.name" autocomplete=off spellcheck="false">
+        </div>
+        <div class="add-modal-item">
+          <label for="key-password">password：</label>
+          <input type="text" name="key-password" id="key-password" [(ngModel)]="key.password" autocomplete=off spellcheck="false" disabled>
+        </div>
+        <div class="add-modal-item">
+          <label for="key-pwd">秘钥：</label>
+          <input type="text" name="key-pwd" id="key-pwd" [(ngModel)]="key.pwd" autocomplete=off spellcheck="false" disabled>
+        </div>
+
+        <div class="btn-group">
+          <input type="button" class="btn btn-red" [value]="addModal.btnValue" (click)="getKey()">
+          <input type="button" class="btn" value="关闭" (click)="modal.close()">
+        </div>
+
+      </form>
+    </div>
   </div>
 
   <div id="mask" [ngStyle]="{'display': mask.display ? 'block' : 'none'}"></div>

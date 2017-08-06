@@ -4,9 +4,11 @@ var router = express.Router();
 var CategoryModel = require('../../models/category');
 var PostModel = require('../../models/post');
 var lang = require('../../lib/lang.json');
+var checkLogin = require('../checkLogin').checkLogin;
+var checkVisitor = require('../checkLogin').checkVisitor;
 
 router.route('/category')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     var categoryCollection;
     var categoryQuery = CategoryModel.Category.find({});
     categoryQuery.exec(function (err, categories) {
@@ -14,7 +16,7 @@ router.route('/category')
       res.json(200, categoryCollection);
     });
   })
-  .post(function (req, res, next) {
+  .post(checkLogin, function (req, res, next) {
     var id = req.body.id;
     var name = req.body.name;
 
@@ -70,7 +72,7 @@ router.route('/category')
       });
     }
   })
-  .delete(function (req, res, next) {
+  .delete(checkLogin, function (req, res, next) {
     var categoryQuery = CategoryModel.Category.find({'_id': {$in: req.body.id}});
     categoryQuery.exec(function (err) {
       if (err) {
@@ -98,7 +100,7 @@ router.route('/category')
   });
 
 router.route('/categorynum')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     PostModel.Post.aggregate({
       $group: {
         _id: "$category",
@@ -120,7 +122,7 @@ router.route('/categorynum')
         })
       }
     })
-  })
+  });
 
 
 module.exports = router;

@@ -19,6 +19,7 @@ import { MessageDialogComponent } from '../message-dialog/message-dialog.compone
 export class AdminUserComponent implements OnInit {
   @ViewChild(LoadingAnimateComponent) loadingAnimateComponent: LoadingAnimateComponent;
   @ViewChild(MessageDialogComponent) messageDialogComponent: MessageDialogComponent;
+  @ViewChild('keyName') keyName;
 
   adminusers: any = [];
 
@@ -26,8 +27,40 @@ export class AdminUserComponent implements OnInit {
     display: true
   };
 
+  key = {
+    name: '',
+    password: '',
+    pwd: ''
+  };
+
   modal = {
     display: false,
+    open: () => {
+      this.modal.display = true;
+      setTimeout(() => {
+        this.keyName.nativeElement.focus();
+      }, 100);
+
+    },
+    close: () => {
+      this.key.name = '';
+      this.key.password = '';
+      this.key.pwd = '';
+      this.modal.display = false;
+    }
+  };
+
+  addModal = {
+    btnValue: '生成',
+    reset: () => {
+      this.addModal.btnValue = '生成';
+    },
+    processing: () => {
+      this.addModal.btnValue = Config.message.processing;
+    },
+    retry: () => {
+      this.addModal.btnValue = Config.message.retry;
+    }
   };
 
   constructor(
@@ -56,6 +89,14 @@ export class AdminUserComponent implements OnInit {
         this.loadingAnimateComponent.loading.display = false;
         this.messageDialogComponent.messageDialog.open(Config.message.getError, 0);
       });
+  }
+
+  getKey() {
+    this._adminuserService.getKey(this.key.name)
+      .subscribe((data) => {
+        this.key.password = data.key.password;
+        this.key.pwd = data.key.pwd;
+      })
   }
 
 }

@@ -57,13 +57,7 @@
         友情链接
       </div>
       <ul class="links-list">
-        <li class="links-list-item"><a href="">123</a></li>
-        <li class="links-list-item"><a href="">123</a></li>
-        <li class="links-list-item"><a href="">123</a></li>
-        <li class="links-list-item"><a href="">123</a></li>
-        <li class="links-list-item"><a href="">123</a></li>
-        <li class="links-list-item"><a href="">123</a></li>
-        <li class="links-list-item"><a href="">123</a></li>
+        <li class="links-list-item" *ngFor="let friend of friends"><a [href]="friend.url" target="_blank">{{ friend.name }}</a></li>
       </ul>
     </div>
   </section>

@@ -4,9 +4,11 @@ var router = express.Router();
 var TagModel = require('../../models/tag');
 var PostModel = require('../../models/post');
 var lang = require('../../lib/lang.json');
+var checkLogin = require('../checkLogin').checkLogin;
+var checkVisitor = require('../checkLogin').checkVisitor;
 
 router.route('/tag')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     var tagCollection;
     var tagQuery = TagModel.Tag.find({});
     tagQuery.exec(function (err, categories) {
@@ -14,7 +16,7 @@ router.route('/tag')
       res.json(200, tagCollection);
     });
   })
-  .post(function (req, res, next) {
+  .post(checkLogin, function (req, res, next) {
     var id = req.body.id;
     var name = req.body.name;
 
@@ -70,7 +72,7 @@ router.route('/tag')
       });
     }
   })
-  .delete(function (req, res, next) {
+  .delete(checkLogin, function (req, res, next) {
     var tagQuery = TagModel.Tag.find({'_id': {$in: req.body.id}});
     tagQuery.exec(function (err) {
       if (err) {
@@ -98,7 +100,7 @@ router.route('/tag')
   });
 
 router.route('/taginfo')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     PostModel.Post.aggregate({
       $project: {
         tags: 1
@@ -117,7 +119,7 @@ router.route('/taginfo')
         })
       }
     })
-  })
+  });
 
 
 module.exports = router;

@@ -25,8 +25,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'src')));
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'home')));
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
+
 app.use('/', index);
-app.use('/users', users);
+// app.use('/users', users);
 
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -43,12 +46,17 @@ app.use(session({
   // username: ''
 }));
 
+app.use('/api/user', require('./api/user/data'));
+app.use('/api/user', require('./api/user/friend'));
+app.use('/api/user', require('./api/user/statistics'));
+
 app.use('/admin', require('./api/login'));
 app.use('/api/admin', require('./api/admin/category'));
 app.use('/api/admin', require('./api/admin/tag'));
 app.use('/api/admin', require('./api/admin/adminuser'));
 app.use('/api/admin', require('./api/admin/post'));
 app.use('/api/admin', require('./api/admin/friend'));
+app.use('/api/admin', require('./api/admin/key'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {

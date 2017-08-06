@@ -1,11 +1,13 @@
-/* 分类接口 */
+/* 友链接口 */
 var express = require('express');
 var router = express.Router();
 var FriendModel = require('../../models/friend');
 var lang = require('../../lib/lang.json');
+var checkLogin = require('../checkLogin').checkLogin;
+var checkVisitor = require('../checkLogin').checkVisitor;
 
 router.route('/friend')
-  .get(function (req, res, next) {
+  .get(checkVisitor, function (req, res, next) {
     var friendCollection;
     var friendQuery = FriendModel.Friend.find({}).sort({order: -1});
     friendQuery.exec(function (err, friends) {
@@ -13,7 +15,7 @@ router.route('/friend')
       res.json(200, friendCollection);
     });
   })
-  .post(function (req, res, next) {
+  .post(checkLogin, function (req, res, next) {
     var id = req.body.id;
     var name = req.body.name;
     var url = req.body.url;
@@ -64,7 +66,7 @@ router.route('/friend')
         })
       }
   })
-  .delete(function (req, res, next) {
+  .delete(checkLogin, function (req, res, next) {
     var friendQuery = FriendModel.Friend.find({'_id': {$in: req.body.id}});
     friendQuery.exec(function (err) {
       if (err) {

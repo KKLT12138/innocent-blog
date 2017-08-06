@@ -6,6 +6,7 @@ import { Config } from '../share/config';
 import { LoadingAnimateComponent } from '../loading-animate/loading-animate.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { SelectCheckBoxService } from '../share/selectCheckBox.service';
+import { needRedirect } from '../share/redirect.fn';
 
 @Component({
   selector: 'admin-categorieslist',

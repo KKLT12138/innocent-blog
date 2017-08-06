@@ -71,6 +71,8 @@
     getVerifyImg();
 
     function loginAjax () {
+      delCookie('username');
+      delCookie('token');
       var xhr = window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject('Microsoft.XMLHTTP');
       var method ='POST';
       var url = 'login';
@@ -97,7 +99,7 @@
             if (res.status === 1) {
               setCookie('token', res.token, 7);
               setCookie('username', res.username, 7);
-              location.href = "/";
+              location.href = "/admin";
             }
             if (res.status === 2) {
               document.getElementById("error-message").innerText = res.message;
@@ -179,6 +181,17 @@
       }
     }
     return "";
+  }
+// 删除cookie
+  function delCookie(cname)
+  {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1000);
+    var cval=getCookie(cname);
+    if(cval!=null) {
+      document.cookie= cname + "="+cval+";expires="+exp.toGMTString() + ";path=/";
+    }
+
   }
 
 </script>

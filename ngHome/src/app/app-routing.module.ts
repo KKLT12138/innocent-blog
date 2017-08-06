@@ -19,6 +19,10 @@ const routes: Routes = [
     component: PostmainComponent
   },
   {
+    path: 'home/:id',
+    component: PostmainComponent
+  },
+  {
     path: 'categories',
     component: CategoriesComponent
   },

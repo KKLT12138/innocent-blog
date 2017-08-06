@@ -3,7 +3,6 @@ import { Title } from '@angular/platform-browser';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

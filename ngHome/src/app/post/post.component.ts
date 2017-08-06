@@ -21,7 +21,9 @@ export class PostComponent implements OnInit {
   ) { }
 
   id: string = "";
-  post: object = {};
+  post: object = {
+
+  };
 
   ngOnInit() {
     this.route.params
