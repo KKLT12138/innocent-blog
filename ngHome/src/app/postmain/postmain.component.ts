@@ -19,12 +19,11 @@ import { Reader } from '../../public/js/easy-markdown';
 export class PostmainComponent implements OnInit {
   @ViewChild(MessageDialogComponent) messageDialogComponent: MessageDialogComponent;
   @ViewChild(LoadingAnimateComponent) loadingAnimateComponent: LoadingAnimateComponent;
-  @ViewChild('postsBody') postsBody;
 
   constructor(
     private _postService: PostService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   posts: any[] = [
@@ -57,6 +56,8 @@ export class PostmainComponent implements OnInit {
   mask = {
     display: true
   };
+
+
 
   ngOnInit() {
     this.activatedRoute.params

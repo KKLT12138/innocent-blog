@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FriendService } from '../share/friend.service';
+import { DataService } from '../share/data.service';
 
 @Component({
   selector: 'blog-sidebar',
@@ -20,12 +21,35 @@ export class BlogSidebarComponent implements OnInit {
     }
   ];
 
+  numbs = {
+    postNum: 0,
+    categoryNum: 0,
+    tagNum: 0
+  };
+
+
   constructor(
-    private _friendService: FriendService
+    private _friendService: FriendService,
+    private _dataService: DataService
   ) { }
 
   ngOnInit() {
     this.getFriends();
+
+    this._dataService.getPostNum()
+      .subscribe((data) => {
+        this.numbs.postNum = data.num;
+      });
+
+    this._dataService.getCategoryNum()
+      .subscribe((data) => {
+        this.numbs.categoryNum = data.num;
+      });
+
+    this._dataService.getTagNum()
+      .subscribe((data) => {
+        this.numbs.tagNum = data.num;
+      });
   }
 
   getFriends() {

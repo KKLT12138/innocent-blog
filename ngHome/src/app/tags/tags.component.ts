@@ -16,6 +16,10 @@ export class TagsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     for (let tag of this.tagsContent.nativeElement.children) {
       tag.style.fontSize = Math.floor(Math.random() * 34 + 12) + 'px';
+      let h = Math.random() * 360;
+      let s = Math.random() * 100;
+      let l = Math.random() * 70 + 30;
+      tag.style.color = `hsl(${h}, ${s}%, ${l}%)`;
     }
   }
 

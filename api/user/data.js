@@ -1,4 +1,4 @@
-/* 文章接口 */
+/* 博客前台访客数据接口 */
 var express = require('express');
 var router = express.Router();
 var PostModel = require('../../models/post');
@@ -6,6 +6,9 @@ var CategoryModel = require('../../models/category');
 var TagModel = require('../../models/tag');
 var lang = require('../../lib/lang.json');
 
+/**
+ * 文章分页列表
+ */
 router.route('/postlist')
   .get(function (req, res, next) {
     var postCollection;
@@ -40,22 +43,89 @@ router.route('/postlist')
     });
   });
 
-// router.route('/post/:id')
-//   .get(function (req, res, next) {
-//     var postCollection;
-//     var postQuery = PostModel.Post.findOne({'_id': req.params.id});
-//     postQuery.exec(function (err, posts) {
-//       postCollection = posts;
-//       var tagQuery = TagModel.Tag.find({'_id': {$in: postCollection.tags}});
-//       tagQuery.exec(function (err, tags) {
-//         postCollection.tags = [];
-//         tags.forEach(function (tag, index) {
-//           postCollection.tags.push(tag.name);
-//         });
-//         res.json(200, postCollection);
-//       });
-//     });
-//   });
+/**
+ * 分类数量
+ */
+router.route('/categorynum')
+  .get(function (req, res, next) {
+    var categoryQuery = CategoryModel.Category.find({}).count().exec(function (err, num) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          num: num
+        })
+      }
+    })
+  });
+
+/**
+ * 标签数量
+ */
+router.route('/tagnum')
+  .get(function (req, res, next) {
+    var tagQuery = TagModel.Tag.find({}).count().exec(function (err, num) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          num: num
+        })
+      }
+    })
+  });
+
+/**
+ * 分类数量
+ */
+router.route('/categorynum')
+  .get(function (req, res, next) {
+    var categoryQuery = CategoryModel.Category.find({}).count().exec(function (err, num) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          num: num
+        })
+      }
+    })
+  });
+
+/**
+ * 文章数量
+ */
+router.route('/postnum')
+  .get(function (req, res, next) {
+    var postQuery = PostModel.Post.find({}).count().exec(function (err, num) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          num: num
+        })
+      }
+    })
+  });
 
 
 

@@ -22,6 +22,8 @@ import { PageComponent } from './page/page.component';
 import { LoadingAnimateComponent } from './loading-animate/loading-animate.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
+import { DataService } from './share/data.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +52,7 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
       provide: LocationStrategy,
       useClass: HashLocationStrategy
     },
+    DataService
   ],
   bootstrap: [AppComponent]
 })

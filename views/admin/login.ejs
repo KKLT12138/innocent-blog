@@ -95,10 +95,9 @@
               document.getElementById("error-message").innerText = res.message;
               getVerifyImg();
             }
-            //todo route
             if (res.status === 1) {
-              setCookie('token', res.token, 7);
-              setCookie('username', res.username, 7);
+              setTempCookie('token', res.token);
+              setTempCookie('username', res.username);
               location.href = "/admin";
             }
             if (res.status === 2) {
@@ -168,6 +167,11 @@
     d.setTime(d.getTime()+(exdays*24*60*60*1000));
     var expires = "expires="+d.toGMTString();
     document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
+  }
+
+//  设置临时cookie（在浏览器关闭时自动清空）
+  function setTempCookie(cname,cvalue) {
+    document.cookie = cname + "=" + cvalue + ";path=/";
   }
 
 //  获取cookie

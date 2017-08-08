@@ -1,3 +1,15 @@
+.pre(@style, @value) {
+  -webkit-@{style}: @value;
+  -moz-@{style}: @value;
+  -ms-@{style}: @value;
+  -o-@{style}: @value;
+    @{style}: @value;
+}
+
+.text-shadow(@value) {
+  .pre(text-shadow, @value);
+}
+
 #tags {
   @f_color: #555;
   @font: "Microsoft YaHei", "Ubuntu", "Sans Regular";
@@ -33,7 +45,7 @@
     .tags-content {
       .tags-item {
         vertical-align: middle;
-
+        .text-shadow(1px 1px 1px #777);
         .a(@f_color, #222);
         display: inline-block;
         margin: 10px;
