@@ -20,8 +20,18 @@ export class PostService {
       .catch(this.handleError);
   }
 
-  getPostById(id: string) {
+  getPost(id): Observable<any> {
+    let url = `${Config.apiUserRoot}post/${id}`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
 
+  getPostNeighbors(id): Observable<any> {
+    let url = `${Config.apiUserRoot}postneighbors/${id}`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
   }
 
   private extraData(res) {

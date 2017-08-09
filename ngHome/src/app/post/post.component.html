@@ -4,19 +4,19 @@
       <div class="content-wrap">
         <div class="posts">
           <div class="posts-head">
-            <h1 class="posts-head-title"><a href="">biaoti</a></h1>
+            <h1 class="posts-head-title"><a href="">{{ post.title }}</a></h1>
             <div class="posts-head-meta">
-              <span class="posts-head-meta-date">Tianzhen 发表于<span>2016-05-03</span></span>
-              <span class="posts-head-meta-category">分类于<a href="">Linux</a></span>
-              <span class="posts-head-meta-tag">标签<a href="">Linux</a></span>
-              <span class="posts-head-meta-read"><span>666</span>次阅读</span>
+              <span class="posts-head-meta-date">{{ post.author }} 发表于<span>{{ post.date }}</span></span>
+              <span class="posts-head-meta-category">分类于<a href="">{{ post.category.name }}</a></span>
+              <span class="posts-head-meta-tag">标签<a href="" *ngFor="let tag of post.tags">{{ tag.name }}</a></span>
+              <span class="posts-head-meta-read"><span>{{ post.reading }}</span>次阅读</span>
             </div>
           </div>
           <div class="posts-body">
             <p>子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎子曰有朋自远方来不亦乐乎</p>
             <div class="posts-body-more">
-              <a href="" class="btn-a pre-post">&lt;&lt;Apache服务器配置</a>
-              <a href="" class="btn-a next-post">Tomcat服务器配置&gt;&gt;</a>
+              <a routerLink="/home/post/{{neighbors.prevPost.id}}" class="btn-a pre-post" *ngIf="neighbors.prevPost.title">&lt;&lt;&nbsp;{{ neighbors.prevPost.title }}</a>
+              <a routerLink="/home/post/{{neighbors.nextPost.id}}" class="btn-a next-post"*ngIf="neighbors.nextPost.title">{{ neighbors.nextPost.title }}&nbsp;&gt;&gt;</a>
             </div>
           </div>
         </div>

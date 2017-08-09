@@ -1,4 +1,4 @@
-export let parseTime = (time: number, format: number = 0): string | object => {
+export let parseTime = (time: number, format: number = 0): any => {
   let dateStr = '';
   let dateObj = {};
 
@@ -14,6 +14,7 @@ export let parseTime = (time: number, format: number = 0): string | object => {
   let m = date.getMinutes() + '';
   let s = date.getSeconds() + '';
 
+  // 2017-08-01
   if (format == 0) {
     if (month.length < 2) {
       month = '0' + month;
@@ -23,7 +24,7 @@ export let parseTime = (time: number, format: number = 0): string | object => {
     }
     dateStr = `${year}-${month}-${day}`;
   }
-
+  // 2017-08-01 8:08:08
   if (format == 1) {
     if (month.length < 2) {
       month = '0' + month;
@@ -39,7 +40,7 @@ export let parseTime = (time: number, format: number = 0): string | object => {
     }
     dateStr = `${year}-${month}-${day} ${h}:${m}:${s}`;
   }
-
+  // Sep 3, 2017
   if (format == 2) {
     trans.forEach((m, index) => {
       if ((index + 1).toString() == month) {
@@ -48,7 +49,13 @@ export let parseTime = (time: number, format: number = 0): string | object => {
     });
     dateStr = `${month} ${day}, ${year}`;
   }
-
+  /**
+   * {
+   *   year: '2017',
+   *   month: '8',
+   *   day: '1'
+   * }
+   */
   if (format == 3) {
     trans.forEach((m, index) => {
       if ((index + 1).toString() == month) {
@@ -64,4 +71,4 @@ export let parseTime = (time: number, format: number = 0): string | object => {
   }
 
   return dateStr;
-}
+};

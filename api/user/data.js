@@ -44,6 +44,79 @@ router.route('/postlist')
   });
 
 /**
+ * 获取指定id文章接口
+ */
+router.route('/post/:id')
+  .get(function (req, res, next) {
+    var postCollection;
+    var postQuery = PostModel.Post.findOne({'_id': req.params.id});
+    postQuery.exec(function (err, posts) {
+      postCollection = posts;
+      var tagQuery = TagModel.Tag.find({'_id': {$in: postCollection.tags}});
+      tagQuery.exec(function (err, tags) {
+        postCollection.tags = [];
+        for (var i in tags) {
+          postCollection.tags[i] = {};
+          postCollection.tags[i].id =tags[i]._id;
+          postCollection.tags[i].name = tags[i].name;
+        }
+        var categoryQuery = CategoryModel.Category.findOne({'_id': postCollection.category});
+        categoryQuery.exec(function (err, category) {
+          var postCategory = {};
+          postCategory.id = category._id;
+          postCategory.name = category.category;
+          res.json(200, {
+            id: postCollection.id,
+            title: postCollection.title,
+            author: postCollection.author,
+            category: postCategory,
+            date: postCollection.date,
+            reading: postCollection.reading,
+            content: postCollection.content,
+            tags: postCollection.tags
+          });
+        });
+      });
+    });
+  });
+
+router.route('/postneighbors/:id')
+  .get(function (req, res, next) {
+    var postId = req.params.id;
+    PostModel.Post.findOne({'_id': postId}).exec(function (err, post) {
+      console.log(post);
+      var prevPost = {};
+      var nextPost = {};
+      PostModel.Post.find({'_id': {$gt: postId}}).sort({'_id': 1}).limit(1).exec(function (err, p) {
+        if (p.length) {
+          prevPost.id = p[0]._id;
+          prevPost.title = p[0].title;
+        } else {
+          prevPost.id = null;
+          prevPost.title = null;
+        }
+        PostModel.Post.find({'_id': {$lt: postId}}).sort({'_id': -1}).limit(1).exec(function (err, n) {
+          if (n.length) {
+            nextPost.id = n[0]._id;
+            nextPost.title = n[0].title;
+          } else {
+            nextPost.id = null;
+            nextPost.title = null;
+          }
+          res.json(200, {
+            status: 1,
+            message: lang.success,
+            data: {
+              prevPost: prevPost,
+              nextPost: nextPost
+            }
+          })
+        })
+      })
+    })
+  });
+
+/**
  * 分类数量
  */
 router.route('/categorynum')

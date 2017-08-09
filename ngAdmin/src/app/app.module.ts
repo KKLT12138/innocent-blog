@@ -30,7 +30,9 @@ import { AddpostEditorDirective } from './addpost/addpost-editor.directive';
 import { CheckedAllDirective } from './share/checkedAll.directive';
 import { ToDatePipe } from './share/timeToDate.pipe';
 import { SelectCheckBoxService } from './share/selectCheckBox.service';
-import { CookieService, CookieOptions } from 'angular2-cookie';
+// ng build时，导入CookieOptions
+import { CookieService } from 'angular2-cookie';
+// import { CookieService, CookieOptions } from 'angular2-cookie';
 
 
 @NgModule({
@@ -71,7 +73,7 @@ import { CookieService, CookieOptions } from 'angular2-cookie';
     },
     SelectCheckBoxService,
     CookieService,
-    CookieOptions
+    // CookieOptions
   ],
   bootstrap: [AppComponent]
 })
