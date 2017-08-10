@@ -1,42 +1,47 @@
-// 分类相关服务
+//前台分类相关服务
 import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 
-let categories: any = [
-  {
-    "id": "abc",
-    "name": "node",
-  },
-  {
-    "id": "ker",
-    "name": "javascript",
-  },
-  {
-    "id": "esc",
-    "name": "c++",
-  },
-  {
-    "id": "aaa",
-    "name": "linux",
-  }
-];
-
-let categoriesById = {
-  "id": "esc",
-  "name": "c++",
-};
+import { Config } from './config';
 
 @Injectable()
 export class CategoryService {
 
-  constructor() { }
+  constructor(
+    private http: Http
+  ) { }
 
-
-  getCategories() {
-    return categories;
+  getCategoryInfo() {
+    let url = `${Config.apiUserRoot}categoryinfo`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
   }
 
-  getCategoryById(id: string) {
-    return categoriesById;
+  getCategoryPostNum() {
+    let url = `${Config.apiUserRoot}categorypostnum`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
+  getCurrentPosts(categoryId, currentPage, pageSize) {
+    let url = `${Config.apiUserRoot}categoryposts?id=${categoryId}&page=${currentPage}&size=${pageSize}`;
+    return this.http.get(url)
+      .map(this.extraData)
+      .catch(this.handleError);
+  }
+
+  private extraData(res) {
+    let body = res.json();
+    return body || [];
+  }
+
+  private handleError (error) {
+    let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : `Server error`;
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
 
 }

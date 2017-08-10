@@ -85,8 +85,8 @@ export class PostmainComponent implements OnInit {
           this.posts[index].date = parseTime(data.date, 3);
           this.posts[index].reading = data.reading;
           let content = data.content;
-          let cutFlag = '<--more-->';
-          if (/<--more-->/.test(content)) {
+          let cutFlag = '<!--more-->';
+          if (/<\!--more-->/.test(content)) {
             this.posts[index].content = content.substring(0, content.indexOf(cutFlag));
           } else {
             this.posts[index].content = content;

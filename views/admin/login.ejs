@@ -77,6 +77,7 @@
       var method ='POST';
       var url = 'login';
       var aysn = true;
+      // 这里的密码是明文传输，加密？不存在的
       var data = "username=" + document.getElementById("username").value + "&password=" + document.getElementById("password").value + "&verify=" + document.getElementById("verify").value;
       var error = function (xhr, err) {
         console.log(xhr, err);

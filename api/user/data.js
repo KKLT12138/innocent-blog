@@ -80,11 +80,13 @@ router.route('/post/:id')
     });
   });
 
+/**
+ * 获得相邻文章
+ */
 router.route('/postneighbors/:id')
   .get(function (req, res, next) {
     var postId = req.params.id;
     PostModel.Post.findOne({'_id': postId}).exec(function (err, post) {
-      console.log(post);
       var prevPost = {};
       var nextPost = {};
       PostModel.Post.find({'_id': {$gt: postId}}).sort({'_id': 1}).limit(1).exec(function (err, p) {
@@ -114,6 +116,70 @@ router.route('/postneighbors/:id')
         })
       })
     })
+  });
+
+/**
+ * 获取分类信息
+ */
+router.route('/categoryinfo')
+  .get(function (req, res, next) {
+    var categoryCollection;
+    var categoryQuery = CategoryModel.Category.find({});
+    categoryQuery.exec(function (err, categories) {
+      categoryCollection = categories;
+      res.json(200, categoryCollection);
+    });
+  });
+
+/**
+ * 获取每个分类有多少篇文章
+ */
+router.route('/categorypostnum')
+  .get(function (req, res, next) {
+    PostModel.Post.aggregate({
+      $group: {
+        _id: "$category",
+        count: {
+          $sum: 1
+        }
+      }
+    }).exec(function (err, doc) {
+      if (err) {
+        res.json(200, {
+          status: 0,
+          message: lang.error
+        })
+      } else {
+        res.json(200, {
+          status: 1,
+          message: lang.success,
+          data: doc
+        })
+      }
+    })
+  });
+
+/**
+ * 获取对应分类的文章（带分页）
+ */
+router.route('/categoryposts')
+  .get(function (req, res, next) {
+    var postCollection;
+    var categoryId = req.query.id;
+    var size = +req.query.size;
+    var page = +req.query.page;
+    var totalNum;
+    PostModel.Post.find({'category': categoryId}).count().exec(function (err, count) {
+      totalNum = count;
+      var postQuery = PostModel.Post.find({'category': categoryId}).skip((page - 1) * size).limit(size);
+      postQuery.exec(function (err, posts) {
+        postCollection = posts;
+        res.json(200, {
+          data: postCollection,
+          totalNum: totalNum
+        });
+      });
+    });
   });
 
 /**

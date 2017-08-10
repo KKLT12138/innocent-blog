@@ -23,7 +23,7 @@
           <div class="posts-body">
             <p [innerHTML]="post.content" class="easy-markdown"></p>
             <div class="posts-body-more">
-              <a href="" class="btn-a">阅读全文&gt;&gt;</a>
+              <a [routerLink]="['/home/post', post.id]" class="btn-a">阅读全文&gt;&gt;</a>
             </div>
           </div>
         </div>

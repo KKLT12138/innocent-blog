@@ -5,7 +5,7 @@ import 'rxjs/add/operator/switchMap';
 import { DataService } from '../share/data.service';
 import { PostService } from '../share/post.service';
 import { parseTime } from '../share/timeToDate.fn';
-
+import { Reader } from '../../public/js/easy-markdown';
 
 @Component({
   selector: 'app-post',
@@ -49,6 +49,7 @@ export class PostComponent implements OnInit {
 
 
   ngOnInit() {
+    window.scrollTo(0,0);
     this.activatedRoute.params
       .subscribe((param) => {
         this._PostService.getPost(param.id)
@@ -59,8 +60,15 @@ export class PostComponent implements OnInit {
             this.post.category = post.category;
             this.post.tags = post.tags;
             this.post.date = parseTime(post.date);
-            this.post.content = post.content;
             this.post.reading = post.reading;
+            let markdown = new Reader('mark');
+            markdown.reader = post.content;
+            let tempStr = "";
+            for (let text of markdown.getHtml()) {
+              tempStr +=text;
+            }
+            this.post.content = tempStr;
+
             this._PostService.getPostNeighbors(this.post.id)
               .subscribe((datas) => {
                 this.neighbors.prevPost = datas.data.prevPost;
