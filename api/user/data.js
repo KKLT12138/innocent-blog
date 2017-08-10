@@ -171,7 +171,7 @@ router.route('/categoryposts')
     var totalNum;
     PostModel.Post.find({'category': categoryId}).count().exec(function (err, count) {
       totalNum = count;
-      var postQuery = PostModel.Post.find({'category': categoryId}).skip((page - 1) * size).limit(size);
+      var postQuery = PostModel.Post.find({'category': categoryId}).sort({date: -1}).skip((page - 1) * size).limit(size);
       postQuery.exec(function (err, posts) {
         postCollection = posts;
         res.json(200, {
