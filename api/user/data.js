@@ -81,6 +81,31 @@ router.route('/post/:id')
   });
 
 /**
+ * 统计阅读量
+ */
+router.route('/post')
+  .post(function (req, res, next) {
+    var id = req.body.id;
+    var postQuery = PostModel.Post.findOne().where('_id', id).exec(function (error, doc) {
+      doc.reading++;
+      doc.save(function (err) {
+        if (err) {
+          console.log(err);
+          res.json(200, {
+            status: 0,
+            message: lang.error
+          })
+        } else {
+          res.json(200, {
+            status: 1,
+            message: lang.success
+          })
+        }
+      })
+    })
+  });
+
+/**
  * 获得相邻文章
  */
 router.route('/postneighbors/:id')
@@ -179,6 +204,19 @@ router.route('/categoryposts')
           totalNum: totalNum
         });
       });
+    });
+  });
+
+/**
+ * 获取标签云
+ */
+router.route('/tagcloud')
+  .get(function (req, res, next) {
+    var tagCollection;
+    var tagQuery = TagModel.Tag.find({});
+    tagQuery.exec(function (err, categories) {
+      tagCollection = categories;
+      res.json(200, tagCollection);
     });
   });
 

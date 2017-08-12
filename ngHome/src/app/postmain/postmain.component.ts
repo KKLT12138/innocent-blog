@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { PostService } from '../share/post.service';
 import { Config } from '../share/config';
@@ -24,6 +25,7 @@ export class PostmainComponent implements OnInit {
     private _postService: PostService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private titleService: Title,
   ) { }
 
   posts: any[] = [
@@ -60,6 +62,7 @@ export class PostmainComponent implements OnInit {
 
 
   ngOnInit() {
+    this.setTitle("Tianzhen呀");
     this.activatedRoute.params
       .subscribe((param) => {
         param.id ? this.pageConfig.currentPage = +param.id : this.pageConfig.currentPage = 1;
@@ -111,6 +114,10 @@ export class PostmainComponent implements OnInit {
   getPageData(currentPage) {
     this.router.navigate(['/home', currentPage]);
     this.getPostList(this.pageConfig.currentPage, this.pageConfig.pageSize);
+  }
+
+  setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
 }

@@ -16,7 +16,22 @@ router.route('/post')
     //这种分页处理方式在数据量小时性能更佳，它占用更少的内存
     PostModel.Post.count().exec(function (err, count) {
       totalNum = count;
-      var postQuery = PostModel.Post.find({}).sort({order: -1, date: -1}).skip((page - 1) * size).limit(size);
+      var postQuery = PostModel.Post.find({}).sort({order: -1, date: -1}).skip((page - 1) * size).limit(size).populate([
+        {
+          path: 'category',
+          select: {
+            'category': 1,
+            '_id': 1
+          }
+        },
+        {
+          path: 'tags',
+          select: {
+            'name': 1,
+            '_id': 1
+          }
+        }
+      ]);
       postQuery.exec(function (err, posts) {
         postCollection = posts;
         res.json(200, {
@@ -87,7 +102,7 @@ router.route('/post')
 
           doc.save(function (err) {
             if (err) {
-              console.log(err)
+              console.log(err);
               res.json(200, {
                 status: 0,
                 message: lang.error

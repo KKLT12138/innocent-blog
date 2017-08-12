@@ -7,8 +7,8 @@
             <h1 class="posts-head-title"><a>{{ post.title }}</a></h1>
             <div class="posts-head-meta">
               <span class="posts-head-meta-date">{{ post.author }} 发表于<span>{{ post.date }}</span></span>
-              <span class="posts-head-meta-category">分类于<a href="">{{ post.category.name }}</a></span>
-              <span class="posts-head-meta-tag">标签<a href="" *ngFor="let tag of post.tags">{{ tag.name }}</a></span>
+              <span class="posts-head-meta-category">分类于<a [href]="'#/categories?id='+post.category.id+'&cname='+post.category.name">{{ post.category.name }}</a></span>
+              <span class="posts-head-meta-tag">标签<a *ngFor="let tag of post.tags">{{ tag.name }}</a></span>
               <span class="posts-head-meta-read"><span>{{ post.reading }}</span>次阅读</span>
             </div>
           </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <div class="comment-box">
+        <!--<div class="comment-box">
           <h2>评论</h2>
           <div class="add-comment">
             <a href="" class="add-comment-avatar">
@@ -90,7 +90,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
       </div>
 

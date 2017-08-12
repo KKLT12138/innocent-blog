@@ -31,8 +31,8 @@ import { CheckedAllDirective } from './share/checkedAll.directive';
 import { ToDatePipe } from './share/timeToDate.pipe';
 import { SelectCheckBoxService } from './share/selectCheckBox.service';
 // ng build时，导入CookieOptions
-import { CookieService } from 'angular2-cookie';
-// import { CookieService, CookieOptions } from 'angular2-cookie';
+// import { CookieService } from 'angular2-cookie';
+import { CookieService, CookieOptions } from 'angular2-cookie';
 
 
 @NgModule({

@@ -1,4 +1,4 @@
-//文章相关服务
+//前台标签相关服务
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -6,41 +6,29 @@ import { Observable } from 'rxjs/Rx';
 import { Config } from './config';
 
 @Injectable()
-export class PostService {
+export class TagService {
 
   constructor(
     private http: Http
   ) { }
 
-
-  getPostList(currentPage, pageSize) {
-    let url = `${Config.apiUserRoot}postlist?page=${currentPage}&size=${pageSize}`;
+  getTagCloud() {
+    let url = `${Config.apiUserRoot}tagcloud`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
   }
 
-  getPost(id): Observable<any> {
-    let url = `${Config.apiUserRoot}post/${id}`;
+  getCategoryPostNum() {
+    let url = `${Config.apiUserRoot}categorypostnum`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
   }
 
-  getPostNeighbors(id): Observable<any> {
-    let url = `${Config.apiUserRoot}postneighbors/${id}`;
+  getCurrentPosts(categoryId, currentPage, pageSize) {
+    let url = `${Config.apiUserRoot}categoryposts?id=${categoryId}&page=${currentPage}&size=${pageSize}`;
     return this.http.get(url)
-      .map(this.extraData)
-      .catch(this.handleError);
-  }
-
-  addPostReading(id): Observable<any> {
-    let url = `${Config.apiUserRoot}post`;
-    let body = JSON.stringify({'id': id});
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
-    return this.http.post(url, body, options)
       .map(this.extraData)
       .catch(this.handleError);
   }

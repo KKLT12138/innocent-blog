@@ -30,8 +30,8 @@ export class PostListComponent implements OnInit {
       id: 'loading..',
       title: 'loading..',
       author: 'loading..',
-      category: 'loading..',
-      tags: 'loading..',
+      category: {},
+      tags: '',
       order: 'loading..',
       commentNum: 'loading..',
       data: 'loading..',
@@ -89,12 +89,16 @@ export class PostListComponent implements OnInit {
           this.posts[index].title = data.title;
           this.posts[index].author = data.author;
           this.posts[index].category = data.category;
-          this.posts[index].tags = data.tags;
+          let tempArr = [];
+          for (let i in data.tags) {
+            tempArr.push(data.tags[i].name);
+          }
+          this.posts[index].tags = tempArr.join(', ');
           this.posts[index].order = data.order;
           this.posts[index].date = data.date;
           this.posts[index].reading = data.reading;
           this.posts[index].content = data.content;
-        })
+        });
       }, error => {
         this.mask.display = false;
         this.loadingAnimateComponent.loading.display = false;

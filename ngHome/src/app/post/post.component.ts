@@ -29,7 +29,10 @@ export class PostComponent implements OnInit {
     id: '',
     title: '',
     author: '',
-    category: '',
+    category: {
+      id: '',
+      name: ''
+    },
     tags: [],
     date: '',
     content: '',
@@ -52,6 +55,9 @@ export class PostComponent implements OnInit {
     window.scrollTo(0,0);
     this.activatedRoute.params
       .subscribe((param) => {
+        this._PostService.addPostReading(param.id)
+          .subscribe();
+
         this._PostService.getPost(param.id)
           .subscribe((post) => {
             this.post.id = post.id;

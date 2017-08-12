@@ -27,12 +27,14 @@
             <input type="checkbox" class="check check-all" (click)="checkBoxService.selectAllCheckBox($event.target.checked, posts, 'id')">
           </th>
           <th width="2%">ID</th>
-          <th width="25%">标题</th>
+          <th width="13%">标题</th>
+          <th width="4%">分类</th>
+          <th width="9%">标签</th>
           <th width="5%">作者</th>
           <th width="5%">点击量</th>
           <th width="5%">评论量</th>
-          <th width="3%">排序</th>
-          <th width="9%">时间</th>
+          <th width="4%">排序</th>
+          <th width="8%">时间</th>
           <th width="8%">操作</th>
         </tr>
         </thead>
@@ -43,6 +45,8 @@
           </td>
           <td>{{ post.id }}</td>
           <td class="main-title">{{ post.title }}</td>
+          <td>{{ post.category.category }}</td>
+          <td>{{ post.tags }}</td>
           <td>{{ post.author }}</td>
           <td>{{ post.reading }}</td>
           <td>{{ post.commentNum }}</td>

@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {CategoryService} from "../share/category.service";
+import { CategoryService } from "../share/category.service";
 import { parseTime } from '../share/timeToDate.fn';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['../../public/css/categories.css']
+  styleUrls: ['../../public/css/categories.css'],
+  providers: [
+    CategoryService
+  ]
 })
 export class CategoriesComponent implements OnInit {
 
@@ -14,6 +18,7 @@ export class CategoriesComponent implements OnInit {
     private _categoryService: CategoryService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private titleService: Title,
   ) { }
 
   categories: any[] = [
@@ -43,10 +48,11 @@ export class CategoriesComponent implements OnInit {
     totalNum: 0,
     currentPage: 1,
     totalPage: 0,
-    pageSize: 2
+    pageSize: 10
   };
 
   ngOnInit() {
+    this.setTitle("Tianzhen呀-分类");
     this._categoryService.getCategoryInfo()
       .subscribe(datas => {
         datas.forEach( (data, index) => {
@@ -68,6 +74,12 @@ export class CategoriesComponent implements OnInit {
             this.currentCategory.id = this.categories[0].id;
             this.currentCategory.name = this.categories[0].name;
             this.getCategoryPosts(this.currentCategory.id, this.pageConfig.currentPage, this.pageConfig.pageSize);
+            this.activatedRoute.queryParams
+              .subscribe((param) => {
+                if (param.id) {
+                  this.setCurrentCategory(param.id, param.cname);
+                }
+              });
           });
       });
   }
@@ -88,13 +100,27 @@ export class CategoriesComponent implements OnInit {
         this.pageConfig.totalNum = datas.totalNum;
         this.pageConfig.totalPage = Math.ceil(this.pageConfig.totalNum / this.pageConfig.pageSize);
         this.currentPosts = [];
-        datas.data.forEach((post, index) => {
-          this.currentPosts[index] = {};
-          this.currentPosts[index].id = post._id;
-          this.currentPosts[index].title = post.title;
-          this.currentPosts[index].date = parseTime(post.date, 2);
-        })
+        if (datas.data.length) {
+          datas.data.forEach((post, index) => {
+            this.currentPosts[index] = {};
+            this.currentPosts[index].id = post._id;
+            this.currentPosts[index].title = post.title;
+            this.currentPosts[index].date = parseTime(post.date, 2);
+          })
+        } else {
+          this.currentPosts = [
+            {
+              id: '',
+              title: '暂无文章',
+              date: 'Jan 1, 1970'
+            }
+          ]
+        }
       });
+  }
+
+  setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 
 }
