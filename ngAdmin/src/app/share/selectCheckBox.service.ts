@@ -32,4 +32,9 @@ export class SelectCheckBoxService {
     }
   }
 
+  /* 清空复选框数组，在切换页面和分页的时候使用 */
+  clearCheckBox() {
+    this.selectedCheckBox = [];
+  }
+
 }

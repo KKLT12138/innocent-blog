@@ -84,6 +84,7 @@ export class CategoriesListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.checkBoxService.clearCheckBox();
     this.getCategories();
   }
 

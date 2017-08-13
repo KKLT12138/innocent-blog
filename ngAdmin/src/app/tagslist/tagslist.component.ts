@@ -79,6 +79,7 @@ export class TagsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.checkBoxService.clearCheckBox();
     this.getTags();
   }
 

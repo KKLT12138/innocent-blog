@@ -68,6 +68,7 @@ export class PostListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.checkBoxService.clearCheckBox();
     this.activatedRoute.params
       .subscribe((param) => {
         param.id ? this.pageConfig.currentPage = +param.id : this.pageConfig.currentPage = 1;
@@ -143,5 +144,6 @@ export class PostListComponent implements OnInit {
   getPageData(currentPage) {
     this.router.navigate(['/admin/postlist', currentPage]);
     this.getPosts(this.pageConfig.currentPage, this.pageConfig.pageSize);
+    this.checkBoxService.clearCheckBox();
   }
 }

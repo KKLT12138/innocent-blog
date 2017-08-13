@@ -88,6 +88,7 @@ export class FriendComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.checkBoxService.clearCheckBox();
     this.getFriends();
   }
 

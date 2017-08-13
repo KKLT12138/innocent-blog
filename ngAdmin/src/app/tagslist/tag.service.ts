@@ -24,14 +24,14 @@ export class TagService {
   }
 
   getTagInfo(): Observable<any> {
-    let url = `${Config.apiAdminRoot}taginfo`;
+    let url = `${Config.apiAdminRoot}taginfo?token=${this.token}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
   }
 
   getPostNum(): Observable<any> {
-    let url = `${Config.apiAdminRoot}postnum`;
+    let url = `${Config.apiAdminRoot}postnum?token=${this.token}`;
     return this.http.get(url)
       .map(this.extraData)
       .catch(this.handleError);
