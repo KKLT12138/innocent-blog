@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './auth-guard.service';
 
 import { AdminMainComponent } from './adminmain/adminmain.component';
 import { PostListComponent } from './postlist/postlist.component';
@@ -21,51 +22,63 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminMainComponent
+    component: AdminMainComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/postlist',
-    component: PostListComponent
+    component: PostListComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/postlist/:id',
-    component: PostListComponent
+    component: PostListComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/addpost',
-    component: AddPostComponent
+    component: AddPostComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/addpost/:id',
-    component: AddPostComponent
+    component: AddPostComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/categorieslist',
-    component: CategoriesListComponent
+    component: CategoriesListComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/tagslist',
-    component: TagsListComponent
+    component: TagsListComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/adminuser',
-    component: AdminUserComponent
+    component: AdminUserComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/regular',
-    component: RegularSettingComponent
+    component: RegularSettingComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/operation',
-    component: OperationComponent
+    component: OperationComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/friend',
-    component: FriendComponent
+    component: FriendComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/comment',
-    component: CommentComponent
+    component: CommentComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

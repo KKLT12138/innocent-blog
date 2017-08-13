@@ -4,7 +4,8 @@
   "description": "My personal blog.",
   "private": true,
   "scripts": {
-    "start": "ng server"
+    "start": "ng server --port 4200",
+    "build": "ng build --prod --aot --base-href ./"
   },
   "repository": {
     "type": "git",

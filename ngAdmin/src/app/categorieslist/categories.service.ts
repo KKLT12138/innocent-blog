@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { CookieService } from "angular2-cookie/services/cookies.service";
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { Config } from '../share/config';
 

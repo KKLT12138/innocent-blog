@@ -3,6 +3,7 @@ export let Config = {
   // apiRoot: 'http://localhost:8080/',
   apiAdminRoot: 'http://www.tianzhen.tech/api/admin/',
   apiRoot: 'http://www.tianzhen.tech/',
+  siteRoot: 'http://tianzhen.tech/',
   message: {
     getError: '数据获取失败，请重试',
     success: '操作成功',

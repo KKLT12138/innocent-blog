@@ -8,6 +8,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthGuardService } from './auth-guard.service';
 
 import { AdminSideMenuComponent } from './admin-sidemenu/admin-sidemenu.component';
 import { AdminMainComponent } from './adminmain/adminmain.component';
@@ -73,7 +74,8 @@ import { CookieService, CookieOptions } from 'angular2-cookie';
     },
     SelectCheckBoxService,
     CookieService,
-    // CookieOptions
+    // CookieOptions,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
