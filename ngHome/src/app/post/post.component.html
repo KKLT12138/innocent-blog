@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="posts-body">
-            <p [innerHTML]="post.content"></p>
+            <p [innerHTML]="post.content" class="easy-markdown"></p>
             <div class="posts-body-more">
               <a routerLink="/home/post/{{neighbors.prevPost.id}}" class="btn-a pre-post" *ngIf="neighbors.prevPost.title">&lt;&lt;&nbsp;{{ neighbors.prevPost.title }}</a>
               <a routerLink="/home/post/{{neighbors.nextPost.id}}" class="btn-a next-post" *ngIf="neighbors.nextPost.title">{{ neighbors.nextPost.title }}&nbsp;&gt;&gt;</a>
